@@ -361,9 +361,6 @@ DELIMITER ;
 DELETE FROM osoba WHERE osoba.id=1;
 
 
-CREATE TABLE temp SELECT * FROM inne;
-CREATE TABLE temp2 SELECT * FROM inne;
-DROP TABLE temp;
 
 
 /* 
@@ -373,5 +370,78 @@ Tak bo odnoszą się do różnych zdarzeń, różnych tabel i nie kolidują ze s
 
 #zad16
 
+CREATE TABLE tempTable(
+id int NOT NULL,
+nazwa varchar(20) NOT NULL,
+typ varchar(20) NOT NULL,
+lokacja varchar(20),
+towarzysze BOOL,
+typHobby varchar(20) NOT NULL
+);
+
+INSERT INTO tempTable (id, nazwa,lokacja,typ,towarzysze, typHobby) (SELECT id, nazwa, lokacja, '-', towarzysze, 'inne' FROM inne);
+INSERT INTO tempTable (id, nazwa,lokacja,typ,towarzysze, typHobby) (SELECT id, nazwa, lokacja, '-', false, 'nauka' FROM nauka);
+INSERT INTO tempTable (id, nazwa,lokacja,typ,towarzysze, typHobby) (SELECT id, nazwa, lokacja, typ, false, 'sport' FROM sport);
+
+CREATE VIEW widok AS
+	(SELECT A.id AS id, A.nazwa AS nazwa, A.typHobby as typHobby, A.lokacja as lokacja, A.towarzysze as towarzysze, A.typ as typ, B.osoba as osoba FROM tempTable AS A JOIN hobby AS B ON A.id=B.id AND A.typHobby=B.typ);
+
+CREATE VIEW zad16 AS
+	(SELECT id, typHobby, nazwa, lokacja, towarzysze, typ, COUNT(*) AS 'Ilość zajmujących się tym hobby' FROM widok GROUP BY typHobby, id, nazwa, lokacja, towarzysze, typ ORDER BY id);
+
+SELECT * FROM zad16;
 
 
+DROP VIEW widok;
+DROP TABLE tempTable;
+
+#zad17
+
+
+CREATE TABLE tempTable2(
+id int NOT NULL,
+nazwa varchar(20) NOT NULL,
+typ varchar(20) NOT NULL,
+lokacja varchar(20),
+towarzysze BOOL,
+typHobby varchar(20) NOT NULL,
+idWlasciciela int DEFAULT 0
+);
+
+INSERT INTO tempTable2 (id, nazwa,lokacja,typ,towarzysze, typHobby) (SELECT id, nazwa, lokacja, '-', towarzysze, 'inne' FROM inne);
+INSERT INTO tempTable2 (id, nazwa,lokacja,typ,towarzysze, typHobby) (SELECT id, nazwa, lokacja, '-', false, 'nauka' FROM nauka);
+INSERT INTO tempTable2 (id, nazwa,lokacja,typ,towarzysze, typHobby) (SELECT id, nazwa, lokacja, typ, false, 'sport' FROM sport);
+INSERT INTO tempTable2 (id, nazwa,lokacja,typ,towarzysze, typHobby, idWlasciciela) (SELECT 0, name , '-', species, false, 'zwierzak',ID FROM zwierzak);
+
+CREATE VIEW zad17 AS
+	(SELECT DISTINCT osoba, imie, nazwisko, dataUrodzenia, plec, A.id AS 'id sportu' , A.nazwa AS 'nazwa sportu', typHobby, lokacja, towarzysze, A.typ as typ
+    FROM tempTable2 AS A JOIN hobby AS B ON ((A.id=B.id AND A.typHobby=B.typ) OR B.osoba=A.idWlasciciela) JOIN osoba as C ON (B.osoba = C.id) ORDER BY osoba);
+
+
+
+SELECT * FROM zad17;
+DROP VIEW zad17;
+DROP TABLE tempTable2;
+
+#zad18
+#Napisz procedurę bez argumentów wejściowych, z jednym argumentem wyjściowym (lub funkcję zwracającą), która wróci imię oraz wiek osoby posiadającej największą liczbę hobby.
+
+SELECT osoba, count(*) AS 'Ilość hobby' FROM hobby GROUP BY osoba ORDER BY count(*) DESC, rand() ;
+
+DELIMITER $$
+CREATE PROCEDURE zad18 (OUT stringOut varchar(40))
+BEGIN 
+SET @nrOsoby = (SELECT osoba AS 'Ilość hobby' FROM hobby GROUP BY osoba ORDER BY count(*) DESC, rand() LIMIT 1);
+SET @imie=(SELECT imie FROM osoba WHERE id=@nrOsoby);
+SET @urodzony=(SELECT dataUrodzenia FROM osoba WHERE id=@nrOsoby);
+SET @wiek=(  (YEAR(CURDATE()) - YEAR(@urodzony)) - (RIGHT(CURDATE(), 5) < RIGHT(@urodzony, 5)));
+SET stringOut=concat(@imie,"-",@wiek," lat");
+#SET stringOut=@imie;
+
+END$$
+DELIMITER ;
+
+CALL zad18(@String18);
+SELECT @String18;
+
+DROP PROCEDURE zad18;
