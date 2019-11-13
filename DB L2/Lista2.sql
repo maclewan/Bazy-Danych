@@ -179,7 +179,6 @@ CALL dod('sport',300);
 CALL dod('nauka',300);
 CALL dod('inne',500);
 CALL dod('hobby',1300);
-       SELECT id FROM sport ORDER BY RAND() LIMIT 1;
 		DELETE FROM hobby;
         DROP PROCEDURE dod;
 #Zad8
@@ -222,7 +221,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-call wypiszHobbyOsoby(5);
+call wypiszHobbyOsoby(3);
     
 #10
 DECLARE @sql2 VARCHAR(100),
@@ -257,15 +256,122 @@ call wypiszHobbyOsoby2(1);
 
 #zad11
  
+
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
+DROP TRIGGER IF EXISTS zad11;
+DELIMITER $$
+$$ 
+CREATE TRIGGER zad11 BEFORE INSERT ON hobby
+FOR EACH ROW
+BEGIN
+	IF NEW.osoba NOT IN (SELECT id FROM osoba) THEN
+		SET NEW.osoba = (SELECT DISTINCT id FROM osoba ORDER BY RAND());
+	END IF;
     
+    IF NEW.typ='nauka' THEN
+		SET NEW.id = (SELECT DISTINCT MAX(id) FROM nauka)+1;
+        CALL dod('nauka',1);
+	ELSEIF NEW.typ='sport' THEN
+		SET NEW.id = (SELECT DISTINCT MAX(id) FROM sport)+1;
+        CALL dod('sport',1);
+	ELSEIF NEW.typ='inne' THEN
+		SET NEW.id = (SELECT DISTINCT MAX(id) FROM inne)+1;
+        CALL dod('inne',1);
+        
+	END IF;
+END$$
+DELIMITER ;
     
+INSERT INTO hobby VALUES (2,123,'inne');
+
+
+#zad12
+
+DROP TRIGGER IF EXISTS zad12;
+DELIMITER $$
+$$ 
+CREATE TRIGGER zad12 AFTER DELETE ON sport
+FOR EACH ROW
+BEGIN
+DELETE FROM hobby
+    WHERE hobby.id = OLD.id;
+    
+END$$
+DELIMITER ;
+
+#zad13
+
+DROP TRIGGER IF EXISTS zad13a;
+DELIMITER $$
+$$ 
+CREATE TRIGGER zad13a AFTER DELETE ON nauka
+FOR EACH ROW
+BEGIN
+DELETE FROM hobby
+    WHERE hobby.id = OLD.id;
+    
+END$$
+DELIMITER ;
+
+#? xD
+DROP TRIGGER IF EXISTS zad13b;
+DELIMITER $$
+$$ 
+CREATE TRIGGER zad13b BEFORE UPDATE ON nauka
+FOR EACH ROW
+BEGIN
+
+	IF NEW.id IN (SELECT id FROM nauka) THEN
+		SET NEW.id = OLD.id;
+	END IF;
+
+
+END$$
+DELIMITER ;
+
+
+#zad14
+
+DROP TRIGGER IF EXISTS takiseTrigger;
+DELIMITER $$
+$$ 
+CREATE TRIGGER takiseTrigger BEFORE DELETE ON hobby
+FOR EACH ROW
+BEGIN
+	DELETE FROM inne WHERE OLD.id = inne.id AND OLD.typ='inne';
+	DELETE FROM sport WHERE OLD.id = sport.id AND OLD.typ='sport';
+	DELETE FROM nauka WHERE OLD.id = nauka.id AND OLD.typ='nauka';
+END$$
+DELIMITER ;
+
+
+
+DROP TRIGGER IF EXISTS zad14;
+DELIMITER $$
+$$ 
+CREATE TRIGGER zad14 BEFORE DELETE ON osoba
+FOR EACH ROW
+BEGIN
+    DELETE FROM hobby WHERE osoba = OLD.id; 
+    UPDATE zwierzak SET ID =(SELECT id FROM osoba ORDER BY RAND() LIMIT 1) WHERE zwierzak.ID = OLD.ID;
+ 
+END$$
+DELIMITER ;
+
+DELETE FROM osoba WHERE osoba.id=1;
+
+
+CREATE TABLE temp SELECT * FROM inne;
+CREATE TABLE temp2 SELECT * FROM inne;
+DROP TABLE temp;
+
+
+/* 
+Zad15
+Tak bo odnoszą się do różnych zdarzeń, różnych tabel i nie kolidują ze sobą, oraz nie wywołują siebie wzajemnie w pętli
+*/
+
+#zad16
+
+
+
