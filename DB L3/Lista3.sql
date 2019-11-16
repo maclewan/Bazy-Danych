@@ -1,6 +1,6 @@
 #Lista 3
 #zad1
-USE hobby;
+USE hobby2;
 
 CREATE INDEX idx_imie ON osoba (imie);
 CREATE INDEX idX_data ON osoba (dataUrodzenia);
@@ -35,7 +35,7 @@ CREATE TABLE tempTable SELECT nazwa, id, 'sport' AS rodzaj FROM sport;
 INSERT INTO tempTable SELECT nazwa, id, 'inne' FROM inne ;
 INSERT INTO tempTable SELECT nazwa, id, 'nauka' FROM nauka;    
 
-SELECT nazwa, typ, COUNT(*) AS ilość FROM tempTable AS A JOIN hobby AS B ON A.id=B.id AND A.rodzaj=B.typ GROUP BY B.typ,A.nazwa ORDER BY ilość DESC LIMIT ilosc; 
+SELECT nazwa, typ, COUNT(*) AS ilosc FROM tempTable AS A JOIN hobby AS B ON A.id=B.id AND A.rodzaj=B.typ GROUP BY B.typ,A.nazwa ORDER BY ilosc DESC LIMIT 1; 
 EXPLAIN SELECT nazwa, typ, COUNT(*) AS ilość FROM tempTable AS A JOIN hobby AS B ON A.id=B.id AND A.rodzaj=B.typ GROUP BY B.typ,A.nazwa ORDER BY ilość DESC LIMIT 1; 
 
 DROP TABLE tempTable;
@@ -71,7 +71,7 @@ nazwa varchar(40),
 PRIMARY KEY (id)
 );
 
-INSERT INTO nZawodow (nazwa) VALUES ('Papiez'),('Pisarz'),('Nauczyciel'),('Informatyk'),('Prawnik'),('Kierowca'),('Lekarz'),('Sprzedawca'),('Konduktor'),('Strazak'),('Policjant');
+INSERT INTO nZawodow (nazwa) VALUES ('papiez'),('pisarz'),('nauczyciel'),('informatyk'),('prawnik'),('kierowca'),('lekarz'),('sprzedawca'),('konduktor'),('strazak'),('policjant');
 
 SET @counter =1;
 
@@ -86,7 +86,10 @@ WHILE @counter<12 DO
     END WHILE;
 END;$$
 DELIMITER ;
+
 CALL addZawody();
+
+
 
 SELECT * FROM zawody;
 DROP PROCEDURE addZawody;
@@ -121,10 +124,10 @@ BEGIN
 END; $$
 DELIMITER ;
 
-DROP PROCEDURE kursor;
+
 
 CALL kursor();    
-    
+DROP PROCEDURE kursor;   
 #zad4
 
     
@@ -210,7 +213,7 @@ CREATE TABLE hasla
 id int,
 pass varchar(40) NOT NULL);
 
-DROP TABLE hasla;
+##DROP TABLE hasla;
 
 DELIMITER $$
 CREATE PROCEDURE wypelniacz ()
@@ -241,7 +244,7 @@ DELIMITER ;
 
 CALL wypelniacz();
 
-DELETE FROM hasla;
+#DELETE FROM hasla;
 DROP procedure wypelniacz;
 
 
@@ -259,9 +262,9 @@ END; $$
 DELIMITER ;
 
 
-CALL logowanie('Diane','2','1a8bf017fc6631c5e8d06459d9c64848eaec6270',@outData);
+CALL logowanie('Diane','16','975a48dafd0dfdd871706be2d7e8fc3aa2afd825',@outData);
 SELECT @outData; #true
-CALL logowanie('Diane','2','2a8bf017fc6631c5e8d06459d9c64848eaec6270',@outData);
+CALL logowanie('Diane','16','875a48dafd0dfdd871706be2d7e8fc3aa2afd825',@outData);
 SELECT @outData; #false
 
 
@@ -350,14 +353,23 @@ END $$
 DELIMITER ;
 
 DROP PROCEDURE podwyzka;
-CALL podwyzka('informatyk');
+CALL podwyzka('papiez');
 
 #zad9 
 
+DELIMITER $$
+DROP FUNCTION IF EXISTS laplace$$
+CREATE FUNCTION laplace (u FLOAT, b FLOAT, x FLOAT) RETURNS FLOAT DETERMINISTIC 
+BEGIN 
+	RETURN(1/(2*b))*EXP(-(ABS(x-u)/b));
+END $$
+
+
 
 DELIMITER $$
-CREATE PROCEDURE srPlaca(IN zawod VARCHAR(30))
+CREATE PROCEDURE srPlaca(IN zawod VARCHAR(30), OUT srednia FLOAT)
 BEGIN
+
 	IF LOWER(zawod) NOT IN (SELECT nazwa FROM zawody) THEN
 		SIGNAL SQLSTATE '45000' 
 		SET MESSAGE_TEXT = 'Nie istnieje taki zawód';
@@ -367,14 +379,18 @@ BEGIN
         SET @idZawodu = (SELECT id FROM zawody WHERE nazwa=zawod);
 	END IF;
 	
-	START TRANSACTION;
-		UPDATE praca SET pensja = pensja*1.1 WHERE idZawodu = @idZawodu; 
-		IF(( SELECT MAX(pensja) FROM praca WHERE idZawodu = @idZawodu)> @maxPensja) THEN
-			ROLLBACK;
-			SIGNAL SQLSTATE '45000' 
-			SET MESSAGE_TEXT = 'Pensja przekracza pensje max';
-		ELSE COMMIT;
-        END IF;
+	SET srednia = (SELECT AVG(pensja) FROM praca WHERE idZawodu=@idZawodu);
+    
+    ##0.05 prywatności różnicowej
+	SET @b = srednia/0.05;
+	SET @x = RAND()*@b;
+	SET @privacy=(SELECT laplace(0,@b,@x));
+    SET srednia=srednia+@privacy;
+    
 
 END $$
 DELIMITER ;
+
+#DROP PROCEDURE srPlaca;
+CALL srPlaca('informatyk',@wyn);
+SELECT @wyn;
