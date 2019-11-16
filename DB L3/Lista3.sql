@@ -265,7 +265,116 @@ CALL logowanie('Diane','2','2a8bf017fc6631c5e8d06459d9c64848eaec6270',@outData);
 SELECT @outData; #false
 
 
-#zad6
+#zad7
+
+DROP PROCEDURE newton;
+DELIMITER $$
+CREATE PROCEDURE newton (IN n int,IN k INT, OUT wynik INT)
+BEGIN
+	SET max_sp_recursion_depth=500;
+	IF (k=0 OR k=n) THEN
+		SET wynik = 1;
+    ELSE
+		CAll newton(n-1,k-1,@w1);
+		SET wynik = @w1;
+		CALL newton(n-1,k,@w2);
+		SET wynik = wynik + @w2;
+    END IF;
+
+END; $$
+DELIMITER ;
 
 
+CALL newton(4,2,@w);
+SELECT @w;
 
+##################################################
+
+WITH RECURSIVE newton2 AS
+(
+	select 4 as n, 2 as k, cast(liczNewton(4,2) as char(20)) as w
+	UNION ALL
+	SELECT  n + 1, k+1, liczNewton(n + 1, k+1 )
+    FROM newton2 WHERE n < 1
+)
+SELECT * FROM newton2;
+
+drop function if exists liczNewton;
+DELIMITER $$
+CREATE FUNCTION liczNewton ( N int, K int )
+RETURNS INT
+BEGIN
+	declare p int;
+    declare pom int default 0;
+    declare wynik int default 1;
+	if K = 0
+	then
+		return '1';
+	else
+		set p = N - K;
+
+        while pom < K
+        do
+        set pom = pom + 1;
+        set wynik = wynik * (p + pom) / pom;
+        end while;
+		RETURN wynik;
+	end if;
+END $$
+DELIMITER ;
+
+
+#zad8
+
+DELIMITER $$
+CREATE PROCEDURE podwyzka(IN zawod VARCHAR(30))
+BEGIN
+	IF LOWER(zawod) NOT IN (SELECT nazwa FROM zawody) THEN
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = 'Nie istnieje taki zawód';
+	ELSE
+		SET @maxPensja = (SELECT pensja_max FROM zawody WHERE nazwa=zawod);
+        SET @idZawodu = (SELECT id FROM zawody WHERE nazwa=zawod);
+	END IF;
+	
+	START TRANSACTION;
+		UPDATE praca SET pensja = pensja*1.1 WHERE idZawodu = @idZawodu; 
+		IF(( SELECT MAX(pensja) FROM praca WHERE idZawodu = @idZawodu)> @maxPensja) THEN
+			ROLLBACK;
+			SIGNAL SQLSTATE '45000' 
+			SET MESSAGE_TEXT = 'Pensja przekracza pensje max';
+		ELSE COMMIT;
+        END IF;
+
+END $$
+DELIMITER ;
+
+DROP PROCEDURE podwyzka;
+CALL podwyzka('informatyk');
+
+#zad9 
+
+
+DELIMITER $$
+CREATE PROCEDURE srPlaca(IN zawod VARCHAR(30))
+BEGIN
+	IF LOWER(zawod) NOT IN (SELECT nazwa FROM zawody) THEN
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = 'Nie istnieje taki zawód';
+	ELSE
+		SET @maxPensja = (SELECT pensja_max FROM zawody WHERE nazwa=zawod);
+        sET @minPensja = (SELECT pensja_min FROM zawody WHERE nazwa=zawod);
+        SET @idZawodu = (SELECT id FROM zawody WHERE nazwa=zawod);
+	END IF;
+	
+	START TRANSACTION;
+		UPDATE praca SET pensja = pensja*1.1 WHERE idZawodu = @idZawodu; 
+		IF(( SELECT MAX(pensja) FROM praca WHERE idZawodu = @idZawodu)> @maxPensja) THEN
+			ROLLBACK;
+			SIGNAL SQLSTATE '45000' 
+			SET MESSAGE_TEXT = 'Pensja przekracza pensje max';
+		ELSE COMMIT;
+        END IF;
+
+END $$
+DELIMITER ;
