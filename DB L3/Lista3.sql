@@ -97,7 +97,7 @@ DELIMITER $$
 CREATE PROCEDURE kursor ()
 BEGIN
 	
-    DECLARE koniec, j SMALLINT UNSIGNED;
+    DECLARE koniec SMALLINT UNSIGNED;
     DECLARE idP int;
     DECLARE idZ int;
     DECLARE pensja int;
@@ -205,14 +205,67 @@ DROP PROCEDURE zad4;
 
 #zad5
 
+CREATE TABLE hasla
+(
+id int,
+pass varchar(40) NOT NULL);
+
+DROP TABLE hasla;
+
+DELIMITER $$
+CREATE PROCEDURE wypelniacz ()
+BEGIN
+
+    DECLARE koniec SMALLINT UNSIGNED;
+	DECLARE idd int;
+    DECLARE nam varchar(40);
+    
+    DECLARE kur2 CURSOR FOR SELECT id, imie FROM osoba;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET koniec = 1;
+    
+    OPEN kur2;
+    petla: LOOP
+		FETCH kur2 INTO idd, nam;
+        
+        IF koniec = 1 THEN 
+			LEAVE petla;
+		END IF;
+        
+        INSERT INTO hasla (id, pass) VALUES (idd, sha1(CONCAT(nam,idd)));
+    END LOOP petla;
 
 
 
+END; $$
+DELIMITER ;
+
+CALL wypelniacz();
+
+DELETE FROM hasla;
+DROP procedure wypelniacz;
 
 
+DELIMITER $$
+CREATE PROCEDURE logowanie (IN nam VARCHAR(40),IN idd INT, IN has VARCHAR(40), OUT dataU date)
+BEGIN
+	SET @tester = sha1(CONCAT(nam,idd));
+    IF(@tester=has) THEN
+		SET dataU = (SELECT DISTINCT dataUrodzenia FROM osoba JOIN hasla ON osoba.id=hasla.id WHERE osoba.id=idd);
+	ELSE 
+		SET dataU = DATE(NOW()) + INTERVAL -90 YEAR + INTERVAL RAND()*70*365.25 DAY;
+	END IF;
+    
+END; $$
+DELIMITER ;
 
 
+CALL logowanie('Diane','2','1a8bf017fc6631c5e8d06459d9c64848eaec6270',@outData);
+SELECT @outData; #true
+CALL logowanie('Diane','2','2a8bf017fc6631c5e8d06459d9c64848eaec6270',@outData);
+SELECT @outData; #false
 
+
+#zad6
 
 
 
