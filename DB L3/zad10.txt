@@ -1,0 +1,9 @@
+#Zadanie 10:
+
+
+
+$ mysqldump --user=root hobby > myBackup.sql --password -f
+$ drop database hobby;
+$ create database hobby;
+$ mysql -u root -p hobby < myBackup.sql
+

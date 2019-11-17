@@ -362,7 +362,8 @@ DROP FUNCTION IF EXISTS laplace$$
 CREATE FUNCTION laplace (u FLOAT, b FLOAT, x FLOAT) RETURNS FLOAT DETERMINISTIC 
 BEGIN 
 	RETURN(1/(2*b))*EXP(-(ABS(x-u)/b));
-END $$
+END; $$
+
 
 
 
@@ -386,11 +387,17 @@ BEGIN
 	SET @x = RAND()*@b;
 	SET @privacy=(SELECT laplace(0,@b,@x));
     SET srednia=srednia+@privacy;
+    SET srednia = @privacy;
+    ##czy nie przekracza max pensji
+    IF srednia>@maxPensja THEN
+		SET srednia=@maxPensja;
+	END IF;
     
 
 END $$
 DELIMITER ;
 
-#DROP PROCEDURE srPlaca;
+
+DROP PROCEDURE srPlaca;
 CALL srPlaca('informatyk',@wyn);
 SELECT @wyn;
