@@ -5,9 +5,9 @@ GRANT Alter,Select,Insert,Update,Delete  ON *.* TO 'Maciej02@localhost';
 GRANT ALL PRIVILEGES ON *.* TO 'Maciej02@localhost';
 FLUSH PRIVILEGES;
 
-CREATE DATABASE hobby;
+CREATE DATABASE hobby2;
 
-USE hobby;
+USE hobby2;
 
 #zad2
 
@@ -77,14 +77,15 @@ FROM pet;
 SELECT * FROM pet;
 
 
-USE hobby;
+USE hobby2;
 
-DELETE FROM zwierzak;
+#DELETE FROM zwierzak;
 LOAD DATA LOCAL INFILE '/var/lib/mysql-files/pet3.txt' INTO TABLE zwierzak;
 SELECT * FROM zwierzak;
 
 
-DELETE FROM osoba;
+#DELETE FROM osoba;
+
 INSERT INTO osoba(imie, dataUrodzenia, plec) 
 (SELECT DISTINCT owner, DATE(NOW()) + INTERVAL -90 YEAR + INTERVAL RAND()*70*365.25 DAY, 't' 
 FROM zwierzak 
@@ -196,7 +197,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-call wypiszHobby(19,'inne');
+call wypiszHobby(55,'inne');
 
 #Zad9
 DECLARE @sql2 VARCHAR(100),
@@ -221,7 +222,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-call wypiszHobbyOsoby(3);
+call wypiszHobbyOsoby(37);
     
 #10
 DECLARE @sql2 VARCHAR(100),
@@ -252,7 +253,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-call wypiszHobbyOsoby2(1);   
+call wypiszHobbyOsoby2(55);   
 
 #zad11
  
@@ -265,7 +266,7 @@ CREATE TRIGGER zad11 BEFORE INSERT ON hobby
 FOR EACH ROW
 BEGIN
 	IF NEW.osoba NOT IN (SELECT id FROM osoba) THEN
-		SET NEW.osoba = (SELECT DISTINCT id FROM osoba ORDER BY RAND());
+		SET NEW.osoba = (SELECT DISTINCT id FROM osoba ORDER BY RAND() LIMIT 1);
 	END IF;
     
     IF NEW.typ='nauka' THEN
@@ -282,7 +283,7 @@ BEGIN
 END$$
 DELIMITER ;
     
-INSERT INTO hobby VALUES (2,123,'inne');
+INSERT INTO hobby VALUES (14,100,'inne');
 
 
 #zad12
@@ -358,7 +359,7 @@ BEGIN
 END$$
 DELIMITER ;
 
-DELETE FROM osoba WHERE osoba.id=1;
+DELETE FROM osoba WHERE osoba.id=12;
 
 
 
@@ -393,6 +394,7 @@ SELECT * FROM zad16;
 
 
 DROP VIEW widok;
+DROP VIEW zad16;
 DROP TABLE tempTable;
 
 #zad17
@@ -413,20 +415,26 @@ INSERT INTO tempTable2 (id, nazwa,lokacja,typ,towarzysze, typHobby) (SELECT id, 
 INSERT INTO tempTable2 (id, nazwa,lokacja,typ,towarzysze, typHobby) (SELECT id, nazwa, lokacja, typ, false, 'sport' FROM sport);
 INSERT INTO tempTable2 (id, nazwa,lokacja,typ,towarzysze, typHobby, idWlasciciela) (SELECT 0, name , '-', species, false, 'zwierzak',ID FROM zwierzak);
 
+CREATE TABLE extHobby (SELECT * FROM hobby) UNION (SELECT DISTINCT ID, '0', 'inne'  FROM zwierzak);
+
+
 CREATE VIEW zad17 AS
 	(SELECT DISTINCT osoba, imie, nazwisko, dataUrodzenia, plec, A.id AS 'id sportu' , A.nazwa AS 'nazwa sportu', typHobby, lokacja, towarzysze, A.typ as typ
-    FROM tempTable2 AS A JOIN hobby AS B ON ((A.id=B.id AND A.typHobby=B.typ) OR B.osoba=A.idWlasciciela) JOIN osoba as C ON (B.osoba = C.id) ORDER BY osoba);
+    FROM tempTable2 AS A JOIN extHobby AS B ON ((A.id=B.id AND A.typHobby=B.typ) OR B.osoba=A.idWlasciciela) JOIN osoba as C ON (B.osoba = C.id) ORDER BY osoba);
 
 
 
 SELECT * FROM zad17;
+
+
 DROP VIEW zad17;
 DROP TABLE tempTable2;
+DROP TABLE extHobby;
 
 #zad18
 #Napisz procedurę bez argumentów wejściowych, z jednym argumentem wyjściowym (lub funkcję zwracającą), która wróci imię oraz wiek osoby posiadającej największą liczbę hobby.
 
-SELECT osoba, count(*) AS 'Ilość hobby' FROM hobby GROUP BY osoba ORDER BY count(*) DESC, rand() ;
+##SELECT osoba, count(*) AS 'Ilość hobby' FROM hobby GROUP BY osoba ORDER BY count(*) DESC, rand() ;
 
 DELIMITER $$
 CREATE PROCEDURE zad18 (OUT stringOut varchar(40))

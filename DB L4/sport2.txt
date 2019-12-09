@@ -1,0 +1,10 @@
+{"typ": "druzynowy", "nazwa": "EMYTRPIHHPA", "lokacja": "PSQBMFOFKHIUW","miejsce":"hala"}
+{"typ": ["indywidualny","druzynowy"], "nazwa": "LEPMSDSDFTUS", "lokacja": "GSWBUUPPDXBO","miejsce":"hala"}
+{"typ": "indywidualny", "nazwa": "ZRRQWEFNSYP", "lokacja": "GCVTFXXVJJRJV","miejsce":"hala"}
+{"typ": ["indywidualny","druzynowy"], "nazwa": "ITDXADFBOPJ","miejsce":"hala" }
+{"typ": "druzynowy", "nazwa": "WQOHDQWEFRFSE", "lokacja": "OEGRQEZJWGRQ","miejsce":"na zewnatrz"}
+{"typ": "indywidualny", "nazwa": "UMCASDFD", "lokacja": "NSYRMIFDBXHUC","miejsce":"na zewnatrz"}
+{"typ": "indywidualny", "nazwa": "EZCFFDM","miejsce":"na zewnątrz" }
+{"typ": ["indywidualny","druzynowy"], "nazwa": "OKHMWERDEKN", "lokacja": "TTOMTHFFMRA","miejsce":"na zewnatrz"}
+{"typ": "druzynowy", "nazwa": "KTPASDQSF","miejsce":["hala","na zewnatrz"] }
+{"typ": ["indywidualny","druzynowy"], "nazwa": "ARGHSADQCQ", "lokacja": "WJCKSJUTKT","miejsce":["hala","na zewnatrz"]}
