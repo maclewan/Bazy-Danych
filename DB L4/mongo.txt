@@ -16,7 +16,9 @@ use MDBHOBBY
 show collections
 
 #zad7 todo:
-db.osoba.find({$or:[ imie: "Jan", /*wiecej niz jedna narodowosc*/]}
+db.osoba.find({$or:[ imie: "Jan", /*wiecej niz jedna narodowosc*/]})
+
+db.osoba.find( {$size: "narodowosc"} )
 
 #zad10 ok
 db.osoba.find({ zainteresowania:{ $all: [ "koszykowka","hokej"]}})
@@ -31,8 +33,25 @@ db.osoba.find({ zainteresowania:{ $all: [ "narciarstwo","strzelectwo"]}})
 db.osoba.update({ zainteresowania:{ $all: [ "narciarstwo","strzelectwo"]}},{  $set: { zainteresowania:"biathlon" }})
 
 
+#zad12 ok
 
-#zad12
+db.osoba.find({"narodowosc.kraj":"Rosja"})
+db.osoba.updateMany({"narodowosc.kraj":"Rosja"},{$unset: { "narodowosc.krajZwiazkowy": ""} })  //zgodnie z dokumentacja powinna dzialac ale nie dziala
+db.osoba.updateMany({"narodowosc.kraj":"Rosja"},{$pull: {'narodowosc': {'krajZwiazkowy': ""}}})      //to niby też ale nie dziala
+
+db.osoba.find({"narodowosc.kraj":"Rosja"}).forEach(function(o) {
+     for(var i=0; i<o.narodowosc.length; i++) 
+	{         var unset = {};         
+		unset["narodowosc." + i + ".krajZwiazkowy"] = "";         
+		db.osoba.update( { "_id": o._id  }, { "$unset": unset } );     
+	} 
+})
+
+
+db.osoba.find({"narodowosc.kraj":"Rosja"})
+
+
+
 
 
 

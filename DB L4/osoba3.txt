@@ -9,7 +9,9 @@
       "rzut kula"
     ],
     "narodowosc": [
-      "Kanada"
+	{
+      "kraj": "Kanada"
+	}
     ]
   }
   {
@@ -21,7 +23,9 @@
       "skok o tyczce"
     ],
     "narodowosc": [
-      "Grecja"
+	{
+      "kraj": "Grecja"
+	}
     ]
   }
   {
@@ -34,8 +38,13 @@
       "plywanie"
     ],
     "narodowosc": [
-      "Podlasie",
-      "UK"
+	{
+      "kraj": "Podlasie"
+	},
+	{
+      "kraj": "UK"
+	}
+    
     ]
   }
   {
@@ -47,8 +56,12 @@
       "szachy"
     ],
     "narodowosc": [
-      "Kanada",
-      "Włochy"
+	{
+      "kraj": "Kanada"
+	},	
+	{
+      "kraj": "Włochy"
+	}
     ]
   }
   {
@@ -61,7 +74,9 @@
       "koszykowka"
     ],
     "narodowosc": [
-      "Podlasie"
+	{
+      "kraj": "Podlasie"
+	}
     ]
   }
   {
@@ -73,7 +88,9 @@
       "skok w dal"
     ],
     "narodowosc": [
-      "Kanada"
+	{
+      "kraj": "Kanada"
+	}
     ]
   }
   {
@@ -87,7 +104,10 @@
       "rzut kula"
     ],
     "narodowosc": [
-      "Slask"
+	{
+      "kraj": "Slask"
+	}
+ 
     ]
   }
   {
@@ -99,9 +119,12 @@
       "hokej"
     ],
     "narodowosc": [
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy":"Adygea"
+	}
+    ]
+
 	
   }
   {
@@ -115,8 +138,13 @@
       "skok o tyczce"
     ],
     "narodowosc": [
-      "USA",
-      "Hiszpania"
+	{
+      "kraj": "USA"
+	},
+	{
+      "kraj": "Hiszpania"
+	}
+      
     ]
   }
   {
@@ -129,9 +157,11 @@
       "F1"
     ],
     "narodowosc": [
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy":"Adygea"
+	}
+    ]
   }
   {
     "imie": "Leblanc",
@@ -144,8 +174,13 @@
       "F1"
     ],
     "narodowosc": [
-      "Włochy",
-      "Hiszpania"
+	{
+      "kraj": "Włochy"
+	},
+	{
+      "kraj": "Hiszpania"
+	}
+ 
     ]
   }
   {
@@ -157,8 +192,13 @@
       "bieganie"
     ],
     "narodowosc": [
-      "Grecja",
-      "Francja"
+	{
+      "kraj": "Grecja"
+	},
+	{
+      "kraj": "Francja"
+	}
+     
     ]
   }
   {
@@ -171,8 +211,13 @@
       "poker"
     ],
     "narodowosc": [
-      "Kanada",
-      "Ukraina"
+	{
+      "kraj": "Kanada"
+	},
+	{
+      "kraj": "Ukraina"
+	}
+      
     ]
   }
   {
@@ -186,10 +231,16 @@
       "rzut kula"
     ],
     "narodowosc": [
-      "Slask",
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
+	{
+      "kraj": "Slask"
+	},
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy":"Kursk"
+	}
+      
+    ]
+	
   }
   {
     "imie": "Jan",
@@ -200,8 +251,13 @@
       "plywanie"
     ],
     "narodowosc": [
-      "Francja",
-      "Włochy"
+	{
+      "kraj": "Francja"
+	},
+	{
+      "kraj": "Wlochy"
+	}
+ 
     ]
   }
   {
@@ -215,7 +271,9 @@
       "pilka nozna"
     ],
     "narodowosc": [
-      "USA"
+	{
+      "kraj": "USA"
+	}
     ]
   }
   {
@@ -227,7 +285,10 @@
       "skok o tyczce"
     ],
     "narodowosc": [
-      "Francja"
+	{
+      "kraj": "Francja"
+	}
+
     ]
   }
   {
@@ -239,8 +300,13 @@
       "rzut oszczepem"
     ],
     "narodowosc": [
-      "Podlasie",
-      "Ukraina"
+	{
+      "kraj": "Podlasie"
+	},
+	{
+      "kraj": "Ukraina"
+	}
+      
     ]
   }
   {
@@ -253,8 +319,13 @@
       "brydz"
     ],
     "narodowosc": [
-      "Polska",
-      "USA"
+	{
+      "kraj": "Polska"
+	},
+	{
+      "kraj": "USA"
+	}
+   
     ]
   }
   {
@@ -267,8 +338,13 @@
       "F1"
     ],
     "narodowosc": [
-      "Hiszpania",
-      "Francja"
+	{
+      "kraj": "Hiszpania"
+	},
+	{
+      "kraj": "Francja"
+	}
+      
     ]
   }
   {
@@ -281,7 +357,10 @@
       "skok w dal"
     ],
     "narodowosc": [
-      "Grecja"
+	{
+      "kraj": "Grecja"
+	}
+
     ]
   }
   {
@@ -293,8 +372,13 @@
       "skok w dal"
     ],
     "narodowosc": [
-      "Czechy",
-      "UK"
+	{
+      "kraj": "Czechy"
+	},
+	{
+      "kraj": "UK"
+	}
+     
     ]
   }
   {
@@ -307,8 +391,13 @@
       "strzelectwo"
     ],
     "narodowosc": [
-      "San Marino",
-      "Francja"
+	{
+      "kraj": "San Marino"
+	},
+	{
+      "kraj": "Francja"
+	}
+  
     ]
   }
   {
@@ -321,8 +410,13 @@
       "koszykowka"
     ],
     "narodowosc": [
-      "UK",
-      "Czechy"
+	{
+      "kraj": "UK"
+	},
+	{
+      "kraj": "Czechy"
+	}
+    
     ]
   }
   {
@@ -335,7 +429,10 @@
       "brydz"
     ],
     "narodowosc": [
-      "Grecja"
+	{
+      "kraj": "Grecja"
+	}
+
     ]
   }
   {
@@ -347,23 +444,13 @@
       "pilka nozna"
     ],
     "narodowosc": [
-      "Slask"
+	{
+      "kraj": "Slask"
+	}
+
     ]
   }
-  {
-    "imie": "Odessa",
-    "nazwisko": " York",
-    "wiek": 20,
-    "wzrost": 176,
-    "zainteresowania": [
-      "koszykowka",
-      "szachy"
-    ],
-    "narodowosc": [
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
-  }
+  
   {
     "imie": "Connie",
     "nazwisko": " Orr",
@@ -374,7 +461,10 @@
       "narciarstwo"
     ],
     "narodowosc": [
-      "Czechy"
+	{
+      "kraj": "Czechy"
+	}
+     
     ]
   }
   {
@@ -388,7 +478,10 @@
       "szachy"
     ],
     "narodowosc": [
-      "Kanada"
+	{
+      "kraj": "Kanada"
+	}
+      
     ]
   }
   {
@@ -401,9 +494,13 @@
       "F1"
     ],
     "narodowosc": [
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Kamchatka"
+	}
+      
+    ]
+
   }
   {
     "imie": "Erickson",
@@ -414,7 +511,10 @@
       "rzut kula"
     ],
     "narodowosc": [
-      "UK"
+	{
+      "kraj": "UK"
+	}
+     
     ]
   }
   {
@@ -426,8 +526,13 @@
       "brydz"
     ],
     "narodowosc": [
-      "Slask",
-      "Francja"
+	{
+      "kraj": "Slask"
+	},
+	{
+      "kraj": "Francja"
+	}
+     
     ]
   }
   {
@@ -441,8 +546,13 @@
       "siatkowka"
     ],
     "narodowosc": [
-      "Podlasie",
-      "Hiszpania"
+	{
+      "kraj": "Podlasie"
+	},
+	{
+      "kraj": "Hiszpania"
+	}
+ 
     ]
   }
   {
@@ -454,8 +564,13 @@
       "strzelectwo"
     ],
     "narodowosc": [
-      "Australia",
-      "Hiszpania"
+	{
+      "kraj": "Australia"
+	},
+	{
+      "kraj": "Hiszpania"
+	}
+
     ]
   }
   {
@@ -468,9 +583,11 @@
       "brydz"
     ],
     "narodowosc": [
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Krym"
+	}
+     ]
   }
   {
     "imie": "Rollins",
@@ -482,7 +599,10 @@
       "szachy"
     ],
     "narodowosc": [
-      "Polska"
+	{
+      "kraj": "Polska"
+	}
+    
     ]
   }
   {
@@ -496,8 +616,13 @@
       "rzut oszczepem"
     ],
     "narodowosc": [
-      "Australia",
-      "USA"
+	{
+      "kraj": "Australia"
+	},
+	{
+      "kraj": "USA"
+	}
+     
     ]
   }
   {
@@ -509,7 +634,10 @@
       "poker"
     ],
     "narodowosc": [
-      "Australia"
+	{
+      "kraj": "Australia"
+	}
+
     ]
   }
   {
@@ -521,8 +649,13 @@
       "pilka nozna"
     ],
     "narodowosc": [
-      "Ukraina",
-      "Niemcy"
+	{
+      "kraj": "Ukraina"
+	},
+	{
+      "kraj": "Niemcy"
+	}
+   
     ]
   }
   {
@@ -534,7 +667,10 @@
       "koszykowka"
     ],
     "narodowosc": [
-      "USA"
+	{
+      "kraj": "USA"
+	}
+    
     ]
   }
   {
@@ -546,9 +682,13 @@
       "brydz"
     ],
     "narodowosc": [
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy":"Krym"
+	}
+    
+    ]
+
   }
   {
     "imie": "Viola",
@@ -559,7 +699,10 @@
       "skok w dal"
     ],
     "narodowosc": [
-      "Hiszpania"
+	{
+      "kraj": "Hiszpania"
+	}
+ 
     ]
   }
   {
@@ -571,10 +714,17 @@
       "skok w dal"
     ],
     "narodowosc": [
-      "Polska",
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
+	{
+      "kraj": "Polska"
+	},
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Altai"
+	}
+
+      
+    ]
+
   }
   {
     "imie": "Hicks",
@@ -587,10 +737,15 @@
       "F1"
     ],
     "narodowosc": [
-      "Francja",
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
+     {
+      "kraj": "Francja"
+	},
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Altai"
+	}
+    ]
+	
   }
   {
     "imie": "Summers",
@@ -603,7 +758,10 @@
       "skok o tyczce"
     ],
     "narodowosc": [
-      "UK"
+     {
+      "kraj": "UK"
+	}
+ 
     ]
   }
   {
@@ -616,9 +774,13 @@
       "narciarstwo"
     ],
     "narodowosc": [
-      "ZSRR"
-    ],
-	"krajZwiazkowy":"Rosja"
+     {
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Moskwa"
+	}
+      
+    ]
+
   }
   {
     "imie": "Cameron",
@@ -631,8 +793,13 @@
       "golf"
     ],
     "narodowosc": [
-      "Niemcy",
-      "Polska"
+     {
+      "kraj": "Niemcy"
+	},
+     {
+      "kraj": "Polska"
+	}
+      
     ]
   }
   {
@@ -646,8 +813,13 @@
       "rzut kula"
     ],
     "narodowosc": [
-      "Grecja",
-      "Francja"
+     {
+      "kraj": "Grecja"
+	},
+     {
+      "kraj": "Francja"
+	}
+      
     ]
   }
   {
@@ -659,8 +831,13 @@
       "brydz"
     ],
     "narodowosc": [
-      "Polska",
-      "Czechy"
+     {
+      "kraj": "Polska"
+	},
+     {
+      "kraj": "Czechy"
+	}
+     
     ]
   }
   {
@@ -672,8 +849,13 @@
       "szachy"
     ],
     "narodowosc": [
-      "Niemcy",
-      "Francja"
+     {
+      "kraj": "Niemcy"
+	},
+     {
+      "kraj": "Francja"
+	}
+
     ]
   }
 
