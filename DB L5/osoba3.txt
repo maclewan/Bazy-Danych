@@ -1,0 +1,861 @@
+
+  {
+    "imie": "Geraldine",
+    "nazwisko": " Matthews",
+    "wiek": 36,
+    "wzrost": 201,
+    "zainteresowania": [
+      "plywanie",
+      "rzut kula"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Kanada"
+	}
+    ]
+  }
+  {
+    "imie": "Jeanne",
+    "nazwisko": " Park",
+    "wiek": 35,
+    "wzrost": 169,
+    "zainteresowania": [
+      "skok o tyczce"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Grecja"
+	}
+    ]
+  }
+  {
+    "imie": "Dixon",
+    "nazwisko": " Cote",
+    "wiek": 36,
+    "wzrost": 173,
+    "zainteresowania": [
+      "koszykowka",
+      "plywanie"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Podlasie"
+	},
+	{
+      "kraj": "UK"
+	}
+    
+    ]
+  }
+  {
+    "imie": "Sears",
+    "nazwisko": " Walker",
+    "wiek": 24,
+    "wzrost": 180,
+    "zainteresowania": [
+      "szachy"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Kanada"
+	},	
+	{
+      "kraj": "Włochy"
+	}
+    ]
+  }
+  {
+    "imie": "Vivian",
+    "nazwisko": " Chan",
+    "wiek": 29,
+    "wzrost": 200,
+    "zainteresowania": [
+      "hokej",
+      "koszykowka"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Podlasie"
+	}
+    ]
+  }
+  {
+    "imie": "Macdonald",
+    "nazwisko": " Patel",
+    "wiek": 32,
+    "wzrost": 202,
+    "zainteresowania": [
+      "skok w dal"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Kanada"
+	}
+    ]
+  }
+  {
+    "imie": "Durham",
+    "nazwisko": " Buck",
+    "wiek": 23,
+    "wzrost": 159,
+    "zainteresowania": [
+      "skok w dal",
+      "brydz",
+      "rzut kula"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Slask"
+	}
+ 
+    ]
+  }
+  {
+    "imie": "Garcia",
+    "nazwisko": " Gentry",
+    "wiek": 22,
+    "wzrost": 171,
+    "zainteresowania": [
+      "hokej"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy":"Adygea"
+	}
+    ]
+
+	
+  }
+  {
+    "imie": "Jewel",
+    "nazwisko": " Frost",
+    "wiek": 37,
+    "wzrost": 195,
+    "zainteresowania": [
+      "rzut oszczepem",
+      "hokej",
+      "skok o tyczce"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "USA"
+	},
+	{
+      "kraj": "Hiszpania"
+	}
+      
+    ]
+  }
+  {
+    "imie": "Mara",
+    "nazwisko": " Wright",
+    "wiek": 31,
+    "wzrost": 178,
+    "zainteresowania": [
+      "skok o tyczce",
+      "F1"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy":"Adygea"
+	}
+    ]
+  }
+  {
+    "imie": "Leblanc",
+    "nazwisko": " Jarvis",
+    "wiek": 24,
+    "wzrost": 174,
+    "zainteresowania": [
+      "skok o tyczce",
+      "strzelectwo",
+      "F1"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Włochy"
+	},
+	{
+      "kraj": "Hiszpania"
+	}
+ 
+    ]
+  }
+  {
+    "imie": "Victoria",
+    "nazwisko": " Santiago",
+    "wiek": 38,
+    "wzrost": 175,
+    "zainteresowania": [
+      "bieganie"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Grecja"
+	},
+	{
+      "kraj": "Francja"
+	}
+     
+    ]
+  }
+  {
+    "imie": "Monica",
+    "nazwisko": " Nicholson",
+    "wiek": 33,
+    "wzrost": 162,
+    "zainteresowania": [
+      "bieganie",
+      "poker"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Kanada"
+	},
+	{
+      "kraj": "Ukraina"
+	}
+      
+    ]
+  }
+  {
+    "imie": "Carlson",
+    "nazwisko": " Henson",
+    "wiek": 38,
+    "wzrost": 152,
+    "zainteresowania": [
+      "F1",
+      "golf",
+      "rzut kula"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Slask"
+	},
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy":"Kursk"
+	}
+      
+    ]
+	
+  }
+  {
+    "imie": "Jan",
+    "nazwisko": " Robertson",
+    "wiek": 38,
+    "wzrost": 162,
+    "zainteresowania": [
+      "plywanie"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Francja"
+	},
+	{
+      "kraj": "Wlochy"
+	}
+ 
+    ]
+  }
+  {
+    "imie": "Palmer",
+    "nazwisko": " Zimmerman",
+    "wiek": 27,
+    "wzrost": 201,
+    "zainteresowania": [
+      "skok w dal",
+      "strzelectwo",
+      "pilka nozna"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "USA"
+	}
+    ]
+  }
+  {
+    "imie": "Letha",
+    "nazwisko": " Mathews",
+    "wiek": 22,
+    "wzrost": 151,
+    "zainteresowania": [
+      "skok o tyczce"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Francja"
+	}
+
+    ]
+  }
+  {
+    "imie": "Rush",
+    "nazwisko": " Gillespie",
+    "wiek": 26,
+    "wzrost": 188,
+    "zainteresowania": [
+      "rzut oszczepem"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Podlasie"
+	},
+	{
+      "kraj": "Ukraina"
+	}
+      
+    ]
+  }
+  {
+    "imie": "Dean",
+    "nazwisko": " Chang",
+    "wiek": 29,
+    "wzrost": 191,
+    "zainteresowania": [
+      "golf",
+      "brydz"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Polska"
+	},
+	{
+      "kraj": "USA"
+	}
+   
+    ]
+  }
+  {
+    "imie": "Richard",
+    "nazwisko": " Beach",
+    "wiek": 30,
+    "wzrost": 163,
+    "zainteresowania": [
+      "rzut oszczepem",
+      "F1"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Hiszpania"
+	},
+	{
+      "kraj": "Francja"
+	}
+      
+    ]
+  }
+  {
+    "imie": "Burgess",
+    "nazwisko": " Kidd",
+    "wiek": 21,
+    "wzrost": 157,
+    "zainteresowania": [
+      "siatkowka",
+      "skok w dal"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Grecja"
+	}
+
+    ]
+  }
+  {
+    "imie": "Black",
+    "nazwisko": " Mcfarland",
+    "wiek": 28,
+    "wzrost": 188,
+    "zainteresowania": [
+      "skok w dal"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Czechy"
+	},
+	{
+      "kraj": "UK"
+	}
+     
+    ]
+  }
+  {
+    "imie": "Mcgowan",
+    "nazwisko": " Ingram",
+    "wiek": 38,
+    "wzrost": 198,
+    "zainteresowania": [
+      "skok o tyczce",
+      "strzelectwo"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "San Marino"
+	},
+	{
+      "kraj": "Francja"
+	}
+  
+    ]
+  }
+  {
+    "imie": "Marjorie",
+    "nazwisko": " Morales",
+    "wiek": 35,
+    "wzrost": 194,
+    "zainteresowania": [
+      "rzut oszczepem",
+      "koszykowka"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "UK"
+	},
+	{
+      "kraj": "Czechy"
+	}
+    
+    ]
+  }
+  {
+    "imie": "Joanna",
+    "nazwisko": " Jones",
+    "wiek": 21,
+    "wzrost": 152,
+    "zainteresowania": [
+      "strzelectwo",
+      "brydz"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Grecja"
+	}
+
+    ]
+  }
+  {
+    "imie": "Kramer",
+    "nazwisko": " Pickett",
+    "wiek": 31,
+    "wzrost": 205,
+    "zainteresowania": [
+      "pilka nozna"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Slask"
+	}
+
+    ]
+  }
+  
+  {
+    "imie": "Connie",
+    "nazwisko": " Orr",
+    "wiek": 22,
+    "wzrost": 173,
+    "zainteresowania": [
+      "bieganie",
+      "narciarstwo"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Czechy"
+	}
+     
+    ]
+  }
+  {
+    "imie": "Shelley",
+    "nazwisko": " Sullivan",
+    "wiek": 22,
+    "wzrost": 171,
+    "zainteresowania": [
+      "plywanie",
+      "pilka nozna",
+      "szachy"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Kanada"
+	}
+      
+    ]
+  }
+  {
+    "imie": "Sylvia",
+    "nazwisko": " Santos",
+    "wiek": 21,
+    "wzrost": 202,
+    "zainteresowania": [
+      "strzelectwo",
+      "F1"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Kamchatka"
+	}
+      
+    ]
+
+  }
+  {
+    "imie": "Erickson",
+    "nazwisko": " Terry",
+    "wiek": 39,
+    "wzrost": 185,
+    "zainteresowania": [
+      "rzut kula"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "UK"
+	}
+     
+    ]
+  }
+  {
+    "imie": "Meyer",
+    "nazwisko": " Key",
+    "wiek": 23,
+    "wzrost": 166,
+    "zainteresowania": [
+      "brydz"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Slask"
+	},
+	{
+      "kraj": "Francja"
+	}
+     
+    ]
+  }
+  {
+    "imie": "Tanya",
+    "nazwisko": " Middleton",
+    "wiek": 32,
+    "wzrost": 189,
+    "zainteresowania": [
+      "poker",
+      "brydz",
+      "siatkowka"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Podlasie"
+	},
+	{
+      "kraj": "Hiszpania"
+	}
+ 
+    ]
+  }
+  {
+    "imie": "Estela",
+    "nazwisko": " Fleming",
+    "wiek": 33,
+    "wzrost": 174,
+    "zainteresowania": [
+      "strzelectwo"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Australia"
+	},
+	{
+      "kraj": "Hiszpania"
+	}
+
+    ]
+  }
+  {
+    "imie": "Elise",
+    "nazwisko": " Galloway",
+    "wiek": 20,
+    "wzrost": 177,
+    "zainteresowania": [
+      "poker",
+      "brydz"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Krym"
+	}
+     ]
+  }
+  {
+    "imie": "Rollins",
+    "nazwisko": " Meadows",
+    "wiek": 29,
+    "wzrost": 166,
+    "zainteresowania": [
+      "bieganie",
+      "szachy"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Polska"
+	}
+    
+    ]
+  }
+  {
+    "imie": "Howell",
+    "nazwisko": " Melendez",
+    "wiek": 23,
+    "wzrost": 192,
+    "zainteresowania": [
+      "koszykowka",
+      "szachy",
+      "rzut oszczepem"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Australia"
+	},
+	{
+      "kraj": "USA"
+	}
+     
+    ]
+  }
+  {
+    "imie": "Annabelle",
+    "nazwisko": " Ware",
+    "wiek": 34,
+    "wzrost": 210,
+    "zainteresowania": [
+      "poker"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Australia"
+	}
+
+    ]
+  }
+  {
+    "imie": "Eve",
+    "nazwisko": " Mckee",
+    "wiek": 28,
+    "wzrost": 209,
+    "zainteresowania": [
+      "pilka nozna"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Ukraina"
+	},
+	{
+      "kraj": "Niemcy"
+	}
+   
+    ]
+  }
+  {
+    "imie": "Janis",
+    "nazwisko": " Marshall",
+    "wiek": 34,
+    "wzrost": 169,
+    "zainteresowania": [
+      "koszykowka"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "USA"
+	}
+    
+    ]
+  }
+  {
+    "imie": "Armstrong",
+    "nazwisko": " Carver",
+    "wiek": 33,
+    "wzrost": 159,
+    "zainteresowania": [
+      "brydz"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy":"Krym"
+	}
+    
+    ]
+
+  }
+  {
+    "imie": "Viola",
+    "nazwisko": " Church",
+    "wiek": 27,
+    "wzrost": 207,
+    "zainteresowania": [
+      "skok w dal"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Hiszpania"
+	}
+ 
+    ]
+  }
+  {
+    "imie": "Hansen",
+    "nazwisko": " Schroeder",
+    "wiek": 21,
+    "wzrost": 153,
+    "zainteresowania": [
+      "skok w dal"
+    ],
+    "narodowosc": [
+	{
+      "kraj": "Polska"
+	},
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Altai"
+	}
+
+      
+    ]
+
+  }
+  {
+    "imie": "Hicks",
+    "nazwisko": " Adams",
+    "wiek": 39,
+    "wzrost": 190,
+    "zainteresowania": [
+      "skok o tyczce",
+      "narciarstwo",
+      "F1"
+    ],
+    "narodowosc": [
+     {
+      "kraj": "Francja"
+	},
+	{
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Altai"
+	}
+    ]
+	
+  }
+  {
+    "imie": "Summers",
+    "nazwisko": " Vargas",
+    "wiek": 22,
+    "wzrost": 206,
+    "zainteresowania": [
+      "narciarstwo",
+      "golf",
+      "skok o tyczce"
+    ],
+    "narodowosc": [
+     {
+      "kraj": "UK"
+	}
+ 
+    ]
+  }
+  {
+    "imie": "Katheryn",
+    "nazwisko": " Mcknight",
+    "wiek": 40,
+    "wzrost": 175,
+    "zainteresowania": [
+      "strzelectwo",
+      "narciarstwo"
+    ],
+    "narodowosc": [
+     {
+      "kraj": "Rosja",
+		"krajZwiazkowy": "Moskwa"
+	}
+      
+    ]
+
+  }
+  {
+    "imie": "Cameron",
+    "nazwisko": " Pittman",
+    "wiek": 22,
+    "wzrost": 198,
+    "zainteresowania": [
+      "narciarstwo",
+      "hokej",
+      "golf"
+    ],
+    "narodowosc": [
+     {
+      "kraj": "Niemcy"
+	},
+     {
+      "kraj": "Polska"
+	}
+      
+    ]
+  }
+  {
+    "imie": "Lynette",
+    "nazwisko": " Emerson",
+    "wiek": 38,
+    "wzrost": 154,
+    "zainteresowania": [
+      "skok o tyczce",
+      "szachy",
+      "rzut kula"
+    ],
+    "narodowosc": [
+     {
+      "kraj": "Grecja"
+	},
+     {
+      "kraj": "Francja"
+	}
+      
+    ]
+  }
+  {
+    "imie": "Pruitt",
+    "nazwisko": " Ramsey",
+    "wiek": 34,
+    "wzrost": 199,
+    "zainteresowania": [
+      "brydz"
+    ],
+    "narodowosc": [
+     {
+      "kraj": "Polska"
+	},
+     {
+      "kraj": "Czechy"
+	}
+     
+    ]
+  }
+  {
+    "imie": "Sandoval",
+    "nazwisko": " Miranda",
+    "wiek": 29,
+    "wzrost": 167,
+    "zainteresowania": [
+      "szachy"
+    ],
+    "narodowosc": [
+     {
+      "kraj": "Niemcy"
+	},
+     {
+      "kraj": "Francja"
+	}
+
+    ]
+  }
+
