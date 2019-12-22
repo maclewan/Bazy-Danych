@@ -1,6 +1,0 @@
-{"species": "cat"}
-{"species": "dog"}
-{"species": "bird"}
-{"species": "snake"}
-{"species": "hamster"}
-

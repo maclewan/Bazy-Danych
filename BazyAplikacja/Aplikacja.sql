@@ -1,5 +1,9 @@
-CREATE DATABASE Klinika;
-USE Klinika;
+CREATE DATABASE klinika;
+USE klinika;
+#DROP DATABASE klinika;
+
+
+#tworzenie tabel 
 
 CREATE TABLE terminy
 (
@@ -38,6 +42,7 @@ CREATE TABLE pracownicy
 staff_id INT NOT NULL AUTO_INCREMENT,
 imie VARCHAR(45) NOT NULL,
 nazwisko VARCHAR(45) NOT NULL,
+pesel CHAR(11) NOT NULL,
 typ ENUM('lekarz','sekretariat'),
 PRIMARY KEY (staff_id)
 );
@@ -55,6 +60,15 @@ FOREIGN KEY (id_rasy) REFERENCES rasy(r_id),
 FOREIGN KEY (id_wlasciciela) REFERENCES wlasciciele(w_id)
 );
 
+CREATE TABLE wizyty(
+w_id INT NOT NULL AUTO_INCREMENT,
+id_pacjenta INT NOT NULL,
+id_terminu INT NOT NULL,
+PRIMARY KEY (w_id),
+FOREIGN KEY (id_pacjenta) REFERENCES pacjenci(p_id),
+FOREIGN KEY (id_terminu) REFERENCES terminy(g_id)
+);
+
 CREATE TABLE notatki(
 n_id INT NOT NULL AUTO_INCREMENT,
 id_pacjenta INT NOT NULL,
@@ -65,14 +79,6 @@ FOREIGN KEY (id_pacjenta) REFERENCES pacjenci(p_id),
 FOREIGN KEY (id_wizyty) REFERENCES wizyty(w_id)
 );
 
-CREATE TABLE wizyty(
-w_id INT NOT NULL AUTO_INCREMENT,
-id_pacjenta INT NOT NULL,
-id_terminu INT NOT NULL,
-PRIMARY KEY (w_id),
-FOREIGN KEY (id_pacjenta) REFERENCES pacjenci(p_id),
-FOREIGN KEY (id_terminu) REFERENCES terminy(g_id)
-);
 
 CREATE TABLE uzytkownicy 
 (
@@ -84,6 +90,57 @@ FOREIGN KEY (id_u) REFERENCES wlasciciele(w_id),
 FOREIGN KEY (id_u) REFERENCES pracownicy(staff_id)
 );
 
-DROP TABLE uzytkownicy;
 
-SELECT * FROM wizyty;
+########################
+#Funkcja generujaca losowe ciągi znakow
+DELIMITER $$
+CREATE DEFINER=`root`@`%` FUNCTION `RandString`(length SMALLINT(3)) RETURNS varchar(100) CHARSET utf8
+begin
+    SET @returnStr = '';
+    SET @allowedChars = 'ABCDEFGHIJKLMNOPRSTUWYZ';
+    SET @i = 0;
+
+    WHILE (@i < length) DO
+        SET @returnStr = CONCAT(@returnStr, substring(@allowedChars, FLOOR(RAND() * LENGTH(@allowedChars) + 1), 1));
+        SET @i = @i + 1;
+    END WHILE;
+    RETURN @returnStr;
+END;$$
+DELIMITER ;
+###################
+
+
+#dodawanie triggerów
+
+DROP TRIGGER IF EXISTS dodajPracownika;
+DELIMITER $$
+$$ 
+CREATE TRIGGER dodajPracownika BEFORE INSERT ON pracownicy
+FOR EACH ROW
+BEGIN
+	#Sprawdzanie peselu
+	SET NEW.staff_id = (SELECT DISTINCT MAX(staff_id) FROM pracownicy)+1;
+    IF NEW.typ='lekarz' THEN
+		INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.staff_id, CONCAT(NEW.pesel,'l'),CONCAT(NEW.imie,NEW.nazwisko));
+	ELSE
+		INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.staff_id, CONCAT(NEW.pesel,'s'),CONCAT(NEW.imie,NEW.nazwisko));
+	END IF;
+
+END$$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS dodajWlasciciela;
+DELIMITER $$
+$$ 
+CREATE TRIGGER dodajWlasciciela BEFORE INSERT ON wlasciciele
+FOR EACH ROW
+BEGIN
+	#Sprawdzanie peselu
+	SET NEW.w_id = (SELECT DISTINCT MAX(w_id) FROM wlasciciele)+1;
+    
+	INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.w_id, CONCAT(NEW.pesel,'w'),CONCAT(NEW.imie,NEW.nazwisko));
+	
+END$$
+DELIMITER ;
+
+
