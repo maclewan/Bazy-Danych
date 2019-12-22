@@ -139,7 +139,7 @@ BEGIN
 	SET NEW.w_id = (SELECT DISTINCT MAX(w_id) FROM wlasciciele)+1;
     
 	INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.w_id, CONCAT(NEW.pesel,'w'),CONCAT(NEW.imie,NEW.nazwisko));
-	
+	#komentarz
 END$$
 DELIMITER ;
 
