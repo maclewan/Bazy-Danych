@@ -304,10 +304,11 @@ END$$
 DELIMITER ;
 
 
+
 ###############################
 #tworzenie losowej bazy rekordów
 DROP PROCEDURE generateDatabase;
-DECLARE @bCounter , @temp INT,
+DECLARE @bCounter,@lekarz, @aCounter, @temp INT,@sDay datetime,
 DELIMITER $$
 CREATE PROCEDURE generateDataBase()
 BEGIN 
@@ -349,25 +350,60 @@ BEGIN
         SET @bCounter = @bCounter-1;
 	END WHILE;
     
-    #
+    #terminy
+    SET @bCounter =60;
+    SET @aCounter =12;
+		
+	Insert INTO terminy (dzien,godzina,id_lekarza) VALUES (date(curdate()),'0:01',(SELECT staff_id FROM pracownicy WHERE typ = 'lekarz' ORDER BY RAND() LIMIT 1));
+	SET @sDay = CONCAT(DATE_ADD((SELECT MAX(dzien) FROM terminy), INTERVAL 1 DAY), ' 7:30');
+	DELETE FROM terminy WHERE godzina='0:01' AND dzien= date(curdate());
+    
+	SET @lekarz = (SELECT staff_id FROM pracownicy WHERE typ = 'lekarz' ORDER BY rand() LIMIT 1);
+	WHILE (@bCounter!=0) DO
+		IF @aCounter=0 THEN
+			SET @aCounter=12;
+            SET @bCounter = @bCounter-1;
+            SET @lekarz = (SELECT staff_id FROM pracownicy WHERE typ = 'lekarz' ORDER BY rand() LIMIT 1);
+        END IF;
+			
+	
+		INSERT INTO terminy (dzien,godzina, id_lekarza) 
+			VALUES (DATE_ADD(@sDay, INTERVAL @bCounter DAY),DATE_ADD(time(@sDay), INTERVAL @aCounter*30 MINUTE),@lekarz);
+		SET @aCounter = @aCounter-1;
+        
+	END WHILE;
+    
+    #wizyty
+    
+    #notatki
     
     
     
 END;$$
 DELIMITER ;
 
+
+Insert INTO terminy (dzien,godzina,id_lekarza) VALUES (date(curdate()),'0:01',(SELECT staff_id FROM pracownicy WHERE typ = 'lekarz' ORDER BY RAND() LIMIT 1));
+	SET @sDay = DATE_ADD((SELECT MAX(dzien) FROM terminy), INTERVAL 1 DAY);
+    SELECT @sDay;
+    SET @sDay = CONCAT(DATE_ADD((SELECT MAX(dzien) FROM terminy), INTERVAL 1 DAY), ' 7:30');
+
+SELECT date(curdate());
 CALL generateDataBase();
 
+SELECT * FROM terminy;
 SELECT * FROM pracownicy;
 SELECT * FROM wlasciciele;
+DELETE FROM pracownicy;
+(SELECT MAX(dzien) FROM terminy);
+
+SELECT  DATE_ADD((SELECT MAX(dzien) FROM terminy), INTERVAL 1 DAY);
 
 
+SELECT ADDTIME('8:30',30*100);
+SELECT ADDTIME('8:00',100);
 
-
-
-SELECT addtime('8:00',30*100);
-
-
+Insert INTO terminy (dzien,godzina,id_lekarza) VALUES (date(curdate()),'0:01',(SELECT staff_id FROM pracownicy WHERE typ = 'lekarz' ORDER BY RAND() LIMIT 1));
 INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ("s","t","78110166134","asd","123","4","55-555");
 INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('pracownik','miesiaca','98092805975','lekarz');
 DELETE FROM wlasciciele where w_id=1003;
