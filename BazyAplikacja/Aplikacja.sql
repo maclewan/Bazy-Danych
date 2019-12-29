@@ -1,6 +1,6 @@
+DROP DATABASE klinika;
 CREATE DATABASE klinika;
 USE klinika;
-DROP DATABASE klinika;
 
 
 #tworzenie tabel 
@@ -114,7 +114,7 @@ DELIMITER ;
 ###################
 #Funkcja generujaca losowy pesel
 
-DROP FUNCTION randomPesel;
+DROP FUNCTION IF EXISTS randomPesel;
 DELIMITER $$
 CREATE FUNCTION randomPesel() RETURNS char(11) CHARSET utf8
 begin
@@ -154,7 +154,6 @@ begin
 END;$$
 DELIMITER ;
 
-SELECT randomPesel();
 
 ############################
 
@@ -307,7 +306,7 @@ DELIMITER ;
 
 ###############################
 #tworzenie losowej bazy rekordów
-DROP PROCEDURE generateDatabase;
+DROP PROCEDURE IF EXISTS generateDatabase;
 DECLARE @bCounter,@lekarz, @aCounter, @temp INT,@sDay datetime,
 DELIMITER $$
 CREATE PROCEDURE generateDataBase()
@@ -374,40 +373,38 @@ BEGIN
 	END WHILE;
     
     #wizyty
+     SET @bCounter =100;
+     WHILE @bCounter!=0 DO
+		DROP TABLE IF EXISTS view1;
+		CREATE TABLE view1 AS (SELECT id_terminu FROM wizyty);
+		INSERT INTO wizyty (id_pacjenta, id_terminu)
+			VALUES ((SELECT p_id FROM pacjenci ORDER BY rand() LIMIT 1),(SELECT g_id FROM terminy WHERE g_id NOT IN (SELECT * FROM view1) ORDER BY rand() LIMIT 1));
+        SET @bCounter = @bCounter-1;
+        
+	END WHILE;
+    DROP TABLE IF EXISTS wizyty_view;
     
     #notatki
-    
+    SET @bCounter =60;
+     WHILE @bCounter!=0 DO
+     SET @aCounter = (SELECT w_id FROM wizyty ORDER BY rand() LIMIT 1);
+		INSERT INTO notatki (id_pacjenta, id_wizyty, komentarz)
+			VALUES ((SELECT id_pacjenta FROM wizyty WHERE w_id=@aCounter),@aCounter,RANDSTRING(50+FLOOR(RAND()*50)));
+        SET @bCounter = @bCounter-1;
+	END WHILE;
     
     
 END;$$
 DELIMITER ;
 
 
-Insert INTO terminy (dzien,godzina,id_lekarza) VALUES (date(curdate()),'0:01',(SELECT staff_id FROM pracownicy WHERE typ = 'lekarz' ORDER BY RAND() LIMIT 1));
-	SET @sDay = DATE_ADD((SELECT MAX(dzien) FROM terminy), INTERVAL 1 DAY);
-    SELECT @sDay;
-    SET @sDay = CONCAT(DATE_ADD((SELECT MAX(dzien) FROM terminy), INTERVAL 1 DAY), ' 7:30');
-
-SELECT date(curdate());
 CALL generateDataBase();
-
-SELECT * FROM terminy;
-SELECT * FROM pracownicy;
-SELECT * FROM wlasciciele;
-DELETE FROM pracownicy;
-(SELECT MAX(dzien) FROM terminy);
-
-SELECT  DATE_ADD((SELECT MAX(dzien) FROM terminy), INTERVAL 1 DAY);
-
-
-SELECT ADDTIME('8:30',30*100);
-SELECT ADDTIME('8:00',100);
-
-Insert INTO terminy (dzien,godzina,id_lekarza) VALUES (date(curdate()),'0:01',(SELECT staff_id FROM pracownicy WHERE typ = 'lekarz' ORDER BY RAND() LIMIT 1));
-INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ("s","t","78110166134","asd","123","4","55-555");
-INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('pracownik','miesiaca','98092805975','lekarz');
-DELETE FROM wlasciciele where w_id=1003;
-SELECT * FROM pracownicy;
-Select * from wlasciciele;
-Select * from uzytkownicy;
+SELECT * FROM notatki;
+SELECT count(*) FROM pacjenci;
+#INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ("s","t","78110166134","asd","123","4","55-555");
+#INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('pracownik','miesiaca','98092805975','lekarz');
+#SELECT * FROM pracownicy;
+#Select * from wlasciciele;
+#Select * from uzytkownicy;
+#SELECT * FROM notatki;
 
