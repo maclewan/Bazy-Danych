@@ -15,6 +15,12 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        root = FXMLLoader.load(getClass().getResource("resources/panel.fxml"));
+        primaryStage.setTitle("Wirtualny pupil");
+        primaryStage.setScene(new Scene(root));
+        primaryStage.setResizable(false);
+        primaryStage.show();
     }
 
 
