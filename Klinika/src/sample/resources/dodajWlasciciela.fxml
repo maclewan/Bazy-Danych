@@ -14,9 +14,9 @@
         <Label layoutX="15.0" layoutY="80.0" text="Nazwisko" />
         <TextField fx:id="fldImie" layoutX="15.0" layoutY="35.0" />
         <TextField fx:id="fldNazwisko" layoutX="15.0" layoutY="100.0" />
-        <TextField fx:id="fldPesel" layoutX="15.0" layoutY="165.0" />
+        <TextField fx:id="fldPesel" layoutX="15.0" layoutY="165.0" onAction="#fldPeselOnAction" />
         <Label layoutX="215.0" layoutY="80.0" text="Nr Domu" />
-        <Button fx:id="btnZatwierdz" layoutX="15.0" layoutY="255.0" mnemonicParsing="false" text="Zatwierdź" />
+        <Button fx:id="btnZatwierdz" layoutX="15.0" layoutY="255.0" mnemonicParsing="false" onAction="#btnZatwierdzOnAction" text="Zatwierdź" />
       <TextField fx:id="fldUlica" layoutX="215.0" layoutY="35.0" />
       <TextField fx:id="fldNrDomu" layoutX="215.0" layoutY="100.0" />
       <TextField fx:id="fldNumerMieszkania" layoutX="215.0" layoutY="165.0" />

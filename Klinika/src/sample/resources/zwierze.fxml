@@ -11,9 +11,9 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="btnEdytuj" layoutX="514.0" layoutY="64.0" mnemonicParsing="false" text="Edytuj" />
-      <Button fx:id="btnUmowWizyte" layoutX="469.0" layoutY="107.0" mnemonicParsing="false" text="Umów wizytę" />
-      <Button fx:id="btnUsunZwierze" layoutX="469.0" layoutY="312.0" mnemonicParsing="false" text="Usuń zwierze" />
+      <Button fx:id="btnEdytuj" layoutX="514.0" layoutY="64.0" mnemonicParsing="false" onAction="#btnEdytujOnAction" text="Edytuj" />
+      <Button fx:id="btnUmowWizyte" layoutX="469.0" layoutY="107.0" mnemonicParsing="false" onAction="#btnUmowWizyteOnAction" text="Umów wizytę" />
+      <Button fx:id="btnUsunZwierze" layoutX="469.0" layoutY="312.0" mnemonicParsing="false" onAction="#btnUsunZwierzeOnAction" text="Usuń zwierze" />
       <Label fx:id="lblZwierz1" layoutX="15.0" layoutY="20.0" text="id zwierzaka, nazwa, rasa i gatunek, ">
          <font>
             <Font size="14.0" />

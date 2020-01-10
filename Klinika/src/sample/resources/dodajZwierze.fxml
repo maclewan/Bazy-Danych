@@ -14,10 +14,10 @@
       <Label layoutX="15.0" layoutY="80.0" text="Umaszczenie" />
       <TextField fx:id="fldNazwa" layoutX="15.0" layoutY="35.0" />
       <TextField fx:id="fldUmaszczenie" layoutX="15.0" layoutY="100.0" />
-      <TextField fx:id="fldRok" layoutX="15.0" layoutY="165.0" />
+      <TextField fx:id="fldRok" layoutX="15.0" layoutY="165.0" onAction="#fldRokOnAction" />
       <Label layoutX="225.0" layoutY="80.0" text="Rasa" />
       <ChoiceBox fx:id="pickerGatunek" layoutX="225.0" layoutY="35.0" prefWidth="150.0" />
       <ChoiceBox fx:id="pickerRasa" disable="true" layoutX="225.0" layoutY="100.0" prefWidth="150.0" />
-      <Button layoutX="300.0" layoutY="165.0" mnemonicParsing="false" text="Zatwierdź" />
+      <Button fx:id="btnZatwierdz" layoutX="300.0" layoutY="165.0" mnemonicParsing="false" onAction="#btnZatwierdzOnAction" text="Zatwierdź" />
    </children>
 </Pane>

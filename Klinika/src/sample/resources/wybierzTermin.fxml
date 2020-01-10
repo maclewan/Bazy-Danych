@@ -38,7 +38,7 @@
         <Label layoutX="115.0" layoutY="95.0" text="Godzina" />
         <Label layoutX="195.0" layoutY="95.0" text="Lekarz" />
         <TextField fx:id="lblLekarz" layoutX="195.0" layoutY="10.0" prefHeight="26.0" prefWidth="143.0" />
-        <Button fx:id="btnFiltruj" layoutX="385.0" layoutY="10.0" mnemonicParsing="false" text="Filtruj" />
-        <Button fx:id="btnUsunFiltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" text="Usuń filtry" />
+        <Button fx:id="btnFiltruj" layoutX="385.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnFiltrujOnAction" text="Filtruj" />
+        <Button fx:id="btnUsunFiltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnUsunFiltrOnAction" text="Usuń filtry" />
     </children>
 </AnchorPane>

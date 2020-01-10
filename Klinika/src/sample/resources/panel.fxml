@@ -17,7 +17,7 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnZwierzDodajZw" layoutX="478.0" layoutY="327.0" mnemonicParsing="false" text="Dodaj zwierze" />
+                  <Button fx:id="btnZwierzDodajZw" layoutX="478.0" layoutY="327.0" mnemonicParsing="false" onAction="#btnZwierzDodajZwOnAction" text="Dodaj zwierze" />
                   <ScrollPane layoutX="15.0" layoutY="120.0" prefHeight="200.0" prefWidth="570.0">
                      <content>
                         <GridPane fx:id="gridZwierz" prefWidth="560.0">
@@ -46,8 +46,8 @@
                   <Label layoutX="365.0" layoutY="95.0" text="Gatunek" />
                   <Label layoutX="515.0" layoutY="95.0" text="Więcej" />
                   <TextField fx:id="fldZwierzGatunek" layoutX="365.0" layoutY="10.0" prefHeight="26.0" prefWidth="129.0" />
-                  <Button fx:id="btnZwierzFiltruj" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" text="Filtruj" />
-                  <Button fx:id="btnZwierzUsunFiltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" text="Usuń filtry" />
+                  <Button fx:id="btnZwierzFiltruj" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnZwierzFiltrujOnAction" text="Filtruj" />
+                  <Button fx:id="btnZwierzUsunFiltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnZwierzUsunFiltrOnAction" text="Usuń filtry" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -85,9 +85,9 @@
                   <Label layoutX="415.0" layoutY="95.0" text="Gatunek" />
                   <TextField fx:id="fldWizWlasciciel" layoutX="150.0" layoutY="10.0" prefHeight="26.0" prefWidth="145.0" />
                   <TextField fx:id="fldWizZwierz" layoutX="315.0" layoutY="10.0" prefHeight="26.0" prefWidth="84.0" />
-                  <Button fx:id="btnUsunFiltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" text="Usuń filtry" />
-                  <Button fx:id="btnWizFiltruj" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" text="Filtruj" />
-                  <Button fx:id="btnWizEdytuj" layoutX="470.0" layoutY="326.0" mnemonicParsing="false" text="Edytuj terminy" />
+                  <Button fx:id="btnUsunFiltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnUsunFiltrOnAction" text="Usuń filtry" />
+                  <Button fx:id="btnWizFiltruj" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnWizFiltrujOnAction" text="Filtruj" />
+                  <Button fx:id="btnWizEdytuj" layoutX="470.0" layoutY="326.0" mnemonicParsing="false" onAction="#btnWizEdytujOnAction" text="Edytuj terminy" />
                   <Label layoutX="509.0" layoutY="95.0" text="Not. Usun" />
                </children></AnchorPane>
       </content>
@@ -96,7 +96,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnWlDodaj" layoutX="453.0" layoutY="327.0" mnemonicParsing="false" text="Dodaj Wlasciciela" />
+                  <Button fx:id="btnWlDodaj" layoutX="453.0" layoutY="327.0" mnemonicParsing="false" onAction="#btnWlDodajOnAction" text="Dodaj Wlasciciela" />
                   <Label layoutX="15.0" layoutY="95.0" text="Imie" />
                   <Label layoutX="125.0" layoutY="95.0" text="Nazwisko" />
                   <Label layoutX="265.0" layoutY="95.0" text="Miasto" />
@@ -126,8 +126,8 @@
                         </GridPane>
                      </content>
                   </ScrollPane>
-                  <Button fx:id="btnWlUsunFiltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" text="Usuń filtry" />
-                  <Button fx:id="btnWlFiltruj" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" text="Filtruj" />
+                  <Button fx:id="btnWlUsunFiltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnWlUsunFiltrOnAction" text="Usuń filtry" />
+                  <Button fx:id="btnWlFiltruj" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnWlFiltrujOnAction" text="Filtruj" />
                   <TextField fx:id="lblWlImie" layoutX="15.0" layoutY="10.0" prefHeight="26.0" prefWidth="95.0" />
                   <TextField fx:id="lblWlNazwisko" layoutX="125.0" layoutY="10.0" prefHeight="26.0" prefWidth="128.0" />
                   <TextField fx:id="lblWlMiasto" layoutX="265.0" layoutY="10.0" prefHeight="26.0" prefWidth="114.0" />
@@ -140,7 +140,7 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnPracDodajPrac" layoutX="453.0" layoutY="327.0" mnemonicParsing="false" text="Dodaj Pracownika" />
+                  <Button fx:id="btnPracDodajPrac" layoutX="453.0" layoutY="327.0" mnemonicParsing="false" onAction="#btnPracDodajPracOnAction" text="Dodaj Pracownika" />
                   <Label layoutX="15.0" layoutY="95.0" text="Imie" />
                   <Label layoutX="125.0" layoutY="95.0" text="Nazwisko" />
                   <Label layoutX="265.0" layoutY="95.0" text="Zawód" />
@@ -170,8 +170,8 @@
                         </GridPane>
                      </content>
                   </ScrollPane>
-                  <Button fx:id="btnPracUsunFIltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" text="Usuń filtry" />
-                  <Button fx:id="btnPracFiltr" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" text="Filtruj" />
+                  <Button fx:id="btnPracUsunFIltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnPracUsunFIltrOnAction" text="Usuń filtry" />
+                  <Button fx:id="btnPracFiltr" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnPracFiltrOnAction" text="Filtruj" />
                   <TextField fx:id="lblPracImie" layoutX="15.0" layoutY="10.0" prefHeight="26.0" prefWidth="95.0" />
                   <TextField fx:id="lblPracNazwisko" layoutX="125.0" layoutY="10.0" prefHeight="26.0" prefWidth="128.0" />
                   <TextField fx:id="lblPracZawod" layoutX="265.0" layoutY="10.0" prefHeight="26.0" prefWidth="114.0" />

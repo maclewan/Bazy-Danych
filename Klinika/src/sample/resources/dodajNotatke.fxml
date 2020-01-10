@@ -9,6 +9,6 @@
    <children>
       <TextArea fx:id="txtaraTrescNotatki" layoutX="15.0" layoutY="45.0" prefHeight="200.0" prefWidth="570.0" promptText="Treść notatki" />
       <Label layoutX="15.0" layoutY="15.0" text="Notatka do wizyty dnia: DZIEŃ GODZINA zwierzęcia: NAZWA " />
-      <Button fx:id="btnZatwiedz" layoutX="500.0" layoutY="250.0" mnemonicParsing="false" text="Zatwierdź" />
+      <Button fx:id="btnZatwiedz" layoutX="500.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnZatwiedzOnAction" text="Zatwierdź" />
    </children>
 </Pane>
