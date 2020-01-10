@@ -14,7 +14,7 @@
       <Button fx:id="btnWszystkie" layoutX="14.0" layoutY="70.0" mnemonicParsing="false" onAction="#btnWszystkieOnAction" text="Wszystkie dostępne" />
       <Button fx:id="btnWszystkieDo12" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" onAction="#btnWszystkieDo12OnAction" text="Wszystkie dostępne do 12" />
       <Button fx:id="btnWszystkiePo12" layoutX="14.0" layoutY="150.0" mnemonicParsing="false" onAction="#btnWszystkiePo12OnAction" text="Wszystkie dostępne po 12" />
-      <Button fx:id="btnDodaj" layoutX="14.0" layoutY="250.0" mnemonicParsing="false" text="Dodaj zaznaczone terminy" />
+      <Button fx:id="btnDodaj" layoutX="14.0" layoutY="250.0" mnemonicParsing="false" onAction="#btnDodajOnAction" text="Dodaj zaznaczone terminy" />
       <GridPane fx:id="gridTerminy" layoutX="260.0" layoutY="25.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
