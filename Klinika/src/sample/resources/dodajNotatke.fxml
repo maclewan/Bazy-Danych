@@ -7,8 +7,8 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextArea layoutX="15.0" layoutY="45.0" prefHeight="200.0" prefWidth="570.0" promptText="Treść notatki" />
+      <TextArea fx:id="txtaraTrescNotatki" layoutX="15.0" layoutY="45.0" prefHeight="200.0" prefWidth="570.0" promptText="Treść notatki" />
       <Label layoutX="15.0" layoutY="15.0" text="Notatka do wizyty dnia: DZIEŃ GODZINA zwierzęcia: NAZWA " />
-      <Button layoutX="500.0" layoutY="250.0" mnemonicParsing="false" text="Zatwierdź" />
+      <Button fx:id="btnZatwiedz" layoutX="500.0" layoutY="250.0" mnemonicParsing="false" text="Zatwierdź" />
    </children>
 </Pane>

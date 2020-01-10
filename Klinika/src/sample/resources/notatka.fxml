@@ -4,9 +4,9 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <TextArea editable="false" layoutX="15.0" layoutY="45.0" prefHeight="200.0" prefWidth="570.0" />
-        <Label layoutX="15.0" layoutY="15.0" text="Notatka do wizyty dnia: DZIEŃ GODZINA " />
+        <Label layoutX="15.0" layoutY="15.0" text="Notatka IMIE ZWIERZAKA do wizyty dnia: DZIEŃ GODZINA " />
     </children>
 </Pane>

@@ -1,14 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="sample.resources.WybierzTermin"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="335.0" prefWidth="460.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
 
+    <children>
+        <ScrollPane layoutX="15.0" layoutY="120.0" prefHeight="200.0" prefWidth="430.0">
+            <content>
+                <GridPane prefHeight="30.0" prefWidth="420.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="170.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="70.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="22.02.2020" />
+                        <Label text="22:22" GridPane.columnIndex="1" />
+                        <Label text="Jan nowak" GridPane.columnIndex="2" />
+                        <Button mnemonicParsing="false" text="Umów" GridPane.columnIndex="3" />
+                    </children>
+                </GridPane>
+            </content>
+        </ScrollPane>
+        <TextField layoutX="15.0" layoutY="10.0" prefHeight="26.0" prefWidth="78.0" />
+        <Label layoutX="15.0" layoutY="95.0" text="Data" />
+        <Label layoutX="115.0" layoutY="95.0" text="Godzina" />
+        <Label layoutX="195.0" layoutY="95.0" text="Lekarz" />
+        <TextField layoutX="195.0" layoutY="10.0" prefHeight="26.0" prefWidth="143.0" />
+        <Button layoutX="385.0" layoutY="10.0" mnemonicParsing="false" text="Filtruj" />
+        <Button layoutX="15.0" layoutY="40.0" mnemonicParsing="false" text="Usuń filtry" />
+    </children>
 </AnchorPane>

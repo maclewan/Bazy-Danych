@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <DatePicker layoutX="14.0" layoutY="14.0" />
-      <Button layoutX="14.0" layoutY="70.0" mnemonicParsing="false" text="Wszystkie dostępne" />
-      <Button layoutX="14.0" layoutY="110.0" mnemonicParsing="false" text="Wszystkie dostępne do 12" />
-      <Button layoutX="14.0" layoutY="150.0" mnemonicParsing="false" text="Wszystkie dostępne po 12" />
-      <Button layoutX="14.0" layoutY="250.0" mnemonicParsing="false" text="Dodaj zaznaczone terminy" />
+      <DatePicker fx:id="datePicker" layoutX="14.0" layoutY="14.0" />
+      <Button fx:id="btnWszystkie" layoutX="14.0" layoutY="70.0" mnemonicParsing="false" text="Wszystkie dostępne" />
+      <Button fx:id="btnWszystkieDo12" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" text="Wszystkie dostępne do 12" />
+      <Button fx:id="btnWszystkiePo12" layoutX="14.0" layoutY="150.0" mnemonicParsing="false" text="Wszystkie dostępne po 12" />
+      <Button fx:id="btnDodaj" layoutX="14.0" layoutY="250.0" mnemonicParsing="false" text="Dodaj zaznaczone terminy" />
       <GridPane layoutX="260.0" layoutY="25.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -31,5 +31,6 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
+      <ChoiceBox fx:id="pickerLekarz" layoutX="15.0" layoutY="190.0" prefWidth="150.0" />
    </children>
 </Pane>
