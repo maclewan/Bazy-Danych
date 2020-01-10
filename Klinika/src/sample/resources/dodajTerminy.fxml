@@ -15,7 +15,7 @@
       <Button fx:id="btnWszystkieDo12" layoutX="14.0" layoutY="110.0" mnemonicParsing="false" text="Wszystkie dostępne do 12" />
       <Button fx:id="btnWszystkiePo12" layoutX="14.0" layoutY="150.0" mnemonicParsing="false" text="Wszystkie dostępne po 12" />
       <Button fx:id="btnDodaj" layoutX="14.0" layoutY="250.0" mnemonicParsing="false" text="Dodaj zaznaczone terminy" />
-      <GridPane layoutX="260.0" layoutY="25.0">
+      <GridPane fx:id="gridTerminy" layoutX="260.0" layoutY="25.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
