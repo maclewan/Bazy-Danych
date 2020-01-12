@@ -5,22 +5,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.controllers.DodPracownikaController;
+import sample.controllers.DodTerminyController;
+import sample.controllers.DodWlascicielaController;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("resources/logowanie.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("resources/dodajWlasciciela.fxml"));
+        DodWlascicielaController dtc = new DodWlascicielaController();
+        loader.setController(dtc);
+
         primaryStage.setTitle("Wirtualny pupil");
-        primaryStage.setScene(new Scene(root));
+        primaryStage.setScene(new Scene(loader.load()));
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        root = FXMLLoader.load(getClass().getResource("resources/panel.fxml"));
-        primaryStage.setTitle("Wirtualny pupil");
-        primaryStage.setScene(new Scene(root));
-        primaryStage.setResizable(false);
-        primaryStage.show();
     }
 
 

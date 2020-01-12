@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="290.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <Label layoutX="15.0" layoutY="15.0" text="Imię" />
         <Label layoutX="215.0" layoutY="15.0" prefHeight="16.0" prefWidth="93.0" text="Ulica" />
@@ -14,7 +14,7 @@
         <Label layoutX="15.0" layoutY="80.0" text="Nazwisko" />
         <TextField fx:id="fldImie" layoutX="15.0" layoutY="35.0" />
         <TextField fx:id="fldNazwisko" layoutX="15.0" layoutY="100.0" />
-        <TextField fx:id="fldPesel" layoutX="15.0" layoutY="165.0" onAction="#fldPeselOnAction" />
+        <TextField fx:id="fldPesel" layoutX="15.0" layoutY="165.0" />
         <Label layoutX="215.0" layoutY="80.0" text="Nr Domu" />
         <Button fx:id="btnZatwierdz" layoutX="15.0" layoutY="255.0" mnemonicParsing="false" onAction="#btnZatwierdzOnAction" text="Zatwierdź" />
       <TextField fx:id="fldUlica" layoutX="215.0" layoutY="35.0" />
@@ -31,6 +31,11 @@
       <Label layoutX="257.0" layoutY="222.0" text="-">
          <font>
             <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblTerminal" layoutX="15.0" layoutY="194.0" text="Label na rzucanie bledow" textFill="#ff0000ae">
+         <font>
+            <Font name="System Bold" size="12.0" />
          </font>
       </Label>
     </children>
