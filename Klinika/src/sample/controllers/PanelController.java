@@ -256,6 +256,7 @@ public class PanelController {
 
     }
 
+
     @FXML
     void btnPracUsunFIltrOnAction(ActionEvent event) {
         fldPracImie.setText("");
@@ -333,16 +334,26 @@ public class PanelController {
     }
 
     private void addUpdateListeners(){
-        fldZwierzWlasc.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateData();
-        });
-        fldZwierzImie.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateData();
-        });
-        fldZwierzGatunek.textProperty().addListener((observable, oldValue, newValue) -> {
-            updateData();
-        });
-        //todo: reszta fieldów
+        SuperArrayList<TextField> filtry = new SuperArrayList<>();
+        filtry.add(fldZwierzWlasc);
+        filtry.add(fldZwierzImie);
+        filtry.add(fldZwierzGatunek);
+        filtry.add(fldWlNazwisko);
+        filtry.add(fldWlKod);
+        filtry.add(fldWlImie);
+        filtry.add(fldWlUlica);
+        filtry.add(fldWizWlasciciel);
+        filtry.add(fldWizZwierz);
+        filtry.add(fldPracImie);
+        filtry.add(fldPracNazwisko);
+        filtry.add(fldPracZawod);
+
+        for (TextField tf: filtry) {
+            tf.textProperty().addListener((observable, oldValue, newValue) -> {
+                updateData();
+            });
+
+        }
 
     }
 
