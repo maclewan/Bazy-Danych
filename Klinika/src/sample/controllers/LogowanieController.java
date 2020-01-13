@@ -16,6 +16,19 @@ import java.sql.*;
 public class LogowanieController {
 
     private Stage thisStage;
+    Connection conn;
+
+    @FXML
+    private void initialize(){
+        lblTerminal.setText("");
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/klinika", "log@localhost", "pas");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     @FXML
     private TextField fldLogin;
@@ -34,9 +47,7 @@ public class LogowanieController {
         String login = fldLogin.getText();
         String haslo = fldHaslo.getText();
         String query = "SELECT count(*) FROM uzytkownicy WHERE login='"+login+"' AND haslo=sha1('"+haslo+"');";
-        System.out.println(login+";"+haslo+";"+query);
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/klinika", "log@localhost", "pas");
 
             Statement stmt = conn.createStatement();
             ResultSet res = stmt.executeQuery(query);
@@ -44,11 +55,17 @@ public class LogowanieController {
 
             res.next();
             if(res.getString("count(*)").equals("0")){
-                System.out.println(res.getString("count(*)"));
                 lblTerminal.setText("Błędne dane logowania");
             }
             else {
-                zaloguj(login.charAt(login.length() - 1));
+                stmt = conn.createStatement();
+                query="SELECT id_u FROM uzytkownicy WHERE login='"+login+"';";
+                res = stmt.executeQuery(query);
+                res.next();
+                int tempId=Integer.parseInt(res.getString("id_u"));
+                char tempTyp=login.charAt(login.length()-1);
+
+                zaloguj(tempId,tempTyp);
                 lblTerminal.setText("Logowanie");
                 stmt.close();
                 res.close();
@@ -66,18 +83,14 @@ public class LogowanieController {
     }
 
 
-    @FXML
-    private void initialize(){
-        lblTerminal.setText("");
 
-    }
 
-    private void zaloguj(Character userType){
+    private void zaloguj(int userId, char userTyp){
 
         try {
 
             Stage stageF = new Stage();
-            PanelController panelController = new PanelController(userType);
+            PanelController panelController = new PanelController(userId,userTyp);
 
 
             FXMLLoader loader =new FXMLLoader(getClass().getClassLoader().getResource("resources/panel.fxml"));

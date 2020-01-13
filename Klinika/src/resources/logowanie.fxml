@@ -14,8 +14,8 @@
             <Font name="DejaVu Sans Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="fldLogin" layoutX="5.0" layoutY="65.0" prefHeight="25.0" prefWidth="220.0" promptText="Podaj login" />
-      <PasswordField fx:id="fldHaslo" layoutX="5.0" layoutY="100.0" prefHeight="25.0" prefWidth="220.0" promptText="Podaj haslo" />
+      <TextField fx:id="fldLogin" layoutX="5.0" layoutY="65.0" prefHeight="25.0" prefWidth="220.0" promptText="Podaj login" text="98092805975l" />
+      <PasswordField fx:id="fldHaslo" layoutX="5.0" layoutY="100.0" prefHeight="25.0" prefWidth="220.0" promptText="Podaj haslo" text="male" />
       <Button fx:id="btnZaloguj" layoutX="225.0" layoutY="135.0" mnemonicParsing="false" onAction="#btnZalogujOnAction" text="Zaloguj" />
       <Label fx:id="lblTerminal" layoutX="5.0" layoutY="145.0" text="Label na rzucanie bledow" textFill="#797777">
          <font>
