@@ -177,6 +177,10 @@ BEGIN
 	END IF;
     
 	SET NEW.staff_id = (SELECT DISTINCT MAX(staff_id) FROM pracownicy)+1;
+    IF NEW.staff_id >990 THEN
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = 'Za dużo pracowników';
+	END IF;
 
 END$$
 DELIMITER ;
@@ -413,25 +417,25 @@ CALL generateDataBase();
 #GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
 #FLUSH PRIVILEGES;
 
-#CREATE USER 'wlasc@localhost';
-#SET PASSWORD FOR 'log@localhost' = 'w3pa2kvi3';
-#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
-#FLUSH PRIVILEGES;
+CREATE USER 'wlasc@localhost';
+SET PASSWORD FOR 'wlasc@localhost' = 'w3pa2kvi3';
+GRANT ALL PRIVILEGES ON klinika.* TO 'wlasc@localhost';
+FLUSH PRIVILEGES;
 
-#CREATE USER 'lek@localhost';
-#SET PASSWORD FOR 'log@localhost' = 'l3efj29chj';
-#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
-#FLUSH PRIVILEGES;
+CREATE USER 'lek@localhost';
+SET PASSWORD FOR 'lek@localhost' = 'l3efj29chj';
+GRANT ALL PRIVILEGES ON klinika.* TO 'lek@localhost';
+FLUSH PRIVILEGES;
 
-#CREATE USER 'sek@localhost';
-#SET PASSWORD FOR 'log@localhost' = 's4f52vserg';
-#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
-#FLUSH PRIVILEGES;
+CREATE USER 'sek@localhost';
+SET PASSWORD FOR 'sek@localhost' = 's4f52vserg';
+GRANT ALL PRIVILEGES ON klinika.* TO 'sek@localhost';
+FLUSH PRIVILEGES;
 
-#CREATE USER 'adm@localhost';
-#SET PASSWORD FOR 'log@localhost' = 'a4vdmq9diw';
-#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
-#FLUSH PRIVILEGES;
+CREATE USER 'adm@localhost';
+SET PASSWORD FOR 'adm@localhost' = 'a4vdmq9diw';
+GRANT ALL PRIVILEGES ON klinika.* TO 'adm@localhost';
+FLUSH PRIVILEGES;
 
 
 #INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ("s","t","78110166134","asd","123","4","55-555");
@@ -440,4 +444,4 @@ CALL generateDataBase();
 #Select * from wlasciciele;
 #Select * from uzytkownicy;
 #SELECT * FROM notatki;
-
+SELECT p_id, imie, nazwisko, nazwa, gatunek FROM (pacjenci JOIN rasy ON pacjenci.id_rasy=rasy.r_id) JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id;
