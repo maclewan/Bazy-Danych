@@ -206,4 +206,8 @@ public class PanelController {
         btnZwierzFiltrujOnAction(event);
     }
 
+    public PanelController(){
+
+    }
+
 }

@@ -45,7 +45,7 @@ staff_id INT NOT NULL AUTO_INCREMENT,
 imie VARCHAR(45) NOT NULL,
 nazwisko VARCHAR(45) NOT NULL,
 pesel CHAR(11) NOT NULL,
-typ ENUM('lekarz','sekretariat'),
+typ ENUM('lekarz','sekretariat','admin'),
 PRIMARY KEY(staff_id)
 );
 
@@ -53,7 +53,7 @@ CREATE TABLE uzytkownicy
 (
 id_u INT NOT NULL,
 login VARCHAR(25) NOT NULL,
-haslo VARCHAR(25) NOT NULL,
+haslo VARCHAR(50) NOT NULL,
 PRIMARY KEY(id_u)
 );
 
@@ -171,7 +171,7 @@ BEGIN
 		SET MESSAGE_TEXT = 'Bledny pesel';
 	END IF;
     
-    IF (SELECT COUNT(*) FROM pracownicy WHERE pesel=NEW.pesel)<>0 THEN
+    IF (SELECT COUNT(*) FROM pracownicy WHERE pesel=NEW.pesel AND TYP=NEW.typ )<>0 THEN
 		SIGNAL SQLSTATE '45000' 
 		SET MESSAGE_TEXT = 'Osoba istnieje juz w bazie';
 	END IF;
@@ -217,9 +217,11 @@ FOR EACH ROW
 BEGIN
 	
     IF NEW.typ='lekarz' THEN
-		INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.staff_id, CONCAT(NEW.pesel,'l'),CONCAT(NEW.imie,NEW.nazwisko));
+		INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.staff_id, CONCAT(NEW.pesel,'l'),sha1(CONCAT(NEW.imie,NEW.nazwisko)));
+	ELSEIF NEW.typ<>'admin' THEN
+		INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.staff_id, CONCAT(NEW.pesel,'s'),sha1(CONCAT(NEW.imie,NEW.nazwisko)));
 	ELSE
-		INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.staff_id, CONCAT(NEW.pesel,'s'),CONCAT(NEW.imie,NEW.nazwisko));
+		INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.staff_id, CONCAT('admin',NEW.staff_id),sha1(CONCAT(NEW.imie,NEW.nazwisko)));
 	END IF;
 
 END$$
@@ -232,7 +234,7 @@ $$
 CREATE TRIGGER dodajWlasciciela AFTER INSERT ON wlasciciele
 FOR EACH ROW
 BEGIN
-	INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.w_id, CONCAT(NEW.pesel,'w'),CONCAT(NEW.imie,NEW.nazwisko));
+	INSERT INTO uzytkownicy (id_u,login,haslo) VALUES(NEW.w_id, CONCAT(NEW.pesel,'w'),sha1(CONCAT(NEW.imie,NEW.nazwisko)));
    
 END$$
 DELIMITER ;
@@ -393,14 +395,45 @@ BEGIN
         SET @bCounter = @bCounter-1;
 	END WHILE;
     
+    INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'lekarz');
+    INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'sekretariat');
+    INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ('ma','le','98092805975','asd','23','4','55-555');
+	INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'admin');
     
 END;$$
 DELIMITER ;
 
-
+#INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('Maciej','Lewandowicz',98092805975,'admin');
 CALL generateDataBase();
-SELECT * FROM notatki;
-SELECT count(*) FROM pacjenci;
+
+
+
+#CREATE USER 'log@localhost';
+#SET PASSWORD FOR 'log@localhost' = 'pas';
+#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
+#FLUSH PRIVILEGES;
+
+#CREATE USER 'wlasc@localhost';
+#SET PASSWORD FOR 'log@localhost' = 'w3pa2kvi3';
+#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
+#FLUSH PRIVILEGES;
+
+#CREATE USER 'lek@localhost';
+#SET PASSWORD FOR 'log@localhost' = 'l3efj29chj';
+#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
+#FLUSH PRIVILEGES;
+
+#CREATE USER 'sek@localhost';
+#SET PASSWORD FOR 'log@localhost' = 's4f52vserg';
+#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
+#FLUSH PRIVILEGES;
+
+#CREATE USER 'adm@localhost';
+#SET PASSWORD FOR 'log@localhost' = 'a4vdmq9diw';
+#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
+#FLUSH PRIVILEGES;
+
+
 #INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ("s","t","78110166134","asd","123","4","55-555");
 #INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('pracownik','miesiaca','98092805975','lekarz');
 #SELECT * FROM pracownicy;
