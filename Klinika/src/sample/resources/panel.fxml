@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab text="Zwierzęta">
       <content>
@@ -99,7 +99,7 @@
                   <Button fx:id="btnWlDodaj" layoutX="453.0" layoutY="327.0" mnemonicParsing="false" onAction="#btnWlDodajOnAction" text="Dodaj Wlasciciela" />
                   <Label layoutX="15.0" layoutY="95.0" text="Imie" />
                   <Label layoutX="125.0" layoutY="95.0" text="Nazwisko" />
-                  <Label layoutX="265.0" layoutY="95.0" text="Miasto" />
+                  <Label layoutX="265.0" layoutY="95.0" text="Ulica" />
                   <Label layoutX="395.0" layoutY="95.0" text="Kod Poczt." />
                   <ScrollPane layoutX="15.0" layoutY="120.0" prefHeight="200.0" prefWidth="570.0">
                      <content>
@@ -128,10 +128,10 @@
                   </ScrollPane>
                   <Button fx:id="btnWlUsunFiltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnWlUsunFiltrOnAction" text="Usuń filtry" />
                   <Button fx:id="btnWlFiltruj" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnWlFiltrujOnAction" text="Filtruj" />
-                  <TextField fx:id="lblWlImie" layoutX="15.0" layoutY="10.0" prefHeight="26.0" prefWidth="95.0" />
-                  <TextField fx:id="lblWlNazwisko" layoutX="125.0" layoutY="10.0" prefHeight="26.0" prefWidth="128.0" />
-                  <TextField fx:id="lblWlMiasto" layoutX="265.0" layoutY="10.0" prefHeight="26.0" prefWidth="114.0" />
-                  <TextField fx:id="lblWlKod" layoutX="395.0" layoutY="9.0" prefHeight="26.0" prefWidth="94.0" />
+                  <TextField fx:id="fldWlImie" layoutX="15.0" layoutY="10.0" prefHeight="26.0" prefWidth="95.0" />
+                  <TextField fx:id="fldWlNazwisko" layoutX="125.0" layoutY="10.0" prefHeight="26.0" prefWidth="128.0" />
+                  <TextField fx:id="fldWlUlica" layoutX="265.0" layoutY="10.0" prefHeight="26.0" prefWidth="114.0" />
+                  <TextField fx:id="fldWlKod" layoutX="395.0" layoutY="9.0" prefHeight="26.0" prefWidth="94.0" />
                </children>
             </AnchorPane>
         </content>
@@ -172,9 +172,9 @@
                   </ScrollPane>
                   <Button fx:id="btnPracUsunFIltr" layoutX="15.0" layoutY="40.0" mnemonicParsing="false" onAction="#btnPracUsunFIltrOnAction" text="Usuń filtry" />
                   <Button fx:id="btnPracFiltr" layoutX="510.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnPracFiltrOnAction" text="Filtruj" />
-                  <TextField fx:id="lblPracImie" layoutX="15.0" layoutY="10.0" prefHeight="26.0" prefWidth="95.0" />
-                  <TextField fx:id="lblPracNazwisko" layoutX="125.0" layoutY="10.0" prefHeight="26.0" prefWidth="128.0" />
-                  <TextField fx:id="lblPracZawod" layoutX="265.0" layoutY="10.0" prefHeight="26.0" prefWidth="114.0" />
+                  <TextField fx:id="fldPracImie" layoutX="15.0" layoutY="10.0" prefHeight="26.0" prefWidth="95.0" />
+                  <TextField fx:id="fldPracNazwisko" layoutX="125.0" layoutY="10.0" prefHeight="26.0" prefWidth="128.0" />
+                  <TextField fx:id="fldPracZawod" layoutX="265.0" layoutY="10.0" prefHeight="26.0" prefWidth="114.0" />
                </children>
             </AnchorPane>
          </content>

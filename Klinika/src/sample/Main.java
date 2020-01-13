@@ -5,16 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.controllers.DodPracownikaController;
-import sample.controllers.DodTerminyController;
-import sample.controllers.DodWlascicielaController;
+import sample.controllers.*;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("resources/dodajWlasciciela.fxml"));
-        DodWlascicielaController dtc = new DodWlascicielaController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("resources/panel.fxml"));
+        PanelController dtc = new PanelController();
         loader.setController(dtc);
 
         primaryStage.setTitle("Wirtualny pupil");

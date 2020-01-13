@@ -9,6 +9,8 @@ import javafx.fxml.FXML;
         import javafx.scene.control.TextField;
         import javafx.scene.layout.GridPane;
 
+import java.time.LocalDate;
+
 public class PanelController {
 
     /**
@@ -75,16 +77,16 @@ public class PanelController {
     private Button btnWlFiltruj;
 
     @FXML
-    private TextField lblWlImie;
+    private TextField fldWlImie;
 
     @FXML
-    private TextField lblWlNazwisko;
+    private TextField fldWlNazwisko;
 
     @FXML
-    private TextField lblWlMiasto;
+    private TextField fldWlUlica;
 
     @FXML
-    private TextField lblWlKod;
+    private TextField fldWlKod;
 
     /**
      * Tab Pracownicy
@@ -106,13 +108,13 @@ public class PanelController {
     private Button btnPracFiltr;
 
     @FXML
-    private TextField lblPracImie;
+    private TextField fldPracImie;
 
     @FXML
-    private TextField lblPracNazwisko;
+    private TextField fldPracNazwisko;
 
     @FXML
-    private TextField lblPracZawod;
+    private TextField fldPracZawod;
 
     /**
      * Tab Pracownicy
@@ -130,18 +132,24 @@ public class PanelController {
 
     @FXML
     void btnPracUsunFIltrOnAction(ActionEvent event) {
+        fldPracImie.setText("");
+        fldPracNazwisko.setText("");
+        fldPracZawod.setText("");
+        btnPracFiltrOnAction(event);
 
     }
 
-    @FXML
-    void btnUsunFiltrOnAction(ActionEvent event) {
-
-    }
 
     /**
      * Tab Umówione Wizyty
      */
 
+    @FXML
+    void btnUsunFiltrOnAction(ActionEvent event) {
+        fldWizWlasciciel.setText("");
+        fldWizZwierz.setText("");
+        btnWizFiltrujOnAction(event);
+    }
 
     @FXML
     void btnWizEdytujOnAction(ActionEvent event) {
@@ -152,6 +160,8 @@ public class PanelController {
     void btnWizFiltrujOnAction(ActionEvent event) {
 
     }
+
+
 
     /**
      * Tab Właściciele
@@ -169,7 +179,12 @@ public class PanelController {
 
     @FXML
     void btnWlUsunFiltrOnAction(ActionEvent event) {
+        fldWlImie.setText("");
+        fldWlKod.setText("");
+        fldWlUlica.setText("");
+        fldWlNazwisko.setText("");
 
+        btnWlFiltrujOnAction(event);
     }
 
     /**
@@ -183,12 +198,14 @@ public class PanelController {
 
     @FXML
     void btnZwierzFiltrujOnAction(ActionEvent event) {
-
     }
 
     @FXML
     void btnZwierzUsunFiltrOnAction(ActionEvent event) {
-
+        fldZwierzGatunek.setText("");
+        fldZwierzImie.setText("");
+        fldZwierzWlasc.setText("");
+        btnZwierzFiltrujOnAction(event);
     }
 
 }
