@@ -1,6 +1,7 @@
 package sample.controllers;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 import java.sql.*;
@@ -26,7 +28,6 @@ public class LogowanieController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -90,7 +91,13 @@ public class LogowanieController {
         try {
 
             Stage stageF = new Stage();
-            PanelController panelController = new PanelController(userId,userTyp);
+            PanelController panelController = new PanelController(userId,userTyp,stageF);
+
+            stageF.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    panelController.stopThreads();
+                }
+            });
 
 
             FXMLLoader loader =new FXMLLoader(getClass().getClassLoader().getResource("resources/panel.fxml"));

@@ -301,7 +301,7 @@ $$
 CREATE TRIGGER sprawdzRasy BEFORE INSERT ON rasy
 FOR EACH ROW
 BEGIN
-	IF NEW.gatunek IN (SELECT gatunek FROM rasy) AND NEW.rasa IN (SELECT rasa FROM rasy) THEN
+	IF NEW.gatunek IN (SELECT gatunek FROM rasy) AND NEW.rasa IN (SELECT rasa FROM rasy WHERE gatunek=NEW.gatunek) THEN
 		SIGNAL SQLSTATE '45000' 
 		SET MESSAGE_TEXT = 'Rasa istnieje juz w bazie';
 	END IF;
@@ -322,6 +322,8 @@ BEGIN
     INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'sekretariat');
     INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ('ma','le','98092805975','asd','23','4','55-555');
 	INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'admin');
+    
+    INSERT INTO rasy (gatunek,rasa) VALUES ('Inna','Inna');
     
 	#rasy
     SET @bCounter =25;
@@ -413,12 +415,16 @@ DELIMITER ;
 #INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('Maciej','Lewandowicz',98092805975,'admin');
 CALL generateDataBase();
 
+CREATE INDEX index1 ON pracownicy(imie,nazwisko,typ,staff_id);
+CREATE INDEX index2 ON wlasciciele(w_id,imie,nazwisko,ulica,kod_pocztowy);
+CREATE INDEX index3 ON pacjenci(p_id,nazwa,id_wlasciciela,id_rasy);
+CREATE INDEX index4 ON rasy(r_id);
 
-
-#CREATE USER 'log@localhost';
-#SET PASSWORD FOR 'log@localhost' = 'pas';
-#GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
-#FLUSH PRIVILEGES;
+CREATE USER 'log@localhost';
+SET PASSWORD FOR 'log@localhost' = 'pas';
+GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
+GRANT ALL PRIVILEGES ON klinika.* TO 'log@localhost';
+FLUSH PRIVILEGES;
 
 CREATE USER 'wlasc@localhost';
 SET PASSWORD FOR 'wlasc@localhost' = 'w3pa2kvi3';
@@ -441,16 +447,23 @@ GRANT ALL PRIVILEGES ON klinika.* TO 'adm@localhost';
 FLUSH PRIVILEGES;
 
 
-#INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ("s","t","78110166134","asd","123","4","55-555");
-#INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('pracownik','miesiaca','98092805975','lekarz');
-#SELECT * FROM pracownicy;
-Select * from wlasciciele;
-#Select * from uzytkownicy;
-#SELECT * FROM notatki;
-#SELECT p_id, imie, nazwisko, nazwa, gatunek FROM (pacjenci JOIN rasy ON pacjenci.id_rasy=rasy.r_id) JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id;
-#SELECT wizyty.w_id AS idWiz, CONCAT(godzina,' ',dzien) AS termin, CONCAT(imie,' ',nazwisko) AS wlasciciel, nazwa, gatunek FROM (((wizyty JOIN terminy ON id_terminu=g_id) JOIN pacjenci ON id_pacjenta=p_id) JOIN rasy ON r_id=id_rasy) JOIN wlasciciele ON id_wlasciciela=wlasciciele.w_id ORDER BY dzien,godzina;
 
 
+
+
+
+
+SELECT p_id, imie, nazwisko, nazwa, gatunek FROM (pacjenci JOIN rasy ON pacjenci.id_rasy=rasy.r_id) JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id;
+SELECT wizyty.w_id AS idWiz, CONCAT(godzina,' ',dzien) AS termin, CONCAT(imie,' ',nazwisko) AS wlasciciel, nazwa, gatunek FROM (((wizyty JOIN terminy ON id_terminu=g_id) JOIN pacjenci ON id_pacjenta=p_id) JOIN rasy ON r_id=id_rasy) JOIN wlasciciele ON id_wlasciciela=wlasciciele.w_id ORDER BY dzien,godzina;
+SELECT w_id,imie,nazwisko,ulica,kod_pocztowy AS kod FROM wlasciciele;
+SELECT imie,nazwisko,typ,staff_id FROM pracownicy;
+
+SELECT r_id, gatunek, rasa FROM rasy;
+
+Use klinika;
+SELECT r_id FROM rasy WHERE CONCAT(gatunek,' - ',rasa)= 'UBYH - SUCYGRPDRFC';
+
+SELECT CONCAT(a,b);
 
 
 

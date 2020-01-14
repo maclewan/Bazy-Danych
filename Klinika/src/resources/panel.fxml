@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab text="Zwierzęta">
       <content>
@@ -39,6 +39,7 @@
                   <Label layoutX="512.0" layoutY="95.0" text="Więcej" />
                   <TextField fx:id="fldZwierzGatunek" layoutX="365.0" layoutY="10.0" prefHeight="26.0" prefWidth="129.0" />
                   <Button fx:id="btnZwierzUsunFiltr" layoutX="505.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnZwierzUsunFiltrOnAction" text="Usuń filtry" />
+                  <Button fx:id="btnZwierzDodajRase" layoutX="17.0" layoutY="327.0" mnemonicParsing="false" onAction="#btnZwierzDodajRaseOnAction" text="Dodaj rasę" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -47,7 +48,7 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Label layoutX="15.0" layoutY="95.0" text="Termin" />
-                  <Label layoutX="312.0" layoutY="95.0" text="Zwierzak" />
+                  <Label layoutX="311.0" layoutY="95.0" text="Zwierzak" />
                   <ScrollPane layoutX="15.0" layoutY="120.0" prefHeight="200.0" prefWidth="570.0">
                      <content>
                         <GridPane fx:id="gridWizyty" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="550.0">
@@ -82,12 +83,12 @@
                         </GridPane>
                      </content></ScrollPane>
                   <Label layoutX="147.0" layoutY="95.0" text="Właściciel" />
-                  <Label layoutX="411.0" layoutY="95.0" text="Gatunek" />
+                  <Label layoutX="409.0" layoutY="95.0" text="Gatunek" />
                   <TextField fx:id="fldWizWlasciciel" layoutX="150.0" layoutY="10.0" prefHeight="26.0" prefWidth="145.0" />
                   <TextField fx:id="fldWizZwierz" layoutX="315.0" layoutY="10.0" prefHeight="26.0" prefWidth="84.0" />
                   <Button fx:id="btnUsunFiltr" layoutX="505.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnUsunFiltrOnAction" text="Usuń filtry" />
-                  <Button fx:id="btnWizEdytuj" layoutX="470.0" layoutY="326.0" mnemonicParsing="false" onAction="#btnWizEdytujOnAction" text="Edytuj terminy" />
-                  <Label fx:id="lblWizNU" layoutX="509.0" layoutY="95.0" text="Not. Usun" />
+                  <Button fx:id="btnWizEdytuj" layoutX="470.0" layoutY="327.0" mnemonicParsing="false" onAction="#btnWizEdytujOnAction" text="Edytuj terminy" />
+                  <Label fx:id="lblWizNU" layoutX="502.0" layoutY="95.0" text="Not. Usun" />
                </children></AnchorPane>
       </content>
     </Tab>

@@ -1,14 +1,20 @@
 package sample.controllers;
 
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import sample.Classes.SuperArrayList;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.concurrent.atomic.LongAccumulator;
@@ -18,29 +24,46 @@ public class PanelController {
 
     private int userId;
     private char userType;
-    Connection conn;
+    private boolean actRequest=true;
+    private Stage stage;
+    private Connection conn;
+    private Refresher refresher;
 
-    SuperArrayList<Label> zwierzDaneWlascicieli = new SuperArrayList<>();
-    SuperArrayList<String> zwierzIdPacjenta = new SuperArrayList<>();
-    SuperArrayList<Label> zwierzNazwaLabel = new SuperArrayList<>();
-    SuperArrayList<Label> zwierzGatunekLabel = new SuperArrayList<>();
-    SuperArrayList<Button> zwierzWiecej = new SuperArrayList<>();
+    private SuperArrayList<Label> zwierzDaneWlascicieli = new SuperArrayList<>();
+    private SuperArrayList<String> zwierzIdPacjenta = new SuperArrayList<>();
+    private SuperArrayList<Label> zwierzNazwaLabel = new SuperArrayList<>();
+    private SuperArrayList<Label> zwierzGatunekLabel = new SuperArrayList<>();
+    private SuperArrayList<Button> zwierzWiecej = new SuperArrayList<>();
 
-    SuperArrayList<String> wizIdWizyty = new SuperArrayList<>();
-    SuperArrayList<Label> wizTermin = new SuperArrayList<>();
-    SuperArrayList<Label> wizWlasciciel = new SuperArrayList<>();
-    SuperArrayList<Label> wizZwierzak = new SuperArrayList<>();
-    SuperArrayList<Label> wizGatunek = new SuperArrayList<>();
-    SuperArrayList<Button> wizNotBtn = new SuperArrayList<>();
-    SuperArrayList<Button> wizUsunWiz = new SuperArrayList<>();
+    private SuperArrayList<String> wizIdWizyty = new SuperArrayList<>();
+    private SuperArrayList<Label> wizTermin = new SuperArrayList<>();
+    private SuperArrayList<Label> wizWlasciciel = new SuperArrayList<>();
+    private SuperArrayList<Label> wizZwierzak = new SuperArrayList<>();
+    private SuperArrayList<Label> wizGatunek = new SuperArrayList<>();
+    private SuperArrayList<Button> wizNotBtn = new SuperArrayList<>();
+    private SuperArrayList<Button> wizUsunWiz = new SuperArrayList<>();
 
-    SuperArrayList<Button> wlUsun = new SuperArrayList<>();
+    private SuperArrayList<String> wlIdWlasciciela = new SuperArrayList<>();
+    private SuperArrayList<Label> wlImie = new SuperArrayList<>();
+    private SuperArrayList<Label> wlNazwisko = new SuperArrayList<>();
+    private SuperArrayList<Label> wlUlica = new SuperArrayList<>();
+    private SuperArrayList<Label> wlKod = new SuperArrayList<>();
+    private SuperArrayList<Button> wlEdit = new SuperArrayList<>();
+    private SuperArrayList<Button> wlUsun = new SuperArrayList<>();
+
+    private SuperArrayList<Label> pracImie = new SuperArrayList<>();
+    private SuperArrayList<Label> pracNazwisko = new SuperArrayList<>();
+    private SuperArrayList<Label> pracZawod = new SuperArrayList<>();
+    private SuperArrayList<Label> pracNumerId = new SuperArrayList<>();
+    private SuperArrayList<Button> pracEdit = new SuperArrayList<>();
+    private SuperArrayList<Button> pracUsun = new SuperArrayList<>();
 
 
 
-    public PanelController(int c,char t){
+    public PanelController(int c,char t,Stage stage){
         userId=c;
         userType=t;
+        this.stage=stage;
     }
 
     @FXML
@@ -68,13 +91,12 @@ public class PanelController {
             }
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/klinika", login, haslo);
 
-            /**
-             * pobieranie danych
-             */
             updateData();
 
             addUpdateListeners();
-            hidePossibilities();
+            refresher = new Refresher(this);
+            refresher.start();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -117,6 +139,8 @@ public class PanelController {
             btnZwierzUsunFiltr.setVisible(false);
             btnWlUsunFiltr.setVisible(false);
 
+            btnZwierzDodajRase.setVisible(false);
+
             for (Button b:wizNotBtn) {
                 b.setVisible(false);
             }
@@ -129,6 +153,48 @@ public class PanelController {
              */
             lblWizNU.setText("      Usun");
 
+        }
+        else if(userType=='l'){
+            /**
+             * taby
+             */
+
+            tabPracownicy.setDisable(true);
+            tabPracownicy.setText("");
+
+            /**
+             * przyciski
+             */
+
+            btnWlDodaj.setVisible(false);
+
+
+            for (Button b:wlUsun) {
+                b.setVisible(false);
+            }
+
+            for (Button b:wizUsunWiz) {
+                b.setVisible(false);
+            }
+            /**
+             * labele
+             */
+            lblWizNU.setText("Notatka");
+        }
+        else if(userType=='s'){
+
+            /**
+             * przyciski
+             */
+
+            for (Button b:pracUsun) {
+                b.setVisible(false);
+            }
+            for (Button b:pracEdit) {
+                b.setVisible(false);
+            }
+            btnZwierzDodajRase.setVisible(false);
+            btnPracDodajPrac.setVisible(false);
         }
     }
 
@@ -176,7 +242,9 @@ public class PanelController {
             }
             else {
                 query = "SELECT p_id, imie, nazwisko, nazwa, gatunek FROM (pacjenci JOIN rasy ON pacjenci.id_rasy=rasy.r_id) " +
-                        "JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id WHERE (nazwisko LIKE '"+zc1+"' OR imie LIKE '"+zc1+"') AND nazwa LIKE '"+zc2+"' AND gatunek LIKE '"+zc3+"';";
+                        "JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id " +
+                        "WHERE (nazwisko LIKE '"+zc1+"' OR imie LIKE '"+zc1+"') AND nazwa LIKE '"+zc2+"' AND gatunek LIKE '"+zc3+"' " +
+                        "ORDER BY nazwisko,imie;";
             }
 
             Statement stmt = conn.createStatement();
@@ -280,8 +348,133 @@ public class PanelController {
                     }
                 });
                 counter++;
-
             }
+
+            /**
+             * Tab Wlasciciele
+             */
+
+            if(userType=='w'){
+                query="SELECT w_id,imie,nazwisko,ulica,kod_pocztowy AS kod FROM wlasciciele " +
+                        "WHERE w_id = "+userId+";";
+            }
+            else{
+                query="SELECT w_id,imie,nazwisko,ulica,kod_pocztowy AS kod FROM wlasciciele " +
+                        "WHERE imie LIKE '"+wlc1+"' AND nazwisko LIKE '"+wlc2+"' AND ulica LIKE '"+wlc3+"' AND kod_pocztowy LIKE '"+wlc4+"' " +
+                        "ORDER BY nazwisko, imie;";
+            }
+
+            stmt = conn.createStatement();
+            res = stmt.executeQuery(query);
+
+            wlIdWlasciciela = new SuperArrayList<>();
+            wlImie = new SuperArrayList<>();
+            wlNazwisko = new SuperArrayList<>();
+            wlUlica = new SuperArrayList<>();
+            wlKod = new SuperArrayList<>();
+            wlEdit = new SuperArrayList<>();
+            wlUsun = new SuperArrayList<>();
+
+            counter=0;
+            while (res.next()) {
+                int j = gridWlasciciel.getRowCount();
+
+                wlIdWlasciciela.add(res.getString("w_id"));
+
+                wlImie.add(new Label(res.getString("imie")));
+                gridWlasciciel.add(wlImie.getLast(), 0, j);
+
+                wlNazwisko.add(new Label(res.getString("nazwisko")));
+                gridWlasciciel.add(wlNazwisko.getLast(), 1, j);
+
+                wlUlica.add(new Label(res.getString("ulica")));
+                gridWlasciciel.add(wlUlica.getLast(), 2, j);
+
+                wlKod.add(new Label(res.getString("kod")));
+                gridWlasciciel.add(wlKod.getLast(), 3, j);
+
+
+                wlEdit.add(new Button("Edit"));
+                gridWlasciciel.add(wlEdit.getLast(), 4, j);
+                wlEdit.getLast().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        //todo:Edytuj dane wlasciciela korzystajac z int counter->wizIdWlasciciela
+                    }
+                });
+
+                wlUsun.add(new Button("X"));
+                gridWlasciciel.add(wlUsun.getLast(), 5, j);
+                wlUsun.getLast().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        //todo:usun wlasciciela korzystajac z int counter ->wizIdWlasciciela
+                    }
+                });
+                counter++;
+            }
+
+            /**
+             * Tab Pracownicy
+             */
+
+
+            query="SELECT imie,nazwisko,typ,staff_id " +
+                    "FROM pracownicy " +
+                    "WHERE imie LIKE '"+pc1+"' AND nazwisko LIKE '"+pc2+"' AND typ LIKE '"+pc3+"';";
+
+            stmt = conn.createStatement();
+            res = stmt.executeQuery(query);
+
+            pracImie = new SuperArrayList<>();
+            pracNazwisko = new SuperArrayList<>();
+            pracZawod = new SuperArrayList<>();
+            pracNumerId = new SuperArrayList<>();
+            pracEdit = new SuperArrayList<>();
+            pracUsun = new SuperArrayList<>();
+
+            counter=0;
+            while (res.next()) {
+                int j = gridPracownicy.getRowCount();
+
+                pracImie.add(new Label(res.getString("imie")));
+                gridPracownicy.add(pracImie.getLast(), 0, j);
+
+                pracNazwisko.add(new Label(res.getString("nazwisko")));
+                gridPracownicy.add(pracNazwisko.getLast(), 1, j);
+
+                pracZawod.add(new Label(res.getString("typ")));
+                gridPracownicy.add(pracZawod.getLast(), 2, j);
+
+                pracNumerId.add(new Label(res.getString("staff_id")));
+                gridPracownicy.add(pracNumerId.getLast(), 3, j);
+
+
+                pracEdit.add(new Button("Edit"));
+                gridPracownicy.add(pracEdit.getLast(), 4, j);
+                pracEdit.getLast().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        //todo:Edytuj dane pracownika korzystajac z int counter->pracNumerId
+                    }
+                });
+
+                pracUsun.add(new Button("X"));
+                gridPracownicy.add(pracUsun.getLast(), 5, j);
+                pracUsun.getLast().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        //todo:usun pracownika korzystajac z int counter ->pracNumerId
+                    }
+                });
+                counter++;
+            }
+
+            /**
+             * Nadaj uprawnienia tylko tym którzy je mają mieć
+             */
+            hidePossibilities();
+
 
 
 
@@ -299,6 +492,9 @@ public class PanelController {
      */
     @FXML
     private Button btnZwierzDodajZw;
+
+    @FXML
+    private Button btnZwierzDodajRase;
 
     @FXML
     private GridPane gridZwierz;
@@ -452,6 +648,26 @@ public class PanelController {
 
     @FXML
     void btnZwierzDodajZwOnAction(ActionEvent event) {
+        //todo: otwórz nowe okno
+        try {
+            Stage stageD = new Stage();
+            DodZwierzeController dodZwierzeController = new DodZwierzeController(this,stageD);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajZwierze.fxml"));
+            loader.setController(dodZwierzeController);
+
+            stageD.setTitle("Dodaj Pupila");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void btnZwierzDodajRaseOnAction(ActionEvent event){
 
     }
 
@@ -495,11 +711,52 @@ public class PanelController {
 
         for (TextField tf: filtry) {
             tf.textProperty().addListener((observable, oldValue, newValue) -> {
-                updateData();
+                actRequest=true;
             });
 
         }
 
+    }
+
+    public boolean getActRequest(){
+        return actRequest;
+    }
+
+    public void refresh(){
+        updateData();
+    }
+
+
+    public void stopThreads(){
+        Platform.runLater(() -> {
+            refresher.interrupt();
+        });
+
+    }
+
+
+    private class Refresher extends Thread{
+
+        private PanelController panelController;
+
+        public Refresher(PanelController panelController){
+            this.panelController=panelController;
+        }
+
+        public void run(){
+            while(true) {
+                try {
+                    Thread.sleep(100);
+                    if (panelController.getActRequest()) ;
+                    Platform.runLater(() -> {
+                        panelController.refresh();
+                    });
+                } catch (InterruptedException e) {
+                    return;
+                }
+
+            }
+        }
     }
 
 
