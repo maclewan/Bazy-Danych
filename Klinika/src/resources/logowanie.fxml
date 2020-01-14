@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="170.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="41.0" layoutY="11.0" text="Logowanie do systemu">
          <font>
             <Font name="DejaVu Sans Bold" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="fldLogin" layoutX="5.0" layoutY="65.0" prefHeight="25.0" prefWidth="220.0" promptText="Podaj login" text="98092805975l" />
+      <TextField fx:id="fldLogin" layoutX="5.0" layoutY="65.0" prefHeight="25.0" prefWidth="220.0" promptText="Podaj login" text="98092805975" />
       <PasswordField fx:id="fldHaslo" layoutX="5.0" layoutY="100.0" prefHeight="25.0" prefWidth="220.0" promptText="Podaj haslo" text="male" />
       <Button fx:id="btnZaloguj" layoutX="225.0" layoutY="135.0" mnemonicParsing="false" onAction="#btnZalogujOnAction" text="Zaloguj" />
       <Label fx:id="lblTerminal" layoutX="5.0" layoutY="145.0" text="Label na rzucanie bledow" textFill="#797777">

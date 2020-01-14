@@ -5,10 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import sample.Classes.SuperArrayList;
 
@@ -37,7 +34,7 @@ public class PanelController {
     SuperArrayList<Button> wizNotBtn = new SuperArrayList<>();
     SuperArrayList<Button> wizUsunWiz = new SuperArrayList<>();
 
-
+    SuperArrayList<Button> wlUsun = new SuperArrayList<>();
 
 
 
@@ -84,6 +81,55 @@ public class PanelController {
     }
 
     private void hidePossibilities() {
+        if(userType=='w'){
+            /**
+             * filtry
+             */
+
+            fldZwierzGatunek.setVisible(false);
+            fldZwierzImie.setVisible(false);
+            fldZwierzWlasc.setVisible(false);
+
+            fldWlKod.setVisible(false);
+            fldWlUlica.setVisible(false);
+            fldWlNazwisko.setVisible(false);
+            fldWlImie.setVisible(false);
+
+            fldWizZwierz.setVisible(false);
+            fldWizWlasciciel.setVisible(false);
+
+            fldPracImie.setVisible(false);
+            fldPracNazwisko.setVisible(false);
+            fldPracZawod.setVisible(false);
+
+            tabPracownicy.setDisable(true);
+            tabPracownicy.setText("");
+
+            /**
+             * przyciski
+             */
+
+            btnZwierzDodajZw.setVisible(false);
+            btnWizEdytuj.setVisible(false);
+            btnWlDodaj.setVisible(false);
+
+            btnUsunFiltr.setVisible(false);
+            btnZwierzUsunFiltr.setVisible(false);
+            btnWlUsunFiltr.setVisible(false);
+
+            for (Button b:wizNotBtn) {
+                b.setVisible(false);
+            }
+            for (Button b:wlUsun) {
+                b.setVisible(false);
+            }
+
+            /**
+             * labele
+             */
+            lblWizNU.setText("      Usun");
+
+        }
     }
 
     private void updateData(){
@@ -246,6 +292,8 @@ public class PanelController {
     }
 
 
+    @FXML
+    private TabPane tabPane;
     /**
      * Tab Zwierzęta
      */
@@ -286,6 +334,9 @@ public class PanelController {
 
     @FXML
     private Button btnWizEdytuj;
+
+    @FXML
+    private Label lblWizNU;
 
 
     /**

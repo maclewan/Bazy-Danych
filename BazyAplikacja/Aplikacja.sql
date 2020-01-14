@@ -317,6 +317,12 @@ DECLARE @bCounter,@lekarz, @aCounter, @temp INT,@sDay datetime,
 DELIMITER $$
 CREATE PROCEDURE generateDataBase()
 BEGIN 
+	#TEMP - do łatwego logowania
+    INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'lekarz');
+    INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'sekretariat');
+    INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ('ma','le','98092805975','asd','23','4','55-555');
+	INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'admin');
+    
 	#rasy
     SET @bCounter =25;
     WHILE @bCounter!=0 DO
@@ -399,10 +405,7 @@ BEGIN
         SET @bCounter = @bCounter-1;
 	END WHILE;
     
-    INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'lekarz');
-    INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'sekretariat');
-    INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ('ma','le','98092805975','asd','23','4','55-555');
-	INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'admin');
+   
     
 END;$$
 DELIMITER ;
@@ -441,7 +444,13 @@ FLUSH PRIVILEGES;
 #INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ("s","t","78110166134","asd","123","4","55-555");
 #INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('pracownik','miesiaca','98092805975','lekarz');
 #SELECT * FROM pracownicy;
-#Select * from wlasciciele;
+Select * from wlasciciele;
 #Select * from uzytkownicy;
 #SELECT * FROM notatki;
-SELECT p_id, imie, nazwisko, nazwa, gatunek FROM (pacjenci JOIN rasy ON pacjenci.id_rasy=rasy.r_id) JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id;
+#SELECT p_id, imie, nazwisko, nazwa, gatunek FROM (pacjenci JOIN rasy ON pacjenci.id_rasy=rasy.r_id) JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id;
+#SELECT wizyty.w_id AS idWiz, CONCAT(godzina,' ',dzien) AS termin, CONCAT(imie,' ',nazwisko) AS wlasciciel, nazwa, gatunek FROM (((wizyty JOIN terminy ON id_terminu=g_id) JOIN pacjenci ON id_pacjenta=p_id) JOIN rasy ON r_id=id_rasy) JOIN wlasciciele ON id_wlasciciela=wlasciciele.w_id ORDER BY dzien,godzina;
+
+
+
+
+

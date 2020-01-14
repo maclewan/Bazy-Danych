@@ -34,9 +34,9 @@
                   <TextField fx:id="fldZwierzWlasc" layoutX="17.0" layoutY="10.0" prefHeight="26.0" prefWidth="178.0" />
                   <TextField fx:id="fldZwierzImie" layoutX="215.0" layoutY="10.0" prefHeight="26.0" prefWidth="129.0" />
                   <Label layoutX="15.0" layoutY="95.0" text="Właściciel" />
-                  <Label layoutX="215.0" layoutY="95.0" text="Imie" />
-                  <Label layoutX="365.0" layoutY="95.0" text="Gatunek" />
-                  <Label layoutX="515.0" layoutY="95.0" text="Więcej" />
+                  <Label layoutX="213.0" layoutY="95.0" text="Imie" />
+                  <Label layoutX="363.0" layoutY="95.0" text="Gatunek" />
+                  <Label layoutX="512.0" layoutY="95.0" text="Więcej" />
                   <TextField fx:id="fldZwierzGatunek" layoutX="365.0" layoutY="10.0" prefHeight="26.0" prefWidth="129.0" />
                   <Button fx:id="btnZwierzUsunFiltr" layoutX="505.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnZwierzUsunFiltrOnAction" text="Usuń filtry" />
                </children></AnchorPane>
@@ -47,7 +47,7 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Label layoutX="15.0" layoutY="95.0" text="Termin" />
-                  <Label layoutX="315.0" layoutY="95.0" text="Zwierzak" />
+                  <Label layoutX="312.0" layoutY="95.0" text="Zwierzak" />
                   <ScrollPane layoutX="15.0" layoutY="120.0" prefHeight="200.0" prefWidth="570.0">
                      <content>
                         <GridPane fx:id="gridWizyty" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="550.0">
@@ -81,13 +81,13 @@
                            </children>
                         </GridPane>
                      </content></ScrollPane>
-                  <Label layoutX="150.0" layoutY="95.0" text="Właściciel" />
-                  <Label layoutX="415.0" layoutY="95.0" text="Gatunek" />
+                  <Label layoutX="147.0" layoutY="95.0" text="Właściciel" />
+                  <Label layoutX="411.0" layoutY="95.0" text="Gatunek" />
                   <TextField fx:id="fldWizWlasciciel" layoutX="150.0" layoutY="10.0" prefHeight="26.0" prefWidth="145.0" />
                   <TextField fx:id="fldWizZwierz" layoutX="315.0" layoutY="10.0" prefHeight="26.0" prefWidth="84.0" />
                   <Button fx:id="btnUsunFiltr" layoutX="505.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnUsunFiltrOnAction" text="Usuń filtry" />
                   <Button fx:id="btnWizEdytuj" layoutX="470.0" layoutY="326.0" mnemonicParsing="false" onAction="#btnWizEdytujOnAction" text="Edytuj terminy" />
-                  <Label layoutX="509.0" layoutY="95.0" text="Not. Usun" />
+                  <Label fx:id="lblWizNU" layoutX="509.0" layoutY="95.0" text="Not. Usun" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -98,11 +98,11 @@
                   <Button fx:id="btnWlDodaj" layoutX="453.0" layoutY="327.0" mnemonicParsing="false" onAction="#btnWlDodajOnAction" text="Dodaj Wlasciciela" />
                   <Label layoutX="15.0" layoutY="95.0" text="Imie" />
                   <Label layoutX="125.0" layoutY="95.0" text="Nazwisko" />
-                  <Label layoutX="265.0" layoutY="95.0" text="Ulica" />
-                  <Label layoutX="395.0" layoutY="95.0" text="Kod Poczt." />
+                  <Label layoutX="262.0" layoutY="95.0" text="Ulica" />
+                  <Label layoutX="391.0" layoutY="95.0" text="Kod Poczt." />
                   <ScrollPane layoutX="15.0" layoutY="120.0" prefHeight="200.0" prefWidth="570.0">
                      <content>
-                        <GridPane fx:id="gridWlasciciel" prefWidth="560.0">
+                        <GridPane fx:id="gridWlasciciel" prefWidth="550.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="110.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="140.0" />
@@ -140,12 +140,12 @@
                <children>
                   <Button fx:id="btnPracDodajPrac" layoutX="453.0" layoutY="327.0" mnemonicParsing="false" onAction="#btnPracDodajPracOnAction" text="Dodaj Pracownika" />
                   <Label layoutX="15.0" layoutY="95.0" text="Imie" />
-                  <Label layoutX="125.0" layoutY="95.0" text="Nazwisko" />
-                  <Label layoutX="265.0" layoutY="95.0" text="Zawód" />
-                  <Label layoutX="395.0" layoutY="95.0" text="Numer id" />
+                  <Label layoutX="124.0" layoutY="95.0" text="Nazwisko" />
+                  <Label layoutX="262.0" layoutY="95.0" text="Zawód" />
+                  <Label layoutX="391.0" layoutY="95.0" text="Numer id" />
                   <ScrollPane layoutX="15.0" layoutY="120.0" prefHeight="200.0" prefWidth="570.0">
                      <content>
-                        <GridPane fx:id="gridPracownicy" prefWidth="560.0">
+                        <GridPane fx:id="gridPracownicy" prefWidth="550.0">
                            <columnConstraints>
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="110.0" />
                               <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="140.0" />
