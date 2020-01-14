@@ -2,6 +2,7 @@ package sample.controllers;
 
 
 import com.mysql.cj.jdbc.SuspendableXAConnection;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -64,7 +65,14 @@ public class DodZwierzeController {
                         fldRok.setText(oldValue);
                     }
                 if (newValue.length() != 0)
-                    rok = Integer.parseInt(newValue); //todo:catchowanie numberformat
+                    try {
+                        rok = Integer.parseInt(newValue); //todo:catchowanie numberformat
+                    }catch (NumberFormatException e){
+                        Platform.runLater(() -> {
+                            fldRok.setText(oldValue);
+
+                        });
+                    }
 
                 if (rok > LocalDate.now().getYear())
                     btnZatwierdz.setDisable(true);
@@ -72,8 +80,6 @@ public class DodZwierzeController {
             });
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (NumberFormatException e){
-
         }
     }
     @FXML

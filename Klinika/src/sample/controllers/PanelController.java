@@ -724,6 +724,7 @@ public class PanelController {
 
     public void refresh(){
         updateData();
+        actRequest = false;
     }
 
 
@@ -735,32 +736,34 @@ public class PanelController {
     }
 
 
-    private class Refresher extends Thread{
 
-        private PanelController panelController;
+}
 
-        public Refresher(PanelController panelController){
-            this.panelController=panelController;
-        }
+class Refresher extends Thread{
 
-        public void run(){
-            while(true) {
-                try {
-                    Thread.sleep(100);
-                    if (panelController.getActRequest()) ;
+    private PanelController panelController;
+
+    public Refresher(PanelController panelController){
+        this.panelController=panelController;
+    }
+
+    public void run(){
+        while(true) {
+            try {
+                Thread.sleep(200);
+                if (panelController.getActRequest()) {
                     Platform.runLater(() -> {
                         panelController.refresh();
                     });
-                } catch (InterruptedException e) {
-                    return;
                 }
+                else
+                    Thread.sleep(80);
 
+
+            } catch (InterruptedException e) {
+                return;
             }
+
         }
     }
-
-
-
-
-
 }
