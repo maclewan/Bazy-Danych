@@ -14,6 +14,7 @@ import sample.Classes.SuperArrayList;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.LongAccumulator;
 
 
 public class PanelController {
@@ -27,6 +28,16 @@ public class PanelController {
     SuperArrayList<Label> zwierzNazwaLabel = new SuperArrayList<>();
     SuperArrayList<Label> zwierzGatunekLabel = new SuperArrayList<>();
     SuperArrayList<Button> zwierzWiecej = new SuperArrayList<>();
+
+    SuperArrayList<String> wizIdWizyty = new SuperArrayList<>();
+    SuperArrayList<Label> wizTermin = new SuperArrayList<>();
+    SuperArrayList<Label> wizWlasciciel = new SuperArrayList<>();
+    SuperArrayList<Label> wizZwierzak = new SuperArrayList<>();
+    SuperArrayList<Label> wizGatunek = new SuperArrayList<>();
+    SuperArrayList<Button> wizNotBtn = new SuperArrayList<>();
+    SuperArrayList<Button> wizUsunWiz = new SuperArrayList<>();
+
+
 
 
 
@@ -81,7 +92,9 @@ public class PanelController {
              * Czyszczenie gridPanow
              */
             clearGP(gridZwierz);
-            //todo: wyczyc grid pany w  zakładkach
+            clearGP(gridPracownicy);
+            clearGP(gridWlasciciel);
+            clearGP(gridWizyty);
 
 
             /**
@@ -90,17 +103,28 @@ public class PanelController {
             String zc1="%"+fldZwierzWlasc.getText()+"%";
             String zc2="%"+fldZwierzImie.getText()+"%";
             String zc3="%"+fldZwierzGatunek.getText()+"%";
-            //todo: pobrać filtry z innych zakladek
+
+            String wic1="%"+fldWizWlasciciel.getText()+"%";
+            String wic2="%"+fldWizZwierz.getText()+"%";
+
+            String wlc1="%"+fldWlImie.getText()+"%";
+            String wlc2="%"+fldWlNazwisko.getText()+"%";
+            String wlc3="%"+fldWlUlica.getText()+"%";
+            String wlc4="%"+fldWlKod.getText()+"%";
+
+            String pc1="%"+fldPracImie.getText()+"%";
+            String pc2="%"+fldPracNazwisko.getText()+"%";
+            String pc3="%"+fldPracZawod.getText()+"%";
 
             /**
              *************************************
              * Pobieram dane z bazy
              */
+            String query;
             /**
              * Tab zwierz
              */
 
-            String query;
             if(userType=='w'){
                 query = "SELECT p_id, imie, nazwisko, nazwa, gatunek FROM (pacjenci JOIN rasy ON pacjenci.id_rasy=rasy.r_id) JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id WHERE w_id="+userId+";";
             }
@@ -144,6 +168,76 @@ public class PanelController {
 
             }
 
+            /**
+             * Tab Umowione wizyty
+             */
+
+            if(userType=='w'){
+                query = "SELECT wizyty.w_id AS idWiz, CONCAT(TIME_FORMAT(godzina,'%H:%i'),' ',dzien) AS termin, CONCAT(imie,' ',nazwisko) AS wlasciciel, nazwa, gatunek " +
+                        "FROM (((wizyty JOIN terminy ON id_terminu=g_id) JOIN pacjenci ON id_pacjenta=p_id) JOIN rasy ON r_id=id_rasy) JOIN wlasciciele " +
+                        "ON id_wlasciciela=wlasciciele.w_id " +
+                        "WHERE wlasciciele.w_id="+userId+" " +
+                        "ORDER BY dzien,godzina;";
+            }
+            else {
+                query = "SELECT wizyty.w_id AS idWiz,CONCAT(TIME_FORMAT(godzina,'%H:%i'),' ',dzien) AS termin, CONCAT(imie,' ',nazwisko) AS wlasciciel, nazwa, gatunek " +
+                        "FROM (((wizyty JOIN terminy ON id_terminu=g_id) JOIN pacjenci ON id_pacjenta=p_id) JOIN rasy ON r_id=id_rasy) JOIN wlasciciele " +
+                        "ON id_wlasciciela=wlasciciele.w_id " +
+                        "WHERE (nazwisko LIKE '"+wic1+"' OR imie LIKE '"+wic1+"') AND nazwa LIKE '"+wic2+"' " +
+                        "ORDER BY dzien,godzina;";
+            }
+
+            stmt = conn.createStatement();
+            res = stmt.executeQuery(query);
+
+            wizIdWizyty = new SuperArrayList<>();
+            wizTermin = new SuperArrayList<>();
+            wizWlasciciel = new SuperArrayList<>();
+            wizZwierzak = new SuperArrayList<>();
+            wizGatunek = new SuperArrayList<>();
+            wizNotBtn = new SuperArrayList<>();
+            wizUsunWiz = new SuperArrayList<>();
+
+            counter=0;
+            while (res.next()) {
+                int j = gridWizyty.getRowCount();
+                wizIdWizyty.add(res.getString("idWiz"));
+
+                wizTermin.add(new Label(res.getString("termin")));
+                gridWizyty.add(wizTermin.getLast(), 0, j);
+
+                wizWlasciciel.add(new Label(res.getString("wlasciciel")));
+                gridWizyty.add(wizWlasciciel.getLast(), 1, j);
+
+                wizZwierzak.add(new Label(res.getString("nazwa")));
+                gridWizyty.add(wizZwierzak.getLast(), 2, j);
+
+                wizGatunek.add(new Label(res.getString("gatunek")));
+                gridWizyty.add(wizGatunek.getLast(), 3, j);
+
+
+                wizNotBtn.add(new Button("N"));
+                gridWizyty.add(wizNotBtn.getLast(), 4, j);
+                wizNotBtn.getLast().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        //todo:Otworz notatke korzystajac z int counter->wizIdWizyty
+                    }
+                });
+
+                wizUsunWiz.add(new Button("X"));
+                gridWizyty.add(wizUsunWiz.getLast(), 5, j);
+                wizUsunWiz.getLast().setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent event) {
+                        //todo:usun wizyte korzystajac z int counter ->wizIdWizyty
+                    }
+                });
+                counter++;
+
+            }
+
+
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -178,7 +272,7 @@ public class PanelController {
      */
 
     @FXML
-    private GridPane girdWizyty;
+    private GridPane gridWizyty;
 
     @FXML
     private TextField fldWizWlasciciel;
