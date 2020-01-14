@@ -17,5 +17,7 @@
       <TextField fx:id="fldRok" layoutX="225.0" layoutY="35.0" prefHeight="26.0" prefWidth="138.0" />
       <ChoiceBox fx:id="pickerGatunek" layoutX="15.0" layoutY="165.0" prefHeight="26.0" prefWidth="244.0" />
       <Button fx:id="btnZatwierdz" layoutX="295.0" layoutY="165.0" mnemonicParsing="false" onAction="#btnZatwierdzOnAction" text="Zatwierdź" />
+      <Label layoutX="225.0" layoutY="80.0" text="ID właściciela" />
+      <TextField fx:id="fldId" layoutX="225.0" layoutY="100.0" prefHeight="26.0" prefWidth="138.0" />
    </children>
 </Pane>

@@ -49,6 +49,7 @@ public class DodZwierzeController {
 
 
             pickerGatunek.setItems(rasyList);
+            pickerGatunek.setValue("Inna - Inna");
 
 
             btnZatwierdz.setDisable(true);
@@ -85,6 +86,9 @@ public class DodZwierzeController {
     private TextField fldRok;
 
     @FXML
+    private TextField fldId;
+
+    @FXML
     private ChoiceBox<String> pickerGatunek;
 
 
@@ -98,6 +102,7 @@ public class DodZwierzeController {
         String umaszczenie=fldUmaszczenie.getText();
         String rok=fldRok.getText();
         String idRasy="";
+        String idWlasciciela=fldId.getText();
 
 
         try {
@@ -107,11 +112,23 @@ public class DodZwierzeController {
             ResultSet res = stmt.executeQuery(query);
             if(res.next())
                 idRasy=res.getString("r_id");
+
+            //czy taki wlasciciel istnieje
+            stmt = conn.createStatement();
+            query = "SELECT count(*) AS c FROM wlasciciele WHERE w_id='"+idWlasciciela+"';";
+            res = stmt.executeQuery(query);
+            res.next();
+            if(res.getString("c").equals("0")){
+                fldId.setText("Złe id Właściciela");
+                return;
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        System.out.println(imie+";"+umaszczenie+";"+rok+";"+idRasy);
+        System.out.println(imie+";"+umaszczenie+";"+rok+";"+idRasy+";"+idWlasciciela);
+
         //todo: dodaj zwierzaka do bazy
 
     }
