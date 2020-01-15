@@ -249,7 +249,7 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS usunWlasciciela;
 DELIMITER $$
 $$ 
-CREATE TRIGGER usunWlasciciela AFTER DELETE ON wlasciciele
+CREATE TRIGGER usunWlasciciela BEFORE DELETE ON wlasciciele
 FOR EACH ROW
 BEGIN
 	DELETE FROM uzytkownicy WHERE id_u=OLD.w_id;
@@ -259,7 +259,7 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS usunPracownika;
 DELIMITER $$
 $$ 
-CREATE TRIGGER usunPracownika AFTER DELETE ON pracownicy
+CREATE TRIGGER usunPracownika BEFORE DELETE ON pracownicy
 FOR EACH ROW
 BEGIN
 	DELETE FROM uzytkownicy WHERE id_u=OLD.staff_id;
@@ -272,10 +272,10 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS usunPacjenta;
 DELIMITER $$
 $$ 
-CREATE TRIGGER usunPacjenta AFTER DELETE ON pacjenci
+CREATE TRIGGER usunPacjenta BEFORE DELETE ON pacjenci
 FOR EACH ROW
 BEGIN
-	DELETE FROM notatki WHERE n_id=OLD.p_id;
+	DELETE FROM notatki WHERE id_pacjenta=OLD.p_id;
 END$$
 DELIMITER ;
 
@@ -298,10 +298,10 @@ DELIMITER ;
 DROP TRIGGER IF EXISTS usunZwierzetaWlasciciela;
 DELIMITER $$
 $$ 
-CREATE TRIGGER usunZwierzetaWlasciciela AFTER DELETE ON wlasciciele
+CREATE TRIGGER usunZwierzetaWlasciciela BEFORE DELETE ON wlasciciele
 FOR EACH ROW
 BEGIN
-	DELETE FROM pacjenci WHERE p_id=OLD.w_id;
+	DELETE FROM pacjenci WHERE id_wlasciciela=OLD.w_id;
 END$$
 DELIMITER ;
 
@@ -373,10 +373,11 @@ DELIMITER $$
 CREATE PROCEDURE generateDataBase()
 BEGIN 
 	#TEMP - do łatwego logowania
+    INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'admin');
     INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'lekarz');
     INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'sekretariat');
     INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ('ma','le','98092805975','asd','23','4','55-555');
-	INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'admin');
+	
     
     INSERT INTO rasy (gatunek,rasa) VALUES ('Inny','Inna');
     

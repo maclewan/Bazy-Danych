@@ -431,7 +431,8 @@ public class PanelController {
 
             query="SELECT imie,nazwisko,typ,staff_id " +
                     "FROM pracownicy " +
-                    "WHERE imie LIKE '"+pc1+"' AND nazwisko LIKE '"+pc2+"' AND typ LIKE '"+pc3+"';";
+                    "WHERE imie LIKE '"+pc1+"' AND nazwisko LIKE '"+pc2+"' AND typ LIKE '"+pc3+"' " +
+                    "ORDER BY staff_id;";
 
             stmt = conn.createStatement();
             res = stmt.executeQuery(query);
@@ -663,6 +664,7 @@ public class PanelController {
             } else {
                 System.out.println("Error at restoring");
             }
+            refresh();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (IOException e) {
