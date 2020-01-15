@@ -335,14 +335,14 @@ BEGIN
     #lekarze
     SET @bCounter =3;
      WHILE @bCounter!=0 DO
-		INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES (RANDSTRING(4+FLOOR(RAND()*10)),RANDSTRING(6+FLOOR(RAND()*6)),randomPesel(),'lekarz');
+		INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES (RANDSTRING(4+FLOOR(RAND()*6)),RANDSTRING(6+FLOOR(RAND()*4)),randomPesel(),'lekarz');
         SET @bCounter = @bCounter-1;
 	END WHILE;
     
     #sekretariat
      SET @bCounter =2;
      WHILE @bCounter!=0 DO
-		INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES (RANDSTRING(4+FLOOR(RAND()*10)),RANDSTRING(6+FLOOR(RAND()*6)),randomPesel(),'sekretariat');
+		INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES (RANDSTRING(4+FLOOR(RAND()*6)),RANDSTRING(6+FLOOR(RAND()*4)),randomPesel(),'sekretariat');
         SET @bCounter = @bCounter-1;
 	END WHILE;
     
@@ -350,7 +350,7 @@ BEGIN
      SET @bCounter =40;
      WHILE @bCounter!=0 DO
 		INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania, kod_pocztowy) 
-			VALUES (RANDSTRING(4+FLOOR(RAND()*10)),RANDSTRING(6+FLOOR(RAND()*6)),randomPesel(),RANDSTRING(4+FLOOR(RAND()*10)),FLOOR(rand()*120)+1,FLOOR(rand()*20)+1,CONCAT(10+FLOOR(RAND()*89),'-',100+FLOOR(RAND()*899)));
+			VALUES (RANDSTRING(4+FLOOR(RAND()*6)),RANDSTRING(6+FLOOR(RAND()*5)),randomPesel(),RANDSTRING(4+FLOOR(RAND()*10)),FLOOR(rand()*120)+1,FLOOR(rand()*20)+1,CONCAT(10+FLOOR(RAND()*89),'-',100+FLOOR(RAND()*899)));
         SET @bCounter = @bCounter-1;
 	END WHILE;
    
@@ -359,7 +359,7 @@ BEGIN
     SET @bCounter =120;
      WHILE @bCounter!=0 DO
 		INSERT INTO pacjenci (nazwa, id_wlasciciela, id_rasy, rok_urodzenia, umaszczenie) 
-			VALUES (RANDSTRING(2+FLOOR(RAND()*12)),(SELECT w_id FROM wlasciciele ORDER BY rand() LIMIT 1),(SELECT r_id FROM rasy ORDER BY rand() LIMIT 1),FLOOR(1990+rand()*25),(RANDSTRING(4+FLOOR(RAND()*10))));
+			VALUES (RANDSTRING(2+FLOOR(RAND()*10)),(SELECT w_id FROM wlasciciele ORDER BY rand() LIMIT 1),(SELECT r_id FROM rasy ORDER BY rand() LIMIT 1),FLOOR(1990+rand()*25),(RANDSTRING(4+FLOOR(RAND()*10))));
         SET @bCounter = @bCounter-1;
 	END WHILE;
     
@@ -474,6 +474,37 @@ UPDATE pacjenci SET nazwa= 'sratatatata',id_wlasciciela = '1012',id_rasy='23',ro
 SELECT * from notatki;
 
 SELECT nazwa, umaszczenie, rok_urodzenia, id_wlasciciela,rasa,gatunek FROM pacjenci JOIN rasy on id_rasy=r_id WHERE p_id=10;
+ DELETE from pacjenci WHERE p_id=1;
+SELECT g_id,dzien,godzina,imie, nazwisko FROM terminy JOIN pracownicy ON id_lekarza=staff_id WHERE g_id NOT IN (SELECT id_terminu from wizyty) AND dzien like '' AND (imie LIKE '' OR nazwisko like '');
+SELECT * from wizyty;
 
+INSERT INTO wizyty (id_pacjenta,id_terminu) VALUES ('10','9');
+SELECT * FROM wizyty;
+DELETE FROM wizyty WHERE id_terminu=9;
+
+
+
+DELIMITER $$
+CREATE PROCEDURE umow(IN pac INT,ter INT)
+BEGIN
+	IF pac NOT IN (SELECT p_id FROM pacjenci) THEN
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = 'Nie istnieje taki pacjent';
+	ELSEIF ter NOT IN (SELECT g_id FROM terminy) THEN
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = 'Termin nie istnieje';
+	END IF;
+	
+	START TRANSACTION;
+		INSERT INTO wizyty (id_pacjenta,id_terminu) VALUES (pac,ter); 
+		IF(SELECT count(*) FROM wizyty WHERE id_terminu=ter >1) THEN
+			ROLLBACK;
+			SIGNAL SQLSTATE '45000' 
+			SET MESSAGE_TEXT = 'Termin juz zajęto';
+		ELSE COMMIT;
+        END IF;
+
+END $$
+DELIMITER ;
 
 

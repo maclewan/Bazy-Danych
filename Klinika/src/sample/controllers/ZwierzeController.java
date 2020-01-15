@@ -11,6 +11,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import sample.Classes.SuperArrayList;
 
 import java.io.IOException;
@@ -173,7 +174,27 @@ public class ZwierzeController {
 
     @FXML
     void btnUmowWizyteOnAction(ActionEvent event) {
-        //todo:
+        try {
+            Stage stageD = new Stage();
+            WybTerminController wybTerminController = new WybTerminController(idPacjenta,conn,stageD,this);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/wybierzTermin.fxml"));
+            loader.setController(wybTerminController);
+
+            stageD.setTitle("Wybierz termin wizyty");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+            stageD.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    wybTerminController.stopThreads();
+                }
+            });
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -781,13 +781,22 @@ class Refresher extends Thread{
     }
 
     public void run(){
+        int count=0;
         while(true) {
             try {
                 Thread.sleep(200);
+                count++;
                 if (panelController.getActRequest()) {
                     Platform.runLater(() -> {
                         panelController.refresh();
                     });
+                    count=0;
+                }
+                else if(count>24){
+                    Platform.runLater(() -> {
+                        panelController.refresh();
+                    });
+                    count=0;
                 }
                 else
                     Thread.sleep(80);
