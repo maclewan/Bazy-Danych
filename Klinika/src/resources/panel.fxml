@@ -89,6 +89,7 @@
                   <Button fx:id="btnUsunFiltr" layoutX="505.0" layoutY="10.0" mnemonicParsing="false" onAction="#btnUsunFiltrOnAction" text="Usuń filtry" />
                   <Button fx:id="btnWizEdytuj" layoutX="470.0" layoutY="327.0" mnemonicParsing="false" onAction="#btnWizEdytujOnAction" text="Edytuj terminy" />
                   <Label fx:id="lblWizNU" layoutX="502.0" layoutY="95.0" text="Not. Usun" />
+                  <TextField fx:id="fldWizDzien" layoutX="42.0" layoutY="10.0" prefHeight="26.0" prefWidth="98.0" />
                </children></AnchorPane>
       </content>
     </Tab>

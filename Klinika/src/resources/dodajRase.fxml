@@ -12,6 +12,6 @@
       <TextField fx:id="fldGatunek" layoutX="15.0" layoutY="95.0" prefHeight="26.0" prefWidth="220.0" />
       <Label layoutX="15.0" layoutY="15.0" text="Rasa" />
       <Label layoutX="15.0" layoutY="75.0" text="Gatunek" />
-      <Button fx:id="btnZatwierdz" layoutX="15.0" layoutY="140.0" mnemonicParsing="false" onAction="#btnZatwierdzOnAction" text="Zatwierdź" />
+      <Button fx:id="btnZatwierdz" layoutX="15.0" layoutY="140.0" mnemonicParsing="false" onAction="#btnZatwierdzOnAction" text="Zatwierdz" />
    </children>
 </AnchorPane>

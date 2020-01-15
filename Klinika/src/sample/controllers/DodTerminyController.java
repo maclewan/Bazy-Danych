@@ -52,6 +52,7 @@ public class DodTerminyController {
          */
         datePicker.setValue(LocalDate.now());
         datePicker.setEditable(false);
+        aktWolneTerminy();
     }
 
     @FXML
@@ -73,7 +74,7 @@ public class DodTerminyController {
     private GridPane gridTerminy;
 
     @FXML
-    private ChoiceBox<?> pickerLekarz;
+    private ChoiceBox<String> pickerLekarz;
 
     @FXML
     void btnDodajOnAction(ActionEvent event) {
@@ -84,7 +85,8 @@ public class DodTerminyController {
     void btnWszystkieDo12OnAction(ActionEvent event) {
         aktWolneTerminy();
         for (int i=0; i<8;i++){
-           rBList.get(i).setSelected(!rBList.get(i).isSelected());
+            if(!rBList.get(i).isDisabled())
+                rBList.get(i).setSelected(!rBList.get(i).isSelected());
         }
 
     }
@@ -93,7 +95,8 @@ public class DodTerminyController {
     void btnWszystkieOnAction(ActionEvent event) {
         aktWolneTerminy();
         for (RadioButton radioButton: rBList) {
-            radioButton.setSelected(!radioButton.isSelected());
+            if(!radioButton.isDisabled())
+                radioButton.setSelected(!radioButton.isSelected());
         }
     }
 
@@ -101,7 +104,8 @@ public class DodTerminyController {
     void btnWszystkiePo12OnAction(ActionEvent event) {
         aktWolneTerminy();
         for (int i=8; i<16;i++){
-            rBList.get(i).setSelected(!rBList.get(i).isSelected());
+            if(!rBList.get(i).isDisabled())
+                rBList.get(i).setSelected(!rBList.get(i).isSelected());
 
         }
     }

@@ -24,6 +24,7 @@ public class DodNotatkeController {
     private ResultSet res;
     private String idNotatki;
     private String idWizyty;
+    private String idPacjenta;
 
 
     public DodNotatkeController(Stage stage, boolean isActualisation, char userType, Connection conn) {
@@ -41,7 +42,8 @@ public class DodNotatkeController {
         }
         if(isActualisation)
             updateData();
-
+        else
+            updateData2();
 
     }
 
@@ -65,7 +67,22 @@ public class DodNotatkeController {
     }
 
     public void updateData2(){
+        try {
+            query = "SELECT dzien, godzina, nazwa, p_id " +
+                    "FROM wizyty JOIN terminy ON id_terminu=g_id JOIN pacjenci ON id_pacjenta=p_id " +
+                    "WHERE w_id = '"+idWizyty+"';";
+            stmt = conn.createStatement();
+            res = stmt.executeQuery(query);
+            res.next();
+            String temp ="Nowa notatka do wizyty z dnia "+res.getString(1)+" "+res.getString(2)+"; Zwierze: "+ res.getString(3);
+            lblTytul.setText(temp);
+            idPacjenta=res.getString(4);
 
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -84,17 +101,20 @@ public class DodNotatkeController {
              * aktualizacja notatki
              */
             if (isActualisation) {
-                query = "UPDATE notatki SET komentarz= '" + txtaraTrescNotatki.getText() + "' WHERE n_id='" + idNotatki + "';";
-
-            stmt = conn.createStatement();
-            stmt.executeUpdate(query);
+                query = "UPDATE notatki SET komentarz= '" + txtaraTrescNotatki.getText() + "' " +
+                        "WHERE n_id='" + idNotatki + "';";
+                stmt = conn.createStatement();
+                stmt.executeUpdate(query);
             }
 
             /**
              * dodawanie nowej notatki
              */
             else{
-
+                query="INSERT INTO notatki (id_pacjenta,id_wizyty,komentarz) " +
+                        "VALUES ('"+idPacjenta+"','"+idWizyty+"','"+txtaraTrescNotatki.getText()+"')";
+                stmt = conn.createStatement();
+                stmt.executeUpdate(query);
             }
             stage.close();
         } catch (SQLException e) {
@@ -105,6 +125,10 @@ public class DodNotatkeController {
 
     public void setIdNotatki(String idNotatki) {
         this.idNotatki = idNotatki;
+    }
+
+    public void setIdWizyty(String idWizyty) {
+        this.idWizyty = idWizyty;
     }
 }
 

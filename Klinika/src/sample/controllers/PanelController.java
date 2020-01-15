@@ -119,6 +119,7 @@ public class PanelController {
 
             fldWizZwierz.setVisible(false);
             fldWizWlasciciel.setVisible(false);
+            fldWizDzien.setVisible(false);
 
             fldPracImie.setVisible(false);
             fldPracNazwisko.setVisible(false);
@@ -216,6 +217,7 @@ public class PanelController {
             String zc2="%"+fldZwierzImie.getText()+"%";
             String zc3="%"+fldZwierzGatunek.getText()+"%";
 
+            String wic0="%"+fldWizDzien.getText()+"%";
             String wic1="%"+fldWizWlasciciel.getText()+"%";
             String wic2="%"+fldWizZwierz.getText()+"%";
 
@@ -298,7 +300,7 @@ public class PanelController {
                 query = "SELECT wizyty.w_id AS idWiz,CONCAT(TIME_FORMAT(godzina,'%H:%i'),' ',dzien) AS termin, CONCAT(imie,' ',nazwisko) AS wlasciciel, nazwa, gatunek " +
                         "FROM (((wizyty JOIN terminy ON id_terminu=g_id) JOIN pacjenci ON id_pacjenta=p_id) JOIN rasy ON r_id=id_rasy) JOIN wlasciciele " +
                         "ON id_wlasciciela=wlasciciele.w_id " +
-                        "WHERE (nazwisko LIKE '"+wic1+"' OR imie LIKE '"+wic1+"') AND nazwa LIKE '"+wic2+"' " +
+                        "WHERE (nazwisko LIKE '"+wic1+"' OR imie LIKE '"+wic1+"') AND dzien LIKE '"+wic0+"'AND nazwa LIKE '"+wic2+"' " +
                         "ORDER BY dzien,godzina;";
             }
 
@@ -333,10 +335,11 @@ public class PanelController {
 
                 wizNotBtn.add(new Button("N"));
                 gridWizyty.add(wizNotBtn.getLast(), 4, j);
+                int finalCounter1 = counter;
                 wizNotBtn.getLast().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //todo:Otworz notatke korzystajac z int counter->wizIdWizyty
+                        openNewNotatka(wizIdWizyty.get(finalCounter1));
                     }
                 });
 
@@ -526,6 +529,9 @@ public class PanelController {
     private TextField fldWizZwierz;
 
     @FXML
+    private TextField fldWizDzien;
+
+    @FXML
     private Button btnUsunFiltr;
 
 
@@ -615,6 +621,7 @@ public class PanelController {
     void btnUsunFiltrOnAction(ActionEvent event) {
         fldWizWlasciciel.setText("");
         fldWizZwierz.setText("");
+        fldWizDzien.setText("");
     }
 
     @FXML
@@ -719,6 +726,7 @@ public class PanelController {
         filtry.add(fldWlUlica);
         filtry.add(fldWizWlasciciel);
         filtry.add(fldWizZwierz);
+        filtry.add(fldWizDzien);
         filtry.add(fldPracImie);
         filtry.add(fldPracNazwisko);
         filtry.add(fldPracZawod);
@@ -759,6 +767,26 @@ public class PanelController {
             loader.setController(zwierzeController);
 
             stageD.setTitle("Szczegóły");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openNewNotatka(String idWizyty){
+        try {
+            Stage stageD = new Stage();
+
+            DodNotatkeController dodNotatkeController = new DodNotatkeController(stageD,false,userType,conn);
+            dodNotatkeController.setIdWizyty(idWizyty);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajNotatke.fxml"));
+            loader.setController(dodNotatkeController);
+
+            stageD.setTitle("Nowa Notatka");
             stageD.setScene(new Scene(loader.load()));
             stageD.show();
             stageD.setResizable(false);
