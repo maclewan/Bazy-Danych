@@ -5,7 +5,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -16,6 +18,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Optional;
 
 public class ZwierzeController {
 
@@ -175,7 +178,34 @@ public class ZwierzeController {
 
     @FXML
     void btnUsunZwierzeOnAction(ActionEvent event) {
-        //todo:
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Uwaga!");
+        alert.setHeaderText("Czy chcesz usunąć pacjenta?");
+        alert.setContentText("Potwierdź lub przerwij");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            try {
+                query = "DELETE from pacjenci WHERE p_id='" + idPacjenta + "';";
+                stmt = conn.createStatement();
+                stmt.executeUpdate(query);
+
+
+                alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Uwaga!");
+                alert.setHeaderText(null);
+                alert.setContentText("Poprawnie usunięto pacjenta");
+                alert.showAndWait();
+                stage.close();
+                pc.refresh();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        } else {
+            return;
+        }
     }
 
     public void refresh(){
