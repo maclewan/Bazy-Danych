@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import sample.Classes.SuperArrayList;
 
+import javax.swing.plaf.nimbus.State;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -345,10 +346,11 @@ public class PanelController {
 
                 wizUsunWiz.add(new Button("X"));
                 gridWizyty.add(wizUsunWiz.getLast(), 5, j);
+                int finalCounter2 = counter;
                 wizUsunWiz.getLast().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //todo:usun wizyte korzystajac z int counter ->wizIdWizyty
+                        deleteWizyta(wizIdWizyty.get(finalCounter2));
                     }
                 });
                 counter++;
@@ -626,7 +628,23 @@ public class PanelController {
 
     @FXML
     void btnWizEdytujOnAction(ActionEvent event) {
+        try {
+            Stage stageD = new Stage();
 
+            DodTerminyController dodTerminyController = new DodTerminyController(conn,stageD);
+
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajTerminy.fxml"));
+            loader.setController(dodTerminyController);
+
+            stageD.setTitle("Dodaj terminy");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -792,6 +810,24 @@ public class PanelController {
             stageD.setResizable(false);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteWizyta(String idWizyty){
+        try {
+            String query = "DELETE FROM wizyty WHERE w_id='" + idWizyty + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            refresh();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Usuwanie wizyty");
+            alert.setHeaderText("Poprawnie odmówiono wizytę");
+            alert.setContentText("Termin został zwolniony");
+
+            alert.showAndWait();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }

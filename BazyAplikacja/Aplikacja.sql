@@ -279,6 +279,19 @@ BEGIN
 END$$
 DELIMITER ;
 
+#######################################################
+#usuwanie notatek po usunięciu wizyty
+DROP TRIGGER IF EXISTS usunNotatki;
+DELIMITER $$
+$$ 
+CREATE TRIGGER usunNotatki BEFORE DELETE ON wizyty
+FOR EACH ROW
+BEGIN
+	DELETE FROM notatki WHERE id_wizyty=OLD.w_id;
+END$$
+DELIMITER ;
+
+
 ###############
 #usuwanie zwierzat po usunieciu wlasciciela
 
@@ -306,6 +319,48 @@ BEGIN
 		SET MESSAGE_TEXT = 'Rasa istnieje juz w bazie';
 	END IF;
 END$$
+DELIMITER ;
+
+##########################################3
+#sprawdzanie czy nie ma takiego terminu już
+DROP TRIGGER IF EXISTS sprawdzTermin;
+DELIMITER $$
+$$ 
+CREATE TRIGGER sprawdzTermin BEFORE INSERT ON terminy
+FOR EACH ROW
+BEGIN
+	IF (SELECT count(*) FROM terminy WHERE dzien=NEW.dzien AND godzina = NEW.godzina AND id_lekarza=NEW.id_lekarza)THEN
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = 'Termin istnieje juz w bazie';
+	END IF;
+END$$
+DELIMITER ;
+
+
+############################################
+#procedura dodawania wizyt
+
+DELIMITER $$
+CREATE PROCEDURE umow(IN pac INT,ter INT)
+BEGIN
+	IF pac NOT IN (SELECT p_id FROM pacjenci) THEN
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = 'Nie istnieje taki pacjent';
+	ELSEIF ter NOT IN (SELECT g_id FROM terminy) THEN
+		SIGNAL SQLSTATE '45000' 
+		SET MESSAGE_TEXT = 'Termin nie istnieje';
+	END IF;
+	
+	START TRANSACTION;
+		INSERT INTO wizyty (id_pacjenta,id_terminu) VALUES (pac,ter); 
+		IF((SELECT count(*) FROM wizyty WHERE id_terminu=ter) >1) THEN
+			ROLLBACK;
+			SIGNAL SQLSTATE '45000' 
+			SET MESSAGE_TEXT = 'Termin juz zajęto';
+		ELSE COMMIT;
+        END IF;
+
+END $$
 DELIMITER ;
 
 
@@ -482,29 +537,25 @@ INSERT INTO wizyty (id_pacjenta,id_terminu) VALUES ('10','9');
 SELECT * FROM wizyty;
 DELETE FROM wizyty WHERE id_terminu=9;
 
+SELECT dzien, godzina, nazwa FROM wizyty JOIN terminy ON id_terminu=g_id JOIN pacjenci ON id_pacjenta=p_id WHERE w_id = 10;
+
+DELETE FROM wizyty WHERE id_pacjenta =75;
+SELECT * from wizyty;
+SELECT * from notatki;
+SELECT * from terminy ORDER BY dzien,godzina;
+
+call umow('10','9');
+
+SELECT godzina, dzien FROM terminy ;
 
 
-DELIMITER $$
-CREATE PROCEDURE umow(IN pac INT,ter INT)
-BEGIN
-	IF pac NOT IN (SELECT p_id FROM pacjenci) THEN
-		SIGNAL SQLSTATE '45000' 
-		SET MESSAGE_TEXT = 'Nie istnieje taki pacjent';
-	ELSEIF ter NOT IN (SELECT g_id FROM terminy) THEN
-		SIGNAL SQLSTATE '45000' 
-		SET MESSAGE_TEXT = 'Termin nie istnieje';
-	END IF;
-	
-	START TRANSACTION;
-		INSERT INTO wizyty (id_pacjenta,id_terminu) VALUES (pac,ter); 
-		IF(SELECT count(*) FROM wizyty WHERE id_terminu=ter >1) THEN
-			ROLLBACK;
-			SIGNAL SQLSTATE '45000' 
-			SET MESSAGE_TEXT = 'Termin juz zajęto';
-		ELSE COMMIT;
-        END IF;
+SELECT * FROM terminy ORDER BY dzien DESC;
 
-END $$
-DELIMITER ;
+INSERT into terminy (dzien,godzina,id_lekarza) VALUES ('2030-10-11','8:30',1);
+
+
+
+
+
 
 

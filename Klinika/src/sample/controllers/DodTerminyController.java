@@ -1,15 +1,19 @@
 package sample.controllers;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import sample.Classes.SuperArrayList;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -17,6 +21,14 @@ public class DodTerminyController {
 
     private SuperArrayList<RadioButton> rBList= new SuperArrayList<>();
     private LocalDate lastSetDate =LocalDate.now();
+    private Connection conn;
+    private Stage stage;
+    private ObservableList<String> lekarzeList;
+
+    public DodTerminyController(Connection conn, Stage stage) {
+        this.conn = conn;
+        this.stage = stage;
+    }
 
     @FXML
     private void initialize(){
@@ -52,8 +64,39 @@ public class DodTerminyController {
          */
         datePicker.setValue(LocalDate.now());
         datePicker.setEditable(false);
+
+        /**
+         * Pobierz terminy
+         */
         aktWolneTerminy();
+        /**
+         * Pobierz lekarzy
+         */
+        try {
+            String query = "SELECT concat(imie,' ', nazwisko),staff_id FROM pracownicy WHERE typ ='lekarz';";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+
+            lekarzeList= FXCollections.observableArrayList();
+
+
+            while(res.next()){
+                lekarzeList.add(res.getString(1));
+
+            }
+
+            pickerLekarz.setItems(lekarzeList);
+            pickerLekarz.setValue(lekarzeList.get(0));
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
+
 
     @FXML
     private DatePicker datePicker;
@@ -76,10 +119,7 @@ public class DodTerminyController {
     @FXML
     private ChoiceBox<String> pickerLekarz;
 
-    @FXML
-    void btnDodajOnAction(ActionEvent event) {
 
-    }
 
     @FXML
     void btnWszystkieDo12OnAction(ActionEvent event) {
@@ -120,7 +160,71 @@ public class DodTerminyController {
     }
 
     public void aktWolneTerminy(){
-        //todo: połącz z bazą i pobierz wolne terminy na ten dzień
+        try {
+            String query = "SELECT godzina FROM terminy WHERE dzien ='" + datePicker.getValue() + "';";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+
+            SuperArrayList<String> listaZajetychterminow =new SuperArrayList<>();
+            while(res.next()){
+                listaZajetychterminow.add(res.getString(1));
+            }
+
+            for (RadioButton rb:rBList) {
+                if(listaZajetychterminow.superContains(rb.getText()+":00")){
+                    rb.setDisable(true);
+                }
+                else
+                    rb.setDisable(false);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void btnDodajOnAction(ActionEvent event) {
+
+        String idLekarza;
+        String data=datePicker.getValue().toString();
+        try {
+            String query = "SELECT staff_id FROM pracownicy WHERE typ='lekarz' AND CONCAT(imie,' ',nazwisko)='" + pickerLekarz.getValue() + "';";
+            Statement stmt = conn.createStatement();
+            ResultSet res = stmt.executeQuery(query);
+            res.next();
+            idLekarza=res.getString(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
+        }
+
+        for (RadioButton rb: rBList) {
+            try {
+                if (!rb.isSelected() || rb.isDisabled()) {
+                    continue;
+                }
+                String query = "INSERT into terminy (dzien,godzina,id_lekarza) " +
+                        "VALUES ('" + data + "','" + rb.getText() + "','" + idLekarza + "');";
+                Statement stmt = conn.createStatement();
+                stmt.executeUpdate(query);
+                rb.setSelected(false);
+                rb.setDisable(true);
+
+            } catch (SQLException e) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Problem");
+                alert.setHeaderText("Błąd dodawania terminu");
+                alert.setContentText("Nie udało się dodać terminu: "+data+" "+rb.getText());
+
+                alert.showAndWait();
+            }
+
+        }
+        aktWolneTerminy();
+
+
     }
 
 }
