@@ -272,10 +272,11 @@ public class PanelController {
 
                 zwierzWiecej.add(new Button("W"));
                 gridZwierz.add(zwierzWiecej.getLast(), 3, j);
+                int finalCounter = counter;
                 zwierzWiecej.getLast().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //todo:Otworz szczegóły korzystajac z int counter
+                        openZwierzDetails(finalCounter);
                     }
                 });
                 counter++;
@@ -648,10 +649,9 @@ public class PanelController {
 
     @FXML
     void btnZwierzDodajZwOnAction(ActionEvent event) {
-        //todo: otwórz nowe okno
         try {
             Stage stageD = new Stage();
-            DodZwierzeController dodZwierzeController = new DodZwierzeController(this,stageD);
+            DodZwierzeController dodZwierzeController = new DodZwierzeController(this,stageD,conn);
 
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajZwierze.fxml"));
             loader.setController(dodZwierzeController);
@@ -668,7 +668,21 @@ public class PanelController {
 
     @FXML
     void btnZwierzDodajRaseOnAction(ActionEvent event){
+        try {
+            Stage stageD = new Stage();
+            DodRaseController dodRaseController = new DodRaseController(conn,stageD,this);
 
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajRase.fxml"));
+            loader.setController(dodRaseController);
+
+            stageD.setTitle("Dodaj Rase");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -733,6 +747,25 @@ public class PanelController {
             refresher.interrupt();
         });
 
+    }
+
+    private void openZwierzDetails(int index){
+        try {
+            Stage stageD = new Stage();
+            String idPacjenta=zwierzIdPacjenta.get(index);
+            ZwierzeController zwierzeController = new ZwierzeController(stageD,conn,this,idPacjenta,userType);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/zwierze.fxml"));
+            loader.setController(zwierzeController);
+
+            stageD.setTitle("Szczegóły");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

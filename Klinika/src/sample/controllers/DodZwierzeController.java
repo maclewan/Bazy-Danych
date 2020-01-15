@@ -18,8 +18,10 @@ import java.time.LocalDate;
 
 public class DodZwierzeController {
 
-    public DodZwierzeController(PanelController panelController, Stage tStage){
+    public DodZwierzeController(PanelController panelController, Stage tStage, Connection conn){
         this.panelController=panelController;
+        this.tStage=tStage;
+        this.conn=conn;
     }
 
     private int rok;
@@ -30,6 +32,8 @@ public class DodZwierzeController {
     private Statement stmt;
     private String query;
     private ResultSet res;
+    private boolean isActualisation=false;
+    private String idZwierza;
 
 
     @FXML
@@ -66,7 +70,7 @@ public class DodZwierzeController {
                     }
                 if (newValue.length() != 0)
                     try {
-                        rok = Integer.parseInt(newValue); //todo:catchowanie numberformat
+                        rok = Integer.parseInt(newValue);
                     }catch (NumberFormatException e){
                         Platform.runLater(() -> {
                             fldRok.setText(oldValue);
@@ -133,11 +137,40 @@ public class DodZwierzeController {
             e.printStackTrace();
         }
 
-        System.out.println(imie+";"+umaszczenie+";"+rok+";"+idRasy+";"+idWlasciciela);
+        if(imie.equals("")||idWlasciciela.equals("")){
+            btnZatwierdz.setText("Brak danych");
+            return;
+        }
 
-        //todo: dodaj zwierzaka do bazy
+        try {
+            stmt = conn.createStatement();
+            if(!isActualisation) {
+                query = "INSERT INTO pacjenci(nazwa,id_wlasciciela,id_rasy,rok_urodzenia,umaszczenie) " +
+                        "VALUES('" + imie + "','" + idWlasciciela + "','" + idRasy + "','" + rok + "','" + umaszczenie + "');";
+            }
+            else{
+                //todo: aktualizacja
+            }
+            stmt.executeUpdate(query);
+            panelController.refresh();
+            tStage.close();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-
+    public void setIsactualisation(boolean isActualisation) {
+        this.isActualisation = isActualisation;
+    }
+    public void setActData(String idZwierza,String nazwa,String umaszczenie,String Rok, String IDwlasciciela, String Rasa, String Gatunek){
+        this.idZwierza=idZwierza;
+        fldNazwa.setText(nazwa);
+        fldUmaszczenie.setText(umaszczenie);
+        fldRok.setText(Rok);
+        fldId.setText(IDwlasciciela);
+        String temp=Rasa+" - "+Gatunek;
+        pickerGatunek.setValue(temp);
+    }
 }
+
