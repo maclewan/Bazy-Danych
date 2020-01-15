@@ -323,7 +323,7 @@ BEGIN
     INSERT INTO wlasciciele (imie,nazwisko,pesel,ulica,nr_domu,nr_mieszkania,kod_pocztowy) VALUES ('ma','le','98092805975','asd','23','4','55-555');
 	INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('ma','le',98092805975,'admin');
     
-    INSERT INTO rasy (gatunek,rasa) VALUES ('Inna','Inna');
+    INSERT INTO rasy (gatunek,rasa) VALUES ('Inny','Inna');
     
 	#rasy
     SET @bCounter =25;
@@ -460,10 +460,20 @@ SELECT imie,nazwisko,typ,staff_id FROM pracownicy;
 
 SELECT r_id, gatunek, rasa FROM rasy;
 
-Use klinika;
-SELECT r_id FROM rasy WHERE CONCAT(gatunek,' - ',rasa)= 'UBYH - SUCYGRPDRFC';
+SELECT nazwa,rasa,gatunek,rok_urodzenia AS rok, umaszczenie FROM pacjenci JOIN rasy ON id_rasy=r_id WHERE p_id=10;
+SELECT n_id, godzina,dzien FROM (terminy JOIN wizyty ON g_id=id_terminu ) JOIN notatki ON id_wizyty=w_id WHERE notatki.id_pacjenta =21;
 
-SELECT CONCAT(a,b);
+SELECT dzien,godzina,nazwa,komentarz FROM ((notatki JOIN pacjenci ON id_pacjenta=p_id) JOIN wizyty ON id_wizyty=w_id) JOIN terminy ON id_terminu = g_id WHERE n_id=27;
+
+
+SELECT * FROM wizyty;
+Select * FROM notatki;
+Select * from pacjenci;
+
+UPDATE pacjenci SET nazwa= 'sratatatata',id_wlasciciela = '1012',id_rasy='23',rok_urodzenia='1975',umaszczenie='aersh' WHERE p_id=1;
+SELECT * from notatki;
+
+SELECT nazwa, umaszczenie, rok_urodzenia, id_wlasciciela,rasa,gatunek FROM pacjenci JOIN rasy on id_rasy=r_id WHERE p_id=10;
 
 
 

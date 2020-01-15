@@ -3,12 +3,15 @@ package sample.controllers;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.Classes.SuperArrayList;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,8 +44,15 @@ public class ZwierzeController {
         if(userTyp=='w'){
             btnEdytuj.setVisible(false);
         }
+        updateData();
 
+    }
+
+    private void updateData(){
         try {
+            /**
+             * Dane do nagłowka
+             */
             query = "SELECT nazwa,rasa,gatunek,rok_urodzenia AS rok, umaszczenie FROM pacjenci JOIN rasy ON id_rasy=r_id WHERE p_id='" + idPacjenta + "';";
             stmt = conn.createStatement();
             res = stmt.executeQuery(query);
@@ -51,33 +61,28 @@ public class ZwierzeController {
             lblZwierz1.setText(temp);
             temp="rok urodzenia: "+res.getString(4)+", umaszczenie: "+res.getString(5);
             lblZwierz2.setText(temp);
-            updateData();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
 
-    }
-
-    private void updateData(){
-        try {
             query = "SELECT n_id, godzina,dzien FROM (terminy JOIN wizyty ON g_id=id_terminu ) JOIN notatki ON id_wizyty=w_id " +
                     "WHERE notatki.id_pacjenta ='"+idPacjenta+ "' " +
                     "ORDER BY dzien, godzina, n_id;";
-            Statement stmt = conn.createStatement();
-            ResultSet res = stmt.executeQuery(query);
+            stmt = conn.createStatement();
+            res = stmt.executeQuery(query);
+
 
             SuperArrayList<String> listaNotId = new SuperArrayList<>();
             SuperArrayList<Label> listaLabel = new SuperArrayList<>();
             SuperArrayList<Button> listaButton = new SuperArrayList<>();
 
+            /**
+             * Dane do tabelki notatek
+             */
             int counter=0;
             while (res.next()) {
                 int j = gridNotatki.getRowCount();
                 listaNotId.add(res.getString(1));
 
-                String temp=res.getString(2)+" "+res.getString(3);
+                temp=res.getString(2)+" "+res.getString(3);
                 listaLabel.add(new Label(temp));
                 gridNotatki.add(listaLabel.getLast(), 0, j);
 
@@ -88,7 +93,7 @@ public class ZwierzeController {
                 listaButton.getLast().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //todo: wyswietl wiecej info z notatki korzystajac z listaNOtid i counter
+                        pokazNotatke(listaNotId.get(finalCounter));
                     }
                 });
                 counter++;
@@ -102,6 +107,27 @@ public class ZwierzeController {
             e.printStackTrace();
         }
     }
+
+    private void pokazNotatke(String idNotatki){
+       try {
+           Stage stageD = new Stage();
+           DodNotatkeController dodNotatkeController = new DodNotatkeController(stageD,true,userTyp,conn);
+           dodNotatkeController.setIdNotatki(idNotatki);
+
+           FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajNotatke.fxml"));
+           loader.setController(dodNotatkeController);
+
+           stageD.setTitle("Notatka "+idNotatki);
+           stageD.setScene(new Scene(loader.load()));
+           stageD.show();
+           stageD.setResizable(false);
+       }
+       catch (IOException e) {
+           e.printStackTrace();
+       }
+    }
+
+
 
 
     @FXML
@@ -124,7 +150,21 @@ public class ZwierzeController {
 
     @FXML
     void btnEdytujOnAction(ActionEvent event) {
-        //todo: JAKOŚ edytuj
+        try {
+            Stage stageD = new Stage();
+            DodZwierzeController dodZwierzeController = new DodZwierzeController(this,stageD,conn,idPacjenta);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajZwierze.fxml"));
+            loader.setController(dodZwierzeController);
+
+            stageD.setTitle("Edytuj zwierzaka");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -136,6 +176,11 @@ public class ZwierzeController {
     @FXML
     void btnUsunZwierzeOnAction(ActionEvent event) {
         //todo:
+    }
+
+    public void refresh(){
+        updateData();
+        pc.refresh();
     }
 
 }

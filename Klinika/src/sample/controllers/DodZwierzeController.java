@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -18,14 +19,36 @@ import java.time.LocalDate;
 
 public class DodZwierzeController {
 
+    /**
+     * Konstruktor do dodawania zawierzecia
+     * @param panelController
+     * @param tStage
+     * @param conn
+     */
     public DodZwierzeController(PanelController panelController, Stage tStage, Connection conn){
         this.panelController=panelController;
         this.tStage=tStage;
         this.conn=conn;
     }
 
+    /**
+     * Konstruktor do edytowania zwierzęcia
+     * @param zwierzeController
+     * @param tStage
+     * @param conn
+     * @param idZwierza
+     */
+    public DodZwierzeController(ZwierzeController zwierzeController,Stage tStage, Connection conn, String idZwierza){
+        isActualisation=true;
+        this.zwierzeController=zwierzeController;
+        this.tStage=tStage;
+        this.conn=conn;
+        this.idZwierza=idZwierza;
+    }
+
     private int rok;
     private PanelController panelController;
+    private ZwierzeController zwierzeController;
     private Connection conn;
     private ObservableList<String> rasyList;
     private Stage tStage;
@@ -39,7 +62,6 @@ public class DodZwierzeController {
     @FXML
     private void initialize(){
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/klinika", "log@localhost", "pas");
             stmt = conn.createStatement();
             query="SELECT gatunek, rasa FROM rasy ORDER BY r_id";
             res = stmt.executeQuery(query);
@@ -57,7 +79,6 @@ public class DodZwierzeController {
             pickerGatunek.setValue("Inna - Inna");
 
 
-            btnZatwierdz.setDisable(true);
             fldRok.textProperty().addListener((observable, oldValue, newValue) -> {
 
                 btnZatwierdz.setDisable(false);
@@ -82,9 +103,18 @@ public class DodZwierzeController {
                     btnZatwierdz.setDisable(true);
 
             });
+            if(isActualisation){
+                stmt = conn.createStatement();
+                query="SELECT nazwa, umaszczenie, rok_urodzenia, id_wlasciciela,rasa,gatunek FROM pacjenci JOIN rasy on id_rasy=r_id WHERE p_id='"+idZwierza+"';";
+                res = stmt.executeQuery(query);
+                res.next();
+                System.out.println(res.getString(5));
+                setActData(res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
     @FXML
     private TextField fldNazwa;
@@ -129,7 +159,14 @@ public class DodZwierzeController {
             res = stmt.executeQuery(query);
             res.next();
             if(res.getString("c").equals("0")){
-                fldId.setText("Złe id Właściciela");
+                fldId.setText("");
+
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Błędne dane");
+                alert.setHeaderText("Złe id Właściciela");
+                alert.setContentText("Popraw dane");
+                alert.showAndWait();
+
                 return;
             }
 
@@ -137,8 +174,14 @@ public class DodZwierzeController {
             e.printStackTrace();
         }
 
-        if(imie.equals("")||idWlasciciela.equals("")){
-            btnZatwierdz.setText("Brak danych");
+        if(imie.equals("")){
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Błędne dane");
+            alert.setHeaderText("Brak danych");
+            alert.setContentText("Popraw dane");
+            alert.showAndWait();
+
             return;
         }
 
@@ -147,12 +190,17 @@ public class DodZwierzeController {
             if(!isActualisation) {
                 query = "INSERT INTO pacjenci(nazwa,id_wlasciciela,id_rasy,rok_urodzenia,umaszczenie) " +
                         "VALUES('" + imie + "','" + idWlasciciela + "','" + idRasy + "','" + rok + "','" + umaszczenie + "');";
+                stmt.executeUpdate(query);
+                panelController.refresh();
             }
             else{
-                //todo: aktualizacja
+                query="UPDATE pacjenci " +
+                        "SET nazwa= '"+imie+"',id_wlasciciela = '"+idWlasciciela+"',id_rasy='"+idRasy+"',rok_urodzenia='"+rok+"',umaszczenie='"+umaszczenie+"' WHERE p_id='"+idZwierza+"';";
+                stmt.executeUpdate(query);
+                zwierzeController.refresh();
             }
-            stmt.executeUpdate(query);
-            panelController.refresh();
+
+
             tStage.close();
 
         } catch (SQLException e) {
@@ -160,16 +208,14 @@ public class DodZwierzeController {
         }
     }
 
-    public void setIsactualisation(boolean isActualisation) {
-        this.isActualisation = isActualisation;
-    }
-    public void setActData(String idZwierza,String nazwa,String umaszczenie,String Rok, String IDwlasciciela, String Rasa, String Gatunek){
-        this.idZwierza=idZwierza;
+
+    private void setActData(String nazwa, String umaszczenie, String Rok, String IDwlasciciela, String Rasa, String Gatunek){
         fldNazwa.setText(nazwa);
         fldUmaszczenie.setText(umaszczenie);
         fldRok.setText(Rok);
         fldId.setText(IDwlasciciela);
-        String temp=Rasa+" - "+Gatunek;
+        String temp=Gatunek+" - "+Rasa;
+        System.out.println(temp);
         pickerGatunek.setValue(temp);
     }
 }
