@@ -197,6 +197,8 @@ public class PanelController {
             }
             btnZwierzDodajRase.setVisible(false);
             btnPracDodajPrac.setVisible(false);
+            btnBackup.setVisible(false);
+            btnRestore.setVisible(false);
         }
     }
 
@@ -246,7 +248,8 @@ public class PanelController {
             else {
                 query = "SELECT p_id, imie, nazwisko, nazwa, gatunek FROM (pacjenci JOIN rasy ON pacjenci.id_rasy=rasy.r_id) " +
                         "JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id " +
-                        "WHERE (nazwisko LIKE '"+zc1+"' OR imie LIKE '"+zc1+"') AND nazwa LIKE '"+zc2+"' AND gatunek LIKE '"+zc3+"' " +
+                        "WHERE (nazwisko LIKE '"+zc1+"' OR imie LIKE '"+zc1+"' OR CONCAT(imie,' ',nazwisko) LIKE '"+zc1+"' OR CONCAT(nazwisko,' ',imie) LIKE '"+zc1+"') " +
+                        "AND nazwa LIKE '"+zc2+"' AND gatunek LIKE '"+zc3+"' " +
                         "ORDER BY nazwisko,imie;";
             }
 
@@ -411,10 +414,11 @@ public class PanelController {
 
                 wlUsun.add(new Button("X"));
                 gridWlasciciel.add(wlUsun.getLast(), 5, j);
+                int finalCounter3 = counter;
                 wlUsun.getLast().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //todo:usun wlasciciela korzystajac z int counter ->wizIdWlasciciela
+                        deleteWlasciciel(wlIdWlasciciela.get(finalCounter3));
                     }
                 });
                 counter++;
@@ -467,10 +471,11 @@ public class PanelController {
 
                 pracUsun.add(new Button("X"));
                 gridPracownicy.add(pracUsun.getLast(), 5, j);
+                int finalCounter4 = counter;
                 pracUsun.getLast().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //todo:usun pracownika korzystajac z int counter ->pracNumerId
+                        deletePracownik(pracNumerId.get(finalCounter4).getText());
                     }
                 });
                 counter++;
@@ -489,6 +494,8 @@ public class PanelController {
         }
 
     }
+
+
 
 
     @FXML
@@ -589,6 +596,12 @@ public class PanelController {
     private Button btnPracFiltr;
 
     @FXML
+    private Button btnBackup;
+
+    @FXML
+    private Button btnRestore;
+
+    @FXML
     private TextField fldPracImie;
 
     @FXML
@@ -612,6 +625,50 @@ public class PanelController {
         fldPracImie.setText("");
         fldPracNazwisko.setText("");
         fldPracZawod.setText("");
+    }
+
+    @FXML
+    void btnBackupOnAction(ActionEvent event) {
+
+        try {
+
+            String executeCmd = "mysqldump -u" + "root" + " -p" + "Zapisy124567" + " " + "klinika" + " -r " + "klinikaBackup.sql";
+            Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
+            int processComplete = runtimeProcess.waitFor();
+            if (processComplete == 0) {
+                System.out.println("Backup Complete");
+            } else {
+                System.out.println("Backup Failure");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void btnRestoreOnAction(ActionEvent event) {
+
+        try{
+            String[] executeCmd = new String[]{"mysql", "klinika", "-u" + "root", "-p" + "Zapisy124567", "-e", " source " + "klinikaBackup.sql"};
+
+            Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
+            int processComplete = runtimeProcess.waitFor();
+
+
+            if (processComplete == 0) {
+                System.out.println("Successfully restored from SQL : " + "hobby12334.sql");
+            } else {
+                System.out.println("Error at restoring");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -667,6 +724,8 @@ public class PanelController {
         fldWlNazwisko.setText("");
 
     }
+
+
 
     /**
      * Tab Zwierzęta
@@ -825,6 +884,42 @@ public class PanelController {
             alert.setTitle("Usuwanie wizyty");
             alert.setHeaderText("Poprawnie odmówiono wizytę");
             alert.setContentText("Termin został zwolniony");
+
+            alert.showAndWait();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteWlasciciel(String idWlasciciela) {
+        try {
+            String query = "DELETE FROM wlasciciele WHERE w_id='" + idWlasciciela + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            refresh();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Usuwanie właściciela");
+            alert.setHeaderText("Poprawnie usunięto właściciela");
+            alert.setContentText("Właściciel został usunięty");
+
+            alert.showAndWait();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deletePracownik(String idPracownika) {
+        try {
+            String query = "DELETE FROM pracownicy WHERE staff_id='" + idPracownika + "';";
+            Statement stmt = conn.createStatement();
+            stmt.executeUpdate(query);
+            refresh();
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Usuwanie pracownika");
+            alert.setHeaderText("Poprawnie usunięto pracownika");
+            alert.setContentText("Pracownik został usunięty");
 
             alert.showAndWait();
         } catch (SQLException e) {
