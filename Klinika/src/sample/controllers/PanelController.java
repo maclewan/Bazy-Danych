@@ -15,6 +15,7 @@ import javafx.stage.WindowEvent;
 import sample.Classes.SuperArrayList;
 
 import javax.swing.plaf.nimbus.State;
+import java.awt.desktop.SystemSleepEvent;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -373,6 +374,7 @@ public class PanelController {
                         "ORDER BY nazwisko, imie;";
             }
 
+
             stmt = conn.createStatement();
             res = stmt.executeQuery(query);
 
@@ -405,10 +407,11 @@ public class PanelController {
 
                 wlEdit.add(new Button("Edit"));
                 gridWlasciciel.add(wlEdit.getLast(), 4, j);
+                int finalCounter5 = counter;
                 wlEdit.getLast().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //todo:Edytuj dane wlasciciela korzystajac z int counter->wizIdWlasciciela
+                        edytujWlasciciela(wlIdWlasciciela.get(finalCounter5));
                     }
                 });
 
@@ -463,10 +466,11 @@ public class PanelController {
 
                 pracEdit.add(new Button("Edit"));
                 gridPracownicy.add(pracEdit.getLast(), 4, j);
+                int finalCounter6 = counter;
                 pracEdit.getLast().setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
-                        //todo:Edytuj dane pracownika korzystajac z int counter->pracNumerId
+                        edytujPracownika(pracNumerId.get(finalCounter6).getText());
                     }
                 });
 
@@ -617,7 +621,22 @@ public class PanelController {
 
     @FXML
     void btnPracDodajPracOnAction(ActionEvent event) {
+        try {
+            Stage stageD = new Stage();
 
+            DodPracownikaController dodPracownikaController = new DodPracownikaController(conn,this,stageD);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajPracownika.fxml"));
+            loader.setController(dodPracownikaController);
+
+            stageD.setTitle("Dodaj nowego Pracownika");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -715,7 +734,22 @@ public class PanelController {
 
     @FXML
     void btnWlDodajOnAction(ActionEvent event) {
+        try {
+            Stage stageD = new Stage();
 
+            DodWlascicielaController dodWlascicielaController = new DodWlascicielaController(conn,this,stageD);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajWlasciciela.fxml"));
+            loader.setController(dodWlascicielaController);
+
+            stageD.setTitle("Nowy właściciel");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -929,7 +963,45 @@ public class PanelController {
         }
     }
 
+    private void edytujWlasciciela(String idWlasciciela) {
+        try {
+            Stage stageD = new Stage();
 
+            DodWlascicielaController dodWlascicielaController = new DodWlascicielaController(idWlasciciela,conn,this,stageD);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajWlasciciela.fxml"));
+            loader.setController(dodWlascicielaController);
+
+            stageD.setTitle("Edytuj dane właściciela");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void edytujPracownika(String idPracownika) {
+        try {
+            Stage stageD = new Stage();
+
+            DodPracownikaController dodPracownikaController = new DodPracownikaController(idPracownika,conn,this,stageD);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("resources/dodajPracownika.fxml"));
+            loader.setController(dodPracownikaController);
+
+            stageD.setTitle("Edytuj dane Pracownika");
+            stageD.setScene(new Scene(loader.load()));
+            stageD.show();
+            stageD.setResizable(false);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
 

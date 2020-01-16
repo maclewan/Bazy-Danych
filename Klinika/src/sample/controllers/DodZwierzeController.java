@@ -104,12 +104,7 @@ public class DodZwierzeController {
 
             });
             if(isActualisation){
-                stmt = conn.createStatement();
-                query="SELECT nazwa, umaszczenie, rok_urodzenia, id_wlasciciela,rasa,gatunek FROM pacjenci JOIN rasy on id_rasy=r_id WHERE p_id='"+idZwierza+"';";
-                res = stmt.executeQuery(query);
-                res.next();
-                System.out.println(res.getString(5));
-                setActData(res.getString(1),res.getString(2),res.getString(3),res.getString(4),res.getString(5),res.getString(6));
+                setActData();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -209,14 +204,33 @@ public class DodZwierzeController {
     }
 
 
-    private void setActData(String nazwa, String umaszczenie, String Rok, String IDwlasciciela, String Rasa, String Gatunek){
-        fldNazwa.setText(nazwa);
-        fldUmaszczenie.setText(umaszczenie);
-        fldRok.setText(Rok);
-        fldId.setText(IDwlasciciela);
-        String temp=Gatunek+" - "+Rasa;
-        System.out.println(temp);
-        pickerGatunek.setValue(temp);
+    private void setActData(){
+        try {
+            stmt = conn.createStatement();
+            query = "SELECT nazwa, umaszczenie, rok_urodzenia, id_wlasciciela,rasa,gatunek FROM pacjenci JOIN rasy on id_rasy=r_id WHERE p_id='" + idZwierza + "';";
+            res = stmt.executeQuery(query);
+            res.next();
+
+            String nazwa = res.getString(1);
+            String umaszczenie = res.getString(2);
+            String Rok = res.getString(3);
+            String IDwlasciciela = res.getString(4);
+            String Rasa = res.getString(5);
+            String Gatunek = res.getString(6);
+
+
+            fldNazwa.setText(nazwa);
+            fldUmaszczenie.setText(umaszczenie);
+            fldRok.setText(Rok);
+            fldId.setText(IDwlasciciela);
+            String temp = Gatunek + " - " + Rasa;
+            pickerGatunek.setValue(temp);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
 
