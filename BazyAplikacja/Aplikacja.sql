@@ -37,6 +37,7 @@ PRIMARY KEY(w_id)
 );
 
 
+
 ALTER TABLE wlasciciele auto_increment = 1000;
 
 CREATE TABLE pracownicy
@@ -476,25 +477,47 @@ CREATE INDEX index2 ON wlasciciele(w_id,imie,nazwisko,ulica,kod_pocztowy);
 CREATE INDEX index3 ON pacjenci(p_id,nazwa,id_wlasciciela,id_rasy);
 CREATE INDEX index4 ON rasy(r_id);
 
+DROP USER 'log@localhost';
 CREATE USER 'log@localhost';
 SET PASSWORD FOR 'log@localhost' = 'pas';
 GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
-GRANT ALL PRIVILEGES ON klinika.* TO 'log@localhost';
 FLUSH PRIVILEGES;
 
+DROP USER 'wlasc@localhost';
 CREATE USER 'wlasc@localhost';
 SET PASSWORD FOR 'wlasc@localhost' = 'w3pa2kvi3';
-GRANT ALL PRIVILEGES ON klinika.* TO 'wlasc@localhost';
+GRANT EXECUTE ON klinika.* TO 'wlasc@localhost';
+GRANT SELECT, INSERT, UPDATE, DELETE ON klinika.wizyty TO 'wlasc@localhost';
+GRANT SELECT, UPDATE ON klinika.wlasciciele TO 'wlasc@localhost';
+GRANT SELECT ON klinika.pacjenci TO 'wlasc@localhost';
+GRANT SELECT ON klinika.notatki TO 'wlasc@localhost';
+GRANT SELECT ON klinika.terminy TO 'wlasc@localhost';
+GRANT SELECT ON klinika.rasy TO 'wlasc@localhost';
+GRANT SELECT ON klinika.pracownicy TO 'wlasc@localhost';
 FLUSH PRIVILEGES;
 
 CREATE USER 'lek@localhost';
 SET PASSWORD FOR 'lek@localhost' = 'l3efj29chj';
-GRANT ALL PRIVILEGES ON klinika.* TO 'lek@localhost';
+GRANT EXECUTE ON klinika.* TO 'lek@localhost';
+GRANT DELETE,UPDATE,SELECT,DELETE ON klinika.pacjenci TO 'lek@localhost';
+GRANT SELECT,UPDATE ON klinika.wlasciciele TO 'lek@localhost';
+GRANT SELECT,INSERT,UPDATE ON klinika.notatki TO 'lek@localhost';
+GRANT SELECT,INSERT ON klinika.wizyty TO 'lek@localhost';
+GRANT SELECT,INSERT ON klinika.rasy TO 'lek@localhost';
+GRANT SELECT,INSERT ON klinika.terminy TO 'lek@localhost';
+GRANT SELECT ON klinika.pracownicy TO 'lek@localhost';
 FLUSH PRIVILEGES;
 
 CREATE USER 'sek@localhost';
 SET PASSWORD FOR 'sek@localhost' = 's4f52vserg';
-GRANT ALL PRIVILEGES ON klinika.* TO 'sek@localhost';
+GRANT EXECUTE ON klinika.* TO 'sek@localhost';
+GRANT SELECT,UPDATE,INSERT ON klinika.pacjenci TO 'sek@localhost';
+GRANT SELECT,INSERT,DELETE,UPDATE ON klinika.wlasciciele TO 'sek@localhost';
+GRANT SELECT,INSERT,DELETE ON klinika.wizyty TO 'sek@localhost';
+GRANT SELECT,INSERT ON klinika.notatki TO 'sek@localhost';;
+GRANT SELECT ON klinika.terminy TO 'sek@localhost';
+GRANT SELECT ON klinika.rasy TO 'sek@localhost';
+GRANT SELECT ON klinika.pracownicy TO 'sek@localhost';
 FLUSH PRIVILEGES;
 
 CREATE USER 'adm@localhost';
@@ -554,7 +577,9 @@ SELECT * FROM terminy ORDER BY dzien DESC;
 
 INSERT into terminy (dzien,godzina,id_lekarza) VALUES ('2030-10-11','8:30',1);
 
+SELECT * FROM wlasciciele;
 
+USE klinika;
 
 
 

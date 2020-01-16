@@ -128,6 +128,7 @@ public class WybTerminController {
 
 
         } catch (SQLException e) {
+            e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Umawianie wizyty");
             alert.setHeaderText("Wybrany termin nie jest dostępny");

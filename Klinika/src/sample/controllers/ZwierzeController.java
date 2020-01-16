@@ -57,6 +57,8 @@ public class ZwierzeController {
             /**
              * Dane do nagłowka
              */
+            clearGP(gridNotatki);
+
             query = "SELECT nazwa,rasa,gatunek,rok_urodzenia AS rok, umaszczenie FROM pacjenci JOIN rasy ON id_rasy=r_id WHERE p_id='" + idPacjenta + "';";
             stmt = conn.createStatement();
             res = stmt.executeQuery(query);
@@ -232,6 +234,20 @@ public class ZwierzeController {
     public void refresh(){
         updateData();
         pc.refresh();
+    }
+
+    private void clearGP(GridPane pane){
+
+        int rowCount=pane.getRowCount();
+        int columnCount=pane.getColumnCount();
+
+        for(int d=0;d<rowCount*columnCount;d++){
+            pane.getChildren().remove(pane.getChildren().get(0));
+        }
+
+        while(pane.getRowConstraints().size()>0){
+            pane.getRowConstraints().remove(0);
+        }
     }
 
 }
