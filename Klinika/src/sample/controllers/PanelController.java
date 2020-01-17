@@ -652,13 +652,23 @@ public class PanelController {
 
         try {
 
-            String executeCmd = "mysqldump -u" + "root" + " -p" + "Zapisy124567" + " " + "klinika" + " -r " + "klinikaBackup.sql";
+            String executeCmd = "mysqldump -u" + "back@localhost" + " -p" + "back" + " " + "klinika" + " -r " + "klinikaBackup.sql";
             Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
             int processComplete = runtimeProcess.waitFor();
             if (processComplete == 0) {
-                System.out.println("Backup Complete");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Backup complete");
+                alert.setHeaderText("Wykonano backup bazy do pliku klinikaBackup.sql");
+                alert.setContentText(null);
+
+                alert.showAndWait();
             } else {
-                System.out.println("Backup Failure");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Backup error");
+                alert.setHeaderText("Bład podczas wykonywania backupu bazy");
+                alert.setContentText(null);
+
+                alert.showAndWait();
             }
 
         } catch (IOException e) {
@@ -672,16 +682,25 @@ public class PanelController {
     void btnRestoreOnAction(ActionEvent event) {
 
         try{
-            String[] executeCmd = new String[]{"mysql", "klinika", "-u" + "root", "-p" + "Zapisy124567", "-e", " source " + "klinikaBackup.sql"};
+            String[] executeCmd = new String[]{"mysql", "klinika", "-u" + "back@localhost", "-p" + "back", "-e", " source " + "klinikaBackup.sql"};
 
             Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
             int processComplete = runtimeProcess.waitFor();
 
 
             if (processComplete == 0) {
-                System.out.println("Successfully restored from SQL : " + "hobby12334.sql");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Restoring complete");
+                alert.setHeaderText("Przywrócono baze z pliku klinikaBackup.sql");
+                alert.setContentText(null);
+                alert.showAndWait();
+
             } else {
-                System.out.println("Error at restoring");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Restoring error");
+                alert.setHeaderText("Bład podczas przywracania bazy");
+                alert.setContentText(null);
+                alert.showAndWait();
             }
             refresh();
         } catch (InterruptedException e) {
@@ -864,6 +883,11 @@ public class PanelController {
 
 
     public void stopThreads(){
+        try {
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Platform.runLater(() -> {
             refresher.interrupt();
         });

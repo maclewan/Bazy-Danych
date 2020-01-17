@@ -55,7 +55,6 @@ public class DodRaseController {
             query = "INSERT INTO rasy (rasa,gatunek) " +
                     "VALUES ('"+fldRasa.getText()+"','"+fldGatunek.getText()+"') ;";
             stmt.executeUpdate(query);
-            System.out.println("dodano?");
             pc.refresh();
             stage.close();
         } catch (SQLException e) {
