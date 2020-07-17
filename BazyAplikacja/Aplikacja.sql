@@ -471,7 +471,6 @@ DELIMITER ;
 
 #INSERT INTO pracownicy (imie,nazwisko,pesel,typ) VALUES ('Maciej','Lewandowicz',98092805975,'admin');
 CALL generateDataBase();
-
 CREATE INDEX index1 ON pracownicy(imie,nazwisko,typ,staff_id);
 CREATE INDEX index2 ON wlasciciele(w_id,imie,nazwisko,ulica,kod_pocztowy);
 CREATE INDEX index3 ON pacjenci(p_id,nazwa,id_wlasciciela,id_rasy);
@@ -481,6 +480,12 @@ DROP USER 'log@localhost';
 CREATE USER 'log@localhost';
 SET PASSWORD FOR 'log@localhost' = 'pas';
 GRANT Select ON klinika.uzytkownicy TO 'log@localhost';
+FLUSH PRIVILEGES;
+
+DROP USER 'back@localhost';
+CREATE USER 'back@localhost';
+SET PASSWORD FOR 'back@localhost' = 'back';
+GRANT ALL PRIVILEGES ON klinika.* TO 'back@localhost';
 FLUSH PRIVILEGES;
 
 DROP USER 'wlasc@localhost';
@@ -529,57 +534,6 @@ FLUSH PRIVILEGES;
 
 
 
-
-
-
-SELECT p_id, imie, nazwisko, nazwa, gatunek FROM (pacjenci JOIN rasy ON pacjenci.id_rasy=rasy.r_id) JOIN wlasciciele ON pacjenci.id_wlasciciela=w_id;
-SELECT wizyty.w_id AS idWiz, CONCAT(godzina,' ',dzien) AS termin, CONCAT(imie,' ',nazwisko) AS wlasciciel, nazwa, gatunek FROM (((wizyty JOIN terminy ON id_terminu=g_id) JOIN pacjenci ON id_pacjenta=p_id) JOIN rasy ON r_id=id_rasy) JOIN wlasciciele ON id_wlasciciela=wlasciciele.w_id ORDER BY dzien,godzina;
-SELECT w_id,imie,nazwisko,ulica,kod_pocztowy AS kod FROM wlasciciele;
-SELECT imie,nazwisko,typ,staff_id FROM pracownicy;
-
-SELECT r_id, gatunek, rasa FROM rasy;
-
-SELECT nazwa,rasa,gatunek,rok_urodzenia AS rok, umaszczenie FROM pacjenci JOIN rasy ON id_rasy=r_id WHERE p_id=10;
-SELECT n_id, godzina,dzien FROM (terminy JOIN wizyty ON g_id=id_terminu ) JOIN notatki ON id_wizyty=w_id WHERE notatki.id_pacjenta =21;
-
-SELECT dzien,godzina,nazwa,komentarz FROM ((notatki JOIN pacjenci ON id_pacjenta=p_id) JOIN wizyty ON id_wizyty=w_id) JOIN terminy ON id_terminu = g_id WHERE n_id=27;
-
-
-SELECT * FROM wizyty;
-Select * FROM notatki;
-Select * from pacjenci;
-
-UPDATE pacjenci SET nazwa= 'sratatatata',id_wlasciciela = '1012',id_rasy='23',rok_urodzenia='1975',umaszczenie='aersh' WHERE p_id=1;
-SELECT * from notatki;
-
-SELECT nazwa, umaszczenie, rok_urodzenia, id_wlasciciela,rasa,gatunek FROM pacjenci JOIN rasy on id_rasy=r_id WHERE p_id=10;
- DELETE from pacjenci WHERE p_id=1;
-SELECT g_id,dzien,godzina,imie, nazwisko FROM terminy JOIN pracownicy ON id_lekarza=staff_id WHERE g_id NOT IN (SELECT id_terminu from wizyty) AND dzien like '' AND (imie LIKE '' OR nazwisko like '');
-SELECT * from wizyty;
-
-INSERT INTO wizyty (id_pacjenta,id_terminu) VALUES ('10','9');
-SELECT * FROM wizyty;
-DELETE FROM wizyty WHERE id_terminu=9;
-
-SELECT dzien, godzina, nazwa FROM wizyty JOIN terminy ON id_terminu=g_id JOIN pacjenci ON id_pacjenta=p_id WHERE w_id = 10;
-
-DELETE FROM wizyty WHERE id_pacjenta =75;
-SELECT * from wizyty;
-SELECT * from notatki;
-SELECT * from terminy ORDER BY dzien,godzina;
-
-call umow('10','9');
-
-SELECT godzina, dzien FROM terminy ;
-
-
-SELECT * FROM terminy ORDER BY dzien DESC;
-
-INSERT into terminy (dzien,godzina,id_lekarza) VALUES ('2030-10-11','8:30',1);
-
-SELECT * FROM wlasciciele;
-
-USE klinika;
 
 
 

@@ -23,6 +23,7 @@ public class LogowanieController {
     @FXML
     private void initialize(){
         lblTerminal.setText("");
+        thisStage.setResizable(false);
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/klinika", "log@localhost", "pas");
         } catch (SQLException e) {

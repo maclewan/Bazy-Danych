@@ -652,7 +652,7 @@ public class PanelController {
 
         try {
 
-            String executeCmd = "mysqldump -u" + "back@localhost" + " -p" + "back" + " " + "klinika" + " -r " + "klinikaBackup.sql";
+            String executeCmd = "mysqldump -u" + "adm@localhost" + " -p" + "a4vdmq9diw" + " " + "klinika" + " -r " + "klinikaBackup.sql";
             Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
             int processComplete = runtimeProcess.waitFor();
             if (processComplete == 0) {
@@ -682,7 +682,7 @@ public class PanelController {
     void btnRestoreOnAction(ActionEvent event) {
 
         try{
-            String[] executeCmd = new String[]{"mysql", "klinika", "-u" + "back@localhost", "-p" + "back", "-e", " source " + "klinikaBackup.sql"};
+            String[] executeCmd = new String[]{"mysql", "klinika", "-u" + "root", "-p" + "Zapisy124567", "-e", " source " + "klinikaBackup.sql"};
 
             Process runtimeProcess = Runtime.getRuntime().exec(executeCmd);
             int processComplete = runtimeProcess.waitFor();

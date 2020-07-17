@@ -8,6 +8,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="javafx-swt" level="application" />
-    <orderEntry type="library" name="mysql-connector-java-8.0" level="project" />
+    <orderEntry type="library" name="JavaFX" level="application" />
+    <orderEntry type="library" name="MysqlConnector5" level="application" />
+    <orderEntry type="library" name="mysql-connector-java-8.0" level="application" />
   </component>
 </module>
