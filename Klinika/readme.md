@@ -16,7 +16,7 @@
 
 
 ## General info
-Projekt studencki na zajęcia z Baz Danych i systemów informacyjnych.
+Projekt studencki na zajęcia z Baz Danych i Systemów Informacyjnych.
 Tworzony przez [Maciej Lewandowicz](https://github.com/sasuke5055).
 
 [Tresc zadania](https://cs.pwr.edu.pl/syga/arch/w2019/db/Lab_projekt.pdf)
