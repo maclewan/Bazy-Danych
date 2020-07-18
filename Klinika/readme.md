@@ -1,8 +1,8 @@
 ## Table of contents
 * [Technologies](#technologies)
 * [General info](#general-info)
-* [Application description](#Application-description)
-* [Hibernate](#Hibernate)
+* [Application description](#application-description)
+* [MySQL](#mySQL)
 	
 
 ## Technologies
