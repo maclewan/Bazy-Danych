@@ -47,17 +47,19 @@ Podobnie można dodawać nowe gatunki i rasy.
 
 ![](images/w2.png)
 
-![](images/w3.png)
-
 Interesujące nas pozycje w aplikacji możemy wyszukiwać za pomocą ciągu znaków.
 
-![](images/w4.png)
+
+![](images/gif.gif)
 
 Istnieje możliwosć wyszukania terminu i umówiania wówczas wizyty. 
 
-![](images/w5.png)
+
+![](images/w4.png)
 
 Lekarz do wizyty ma możliwość dopisania notatki.
+
+![](images/w5.png)
 
 ![](images/w55.png)
 
